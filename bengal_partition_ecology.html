@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Communal Politics Ruined Agrarian Bengal — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sepia:#F2E8D0;--sepia2:#E8D8B8;--sepia3:#D8C8A0;--sepia4:#C0A878;--sepia5:#A08850;
+  --ink:#1A1208;--ink2:#2E2214;--ink3:#6A5A40;--ink4:#A09070;
+  --blood:#5C0808;--blood2:#7A1010;--blood3:#A82020;
+  --gold:#8A6010;--gold2:#B88820;--gold3:#D4AA50;--gold4:#F0D890;
+  --rule:rgba(26,18,8,.15);
+  --disp:'Cinzel Decorative',serif;--head:'Cinzel',serif;
+  --body:'Lora',Georgia,serif;--type:'Special Elite',monospace;
+  --max:640px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--sepia);color:var(--ink);min-height:100vh}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");mix-blend-mode:multiply}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 48px;background:var(--ink);border-bottom:2px solid var(--gold2)}
+.nav-back{font-family:var(--type);font-size:11px;letter-spacing:.06em;text-decoration:none;color:rgba(255,255,255,.4)}
+.nav-back:hover{color:var(--gold4)}
+
+/* MASTHEAD */
+.masthead{border-bottom:1px solid var(--sepia4);padding:32px 48px 28px;text-align:center}
+.mh-ornament{font-family:var(--disp);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--sepia4);margin-bottom:16px}
+.mh-title{font-family:var(--disp);font-size:clamp(24px,4.5vw,52px);font-weight:900;line-height:1.05;letter-spacing:.04em;color:var(--ink);margin-bottom:6px}
+.mh-title em{font-style:italic;color:var(--blood2)}
+.mh-subtitle{font-family:var(--head);font-size:clamp(12px,2vw,17px);font-weight:400;letter-spacing:.12em;color:var(--ink4);text-transform:uppercase;margin-bottom:20px}
+.triple-rule{display:flex;flex-direction:column;gap:2px;margin:0 0 20px;width:100%}
+.tr-thick{height:3px;background:var(--ink)}
+.tr-thin{height:1px;background:var(--ink)}
+.mh-byline{font-family:var(--type);font-size:12px;letter-spacing:.06em;color:var(--ink3)}
+.mh-byline span{color:var(--ink)}
+
+/* CONTENTS */
+.contents-strip{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:16px 48px;display:flex;align-items:start;gap:32px;background:var(--sepia2)}
+.cs-label{font-family:var(--head);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);flex-shrink:0;padding-top:2px;white-space:nowrap}
+.cs-items{display:flex;flex-wrap:wrap;gap:0 32px;list-style:none;flex:1}
+.cs-items li{font-family:var(--type);font-size:11px;color:var(--ink3);padding:2px 0;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.cs-items li::before{content:'§';color:var(--gold2);font-size:10px}
+
+/* ARTICLE */
+.article{max-width:var(--max);margin:0 auto;padding:0 48px}
+
+/* SECTION */
+.sec{padding:52px 0 0}
+.sec-head-wrap{text-align:center;margin-bottom:24px}
+.sec-deco{font-family:var(--head);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sepia4);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:10px}
+.sec-deco::before,.sec-deco::after{content:'';flex:1;height:1px;background:var(--sepia4)}
+.sec-head{font-family:var(--head);font-size:clamp(17px,2.5vw,24px);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);line-height:1.2}
+.sec-head em{font-style:italic;color:var(--blood2);text-transform:none;font-family:var(--body);font-size:1.1em;letter-spacing:0}
+
+/* PROSE */
+.p{font-family:var(--body);font-size:18px;font-weight:400;line-height:1.9;color:var(--ink2);margin-bottom:20px;text-align:justify;hyphens:auto}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--ink)}
+.p strong{font-weight:600;color:var(--ink)}
+.dropcap::first-letter{font-family:var(--disp);font-size:90px;font-weight:900;float:left;line-height:.75;margin:4px 8px 0 0;color:var(--blood2)}
+
+/* PULL QUOTE */
+.pq{margin:40px 0;text-align:center;padding:24px 16px}
+.pq-top-rule{display:flex;flex-direction:column;gap:2px;margin-bottom:20px}
+.pq-bot-rule{display:flex;flex-direction:column;gap:2px;margin-top:20px}
+.pq-r-thick{height:2px;background:var(--ink)}
+.pq-r-thin{height:1px;background:var(--ink)}
+.pq-text{font-family:var(--body);font-size:clamp(16px,2.5vw,21px);font-style:italic;line-height:1.5;color:var(--ink);letter-spacing:.01em}
+.pq-text em{font-style:normal;color:var(--blood2)}
+.pq-attr{font-family:var(--type);font-size:10px;letter-spacing:.06em;color:var(--ink4);margin-top:12px;display:block}
+
+/* WESTEROS PARALLEL */
+.got-inset{background:var(--ink);padding:24px 28px;margin:36px -12px;position:relative;border:1px solid var(--gold2)}
+.got-inset::before{content:'Westeros Parallel';position:absolute;top:-10px;left:20px;font-family:var(--head);font-size:9px;letter-spacing:.2em;text-transform:uppercase;background:var(--blood2);color:var(--gold4);padding:2px 10px;border:1px solid var(--gold2)}
+.got-inset::after{content:'';position:absolute;inset:4px;border:1px solid rgba(212,170,80,.12);pointer-events:none}
+.gi-text{font-family:var(--body);font-size:16px;font-style:italic;font-weight:400;line-height:1.8;color:rgba(240,216,144,.8)}
+.gi-text strong{color:var(--gold4);font-style:normal;font-weight:600}
+
+/* STAT */
+.stat-aside{border:1px solid var(--sepia4);border-top:3px solid var(--blood2);padding:18px 20px;margin:32px 0;background:var(--sepia2);text-align:center}
+.sa-label{font-family:var(--head);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--blood2);margin-bottom:10px}
+.sa-num{font-family:var(--disp);font-size:44px;font-weight:900;color:var(--ink);line-height:1;margin-bottom:8px}
+.sa-desc{font-family:var(--type);font-size:12px;color:var(--ink3);line-height:1.65}
+
+/* ORNAMENTAL DIVIDER */
+.orn-div{text-align:center;padding:32px 0;font-family:var(--head);font-size:14px;color:var(--sepia4);letter-spacing:.2em;display:flex;align-items:center;gap:16px}
+.orn-rule{flex:1;height:1px;background:var(--sepia4)}
+
+/* WIDE BLOCK */
+.wide-block{max-width:860px;margin:52px auto;padding:0 48px}
+.wb-inner{background:var(--ink2);border:1px solid var(--gold2);padding:36px 40px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+.wb-inner::before{content:'';position:absolute;inset:5px;border:1px solid rgba(212,170,80,.15);pointer-events:none}
+.wb-deco{font-family:var(--head);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold3);margin-bottom:14px;display:block}
+.wb-title{font-family:var(--body);font-size:clamp(17px,2.5vw,24px);font-style:italic;color:var(--sepia);line-height:1.35}
+.wb-body{font-family:var(--type);font-size:12px;color:rgba(240,216,144,.6);line-height:1.8}
+
+/* CLOSING */
+.closing{max-width:var(--max);margin:0 auto;padding:52px 48px 72px;text-align:center}
+.closing .triple-rule{margin-bottom:32px}
+.closing-text{font-family:var(--body);font-size:clamp(16px,2.5vw,20px);font-style:italic;line-height:1.65;color:var(--ink2);margin-bottom:28px}
+.closing-mark{font-family:var(--disp);font-size:20px;font-weight:900;letter-spacing:.08em;color:var(--blood2);display:block}
+
+/* FOOTER */
+.site-footer{background:var(--ink);border-top:2px solid var(--gold2);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.sf-l{font-family:var(--type);font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.35)}
+.sf-r{font-family:var(--head);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+
+@media(max-width:760px){
+  .nav,.masthead,.contents-strip,.article,.wide-block,.closing,.site-footer{padding-left:24px;padding-right:24px}
+  .wb-inner{grid-template-columns:1fr;gap:20px}
+  .contents-strip{flex-direction:column;gap:12px}
+  .dropcap::first-letter{font-size:64px}
+  .got-inset{margin-left:0;margin-right:0}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
+</div>
+
+<div class="masthead">
+  <div class="mh-ornament">✦ &nbsp; Anno Domini 1947 &nbsp; ✦</div>
+  <div class="triple-rule"><div class="tr-thick"></div><div class="tr-thin"></div></div>
+  <div class="mh-title">How Communal Politics<br>Ruined <em>Agrarian Bengal</em></div>
+  <div class="mh-subtitle">The game nobody won &nbsp;·&nbsp; the land that paid for it</div>
+  <div class="triple-rule"><div class="tr-thin"></div><div class="tr-thick"></div></div>
+  <div class="mh-byline">Written by <span>Al Amin</span> &nbsp;·&nbsp; A Personal Reading of Partition 1947</div>
+</div>
+
+<div class="contents-strip">
+  <div class="cs-label">Contents</div>
+  <ul class="cs-items">
+    <li>What Eastern Bengal actually was</li>
+    <li>The slow decline</li>
+    <li>The bhadralok enter the game</li>
+    <li>Why the violence happened where it did</li>
+    <li>The partition's ecological illiteracy</li>
+    <li>What actually won, and what lost</li>
+  </ul>
+</div>
+
+<div class="article">
+
+  <div class="sec">
+    <div class="p dropcap">I want to start with something that might sound strange. When I think about the 1947 partition of Bengal, I keep thinking about Game of Thrones. Not the dragons. Not the swords. I think about the moment when every great house in Westeros is so busy fighting each other for the Iron Throne that nobody notices the real threat approaching from the north. The White Walkers do not care who sits on the throne. They are coming regardless. And by the time everyone realizes what actually mattered, it is already too late.</div>
+    <div class="p">Bengal in 1947 was something like that. Two communities spent decades fighting over land, political power, and identity. They drew a line through the delta and called it a solution. And in doing so, both of them lost the thing they were actually fighting about. The land itself.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head-wrap">
+      <div class="sec-deco">I</div>
+      <div class="sec-head">What Eastern Bengal <em>Actually Was</em></div>
+    </div>
+    <div class="p">To understand what was lost, you have to understand what Eastern Bengal was in the 19th century. It was not just fertile. It was extraordinary. The riverine ecology of the delta kept producing new land, char land rising out of the water, forested tracts being cleared, wastelands becoming rice fields. The peasants who worked this land, mostly Muslim, joined by some lower-caste Hindus, were building something remarkable. Wages were relatively high. Landlessness was rare. Cash was flowing into rural areas in ways it simply was not elsewhere in Bengal.</div>
+    <div class="got-inset">
+      <div class="gi-text">Think of it like a kingdom that has figured out its own food supply. Prosperous, self-sustaining, not dependent on anyone else. In Game of Thrones language, Eastern Bengal was <strong>the granary of the realm.</strong> Everyone knew it. The question was who got to control it. For a time, nobody needed to. The peasants worked it, and the delta provided.</div>
+    </div>
+    <div class="p">The architects of this world were not administrators or elites. They were active, cultivating peasants who reclaimed char lands, cleared forests, and made something out of nothing across generations. A world built from below, by people nobody was writing histories about.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head-wrap">
+      <div class="sec-deco">II</div>
+      <div class="sec-head">The Slow <em>Decline</em></div>
+    </div>
+    <div class="p">Then things started to fall apart, and here is where the story gets complicated. The British built railways across Bengal. That sounds like progress, and in some ways it was. But the railway embankments cut across the natural water flow of the delta. Rivers that used to spread their silt across floodplains were now blocked. Water that used to drain away started logging in fields. The rich, silty, annual flooding that made Eastern Bengal so fertile began to fail. River beds rose. Embankments burst unpredictably. And then water hyacinth arrived, choking up waterways, blocking transport, suffocating agricultural land.</div>
+    <div class="p">The ecology was deteriorating. The granary was in trouble. And then, into this weakening ecosystem, a new player arrived.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head-wrap">
+      <div class="sec-deco">III</div>
+      <div class="sec-head">The Bhadralok <em>Enter the Game</em></div>
+    </div>
+    <div class="p">From around the turn of the 20th century, educated urban middle-class Bengalis, mostly upper-caste Hindus known as bhadralok, began moving into rural Eastern Bengal. They were not coming to farm. They were coming to own. The British government actively encouraged this, offering khas mahal lands to middle-class settlers, generous enough to allow them to live, in the government's own words, in a better style than ordinary cultivators.</div>
+    <div class="got-inset">
+      <div class="gi-text">This is the moment in the story where <strong>a new house enters the game.</strong> They did not build the granary. They did not tend it through the difficult years. But now that the granary exists and the ecology is weakening, they want a seat at the table. And they have something the peasants do not: the backing of the crown.</div>
+    </div>
+    <div class="p">The Muslim peasantry, who had built this productive world over generations, found themselves competing for the same shrinking ecological resource with people who had the backing of the colonial state, the cultural capital of the educated class, and increasingly the legal mechanisms to acquire land. When the Bengal famine of 1943 arrived and desperate peasants sold land just to eat, an enormous portion of rice land passed permanently to absentee, non-cultivating owners. People who lived in cities and owned countryside.</div>
+    <div class="stat-aside">
+      <div class="sa-label">The Famine Transfer</div>
+      <div class="sa-num">420,000</div>
+      <div class="sa-desc">Approximately 420,000 acres of rice land passed to outsiders during the 1943 famine. The smallfolk were losing their fields while the great houses counted their holdings.</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head-wrap">
+      <div class="sec-deco">IV</div>
+      <div class="sec-head">Why the Violence Happened <em>Where It Did</em></div>
+    </div>
+    <div class="p">Here is something I find genuinely clarifying about this history. The worst pre-partition communal violence, setting aside Kolkata, happened in specific districts: Noakhali, Comilla, Dhaka, Mymensingh, Pabna. These are not random locations. They are precisely the districts where the rate of land transfer from cultivating peasants to non-cultivating urban owners was highest.</div>
+    <div class="p">The violence was not simply about religion. Religion was the language being used. The underlying grammar was access to land, which is to say access to survival.</div>
+    <div class="pq">
+      <div class="pq-top-rule"><div class="pq-r-thick"></div><div class="pq-r-thin"></div></div>
+      <div class="pq-text">Wars almost always claim to be about honor or loyalty or justice. Underneath, they are about <em>who controls the food.</em> Who controls the water. Who controls the routes through which both move.</div>
+      <div class="pq-attr">The Game of Thrones truth about Bengal</div>
+      <div class="pq-bot-rule"><div class="pq-r-thin"></div><div class="pq-r-thick"></div></div>
+    </div>
+    <div class="p">Two communities had been living in relative peace through the 19th century when the ecological base was expanding and there was enough for everyone. When the ecological base began shrinking, and when one community started losing land to another with state backing, the conflict followed as surely as winter follows autumn.</div>
+  </div>
+
+</div>
+
+<div class="wide-block">
+  <div class="wb-inner">
+    <div>
+      <span class="wb-deco">The Partition's Ecological Logic</span>
+      <div class="wb-title">Both sides wanted Eastern Bengal. Both sides lost it.</div>
+    </div>
+    <div class="wb-body">The Muslim majority got political space, East Pakistan, later Bangladesh. But decades of ecological deterioration had already damaged the agrarian world the peasantry had built. The Hindu elite in Kolkata got West Bengal, but without the productive delta of the east, found themselves with a relatively moribund land. Their answer was the Farakka Barrage, built in 1975, which continues to shape the water disputes between India and Bangladesh to this day. The game was played at the ecological level even when nobody was using ecological language.</div>
+  </div>
+</div>
+
+<div class="article">
+
+  <div class="sec">
+    <div class="sec-head-wrap">
+      <div class="sec-deco">V</div>
+      <div class="sec-head">The Partition Was <em>Ecologically Illiterate</em></div>
+    </div>
+    <div class="p">The partition negotiations were shaped by water anxiety decades before the barrage was built. Murshidabad, Muslim-majority, went to India. Hindu-majority Jessore went to East Pakistan. Partly to secure the right hydrological position for diverting Ganges water westward. A political boundary drawn partly to serve a future engineering project. The line through Bengal was not just a communal line. It was a hydrological calculation.</div>
+    <div class="p">And what happened afterward confirmed it. Writing in 1948, one voice put it plainly: less food but more to be fed. The only solution was improved river management. The Farakka Barrage was the culmination of that logic. And the Teesta dispute that continues today between India and Bangladesh is not a new problem. It is the same problem, in a new generation, wearing different clothes.</div>
+    <div class="got-inset">
+      <div class="gi-text">There is a moment in Game of Thrones when Daenerys burns the Lannister supply wagons, and someone points out that the <strong>common people are the ones dying in that field.</strong> Soldiers, farmers, ordinary men. The war between great powers is always paid for by the people who never wanted it. The Bengal partition was paid for the same way.</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head-wrap">
+      <div class="sec-deco">VI</div>
+      <div class="sec-head">What <em>Actually</em> Won, and What Lost</div>
+    </div>
+    <div class="p">The peasants who built the delta's extraordinary fertility through generations of labor paid for the political games of elites who had recently arrived to claim what others had built. They paid with their land during the transfers. They paid with their lives during the famine. They paid with the communities broken apart at partition.</div>
+    <div class="p">And both sides of the line have been paying ecologically ever since. The delta does not care about the line drawn through it in 1947. Rivers do not stop at borders. Silt does not respect partition. The fractured ecology of the Bengal delta is a single wounded system, and the wound has not closed.</div>
+    <div class="p">The connection works in two ways. First, when it came to the ecological question, the two-nation theory on which the partition was claimed to be based was completely muted. The real negotiations were about water, not religion. Second, the human suffering from partition was enormous and immediate, but the ecological suffering has been longer-lasting, reaching further, affecting more people, and it is still not finished.</div>
+  </div>
+
+  <div class="orn-div">
+    <div class="orn-rule"></div>
+    <div class="orn-mark">✦ &nbsp; Finis &nbsp; ✦</div>
+    <div class="orn-rule"></div>
+  </div>
+
+</div>
+
+<div class="closing">
+  <div class="triple-rule"><div class="tr-thick"></div><div class="tr-thin"></div></div>
+  <div class="closing-text">Communal politics won in 1947. The ecology of the region lost. The granary was the prize. The granary was what was destroyed in the fighting for it. That, in the end, is the story the Iron Throne always tells.</div>
+  <div class="closing-mark">The Game Nobody Won</div>
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">How Communal Politics Ruined Agrarian Bengal · Personal essay</div>
+  <div class="sf-r">Notes by Al Amin</div>
+</div>
+
+</body>
+</html>
