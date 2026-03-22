@@ -3,371 +3,578 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thesis — Predictive Modeling of Football Match Outcomes</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<title>Predictive Modeling of Football Match Outcomes — Al-Amin, RUET 2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --navy:  #060D1A;
-  --navy2: #0D1B2A;
-  --navy3: #152236;
-  --navy4: #1E3050;
-  --navy5: #2A4268;
-  --cyan:  #00B4D8;
-  --cyan2: #48CAE4;
-  --cyan3: #90E0EF;
-  --cyan4: #CAF0F8;
-  --cyan5: #E8F9FC;
-  --white: #EEF4F8;
-  --white2:#C4D4E0;
-  --white3:#8AA0B0;
-  --white4:#4A6070;
-  --white5:#2A3C4C;
-  --red:   #FF4D6D;
-  --amber: #FFB347;
-  --green: #52B788;
-  --rule:  rgba(0,180,216,.15);
-  --rule2: rgba(0,180,216,.08);
+  --bg:    #070b14;
+  --bg2:   #0c1422;
+  --bg3:   #111d30;
+  --bg4:   #172440;
+  --gold:  #c9a84c;
+  --gold2: #e8c97a;
+  --gold3: #7a5e24;
+  --gold4: rgba(201,168,76,.18);
+  --gold5: rgba(201,168,76,.07);
+  --cream: #e6e0d4;
+  --muted: #7a8294;
+  --dim:   #4a5468;
+  --green: #4caf7d;
+  --red:   #e05c5c;
+  --blue:  #3e7bfa;
+  --rule:  rgba(201,168,76,.14);
+  --rule2: rgba(255,255,255,.06);
   --mono:  'JetBrains Mono',monospace;
-  --sans:  'Inter',system-ui,sans-serif;
-  --serif: 'Lora',Georgia,serif;
+  --sans:  'Jost',system-ui,sans-serif;
+  --serif: 'Cormorant Garamond',Georgia,serif;
 }
 
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--navy);color:var(--white);min-height:100vh;position:relative}
+html{scroll-behavior:smooth;font-size:16px}
 
-/* Blueprint grid overlay */
+/* ══ BLUEPRINT GRID (from theirs, gold-tinted) ══ */
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--cream);
+  min-height:100vh;
+  font-weight:300;
+  position:relative;
+}
 body::before{
   content:'';
   position:fixed;inset:0;
   background-image:
-    linear-gradient(rgba(0,180,216,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,180,216,.04) 1px,transparent 1px);
-  background-size:40px 40px;
+    linear-gradient(rgba(201,168,76,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,168,76,.03) 1px,transparent 1px);
+  background-size:44px 44px;
   pointer-events:none;z-index:0;
 }
 *{position:relative;z-index:1}
 
-/* ══ NAV ══ */
-.nav{
+/* ══ TOP NAV (from theirs) ══ */
+.topnav{
   display:flex;align-items:center;justify-content:space-between;
-  padding:14px 48px;
+  padding:13px 40px;
   border-bottom:1px solid var(--rule);
-  background:rgba(6,13,26,.9);
-  backdrop-filter:blur(8px);
-  position:sticky;top:0;z-index:100;
+  background:rgba(7,11,20,.92);
+  backdrop-filter:blur(10px);
+  position:sticky;top:0;z-index:200;
 }
-.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--white3)}
-.nav-back:hover{color:var(--cyan)}
-.nav-r{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--white4)}
+.tn-brand{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px}
+.tn-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.7}
+.tn-right{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 
-/* ══ COVER ══ */
+/* ══ SHELL ══ */
+.shell{display:flex;min-height:100vh}
+
+/* ══ SIDEBAR ══ */
+.sidebar{
+  width:264px;flex-shrink:0;
+  background:var(--bg2);
+  border-right:1px solid var(--rule);
+  position:sticky;top:40px;
+  height:calc(100vh - 40px);
+  overflow-y:auto;display:flex;flex-direction:column;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:2px}
+
+.sb-logo{padding:24px 22px 18px;border-bottom:1px solid var(--rule)}
+.sb-inst{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:5px}
+.sb-short{font-family:var(--serif);font-size:13.5px;font-weight:500;color:var(--cream);line-height:1.4}
+
+.sb-nav{padding:14px 0;flex:1}
+.nav-label{font-size:8.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:10px 22px 4px;display:block}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 22px;font-size:12.5px;font-weight:400;
+  color:var(--muted);text-decoration:none;
+  transition:all .2s;border-left:2px solid transparent;cursor:pointer;
+}
+.nav-item:hover{color:var(--cream);background:rgba(201,168,76,.04)}
+.nav-item.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.06)}
+.nav-item .nn{font-family:var(--mono);font-size:9.5px;color:var(--gold3);min-width:18px}
+
+.sb-footer{
+  padding:14px 22px;border-top:1px solid var(--rule);
+  font-size:10.5px;color:var(--muted);line-height:1.6;
+}
+.sb-footer strong{color:var(--gold);font-weight:500}
+
+/* ══ MAIN ══ */
+.main{flex:1;min-width:0}
+
+/* ════════════════════════════════
+   COVER (from theirs, gold palette)
+   ════════════════════════════════ */
 .cover{
   border-bottom:1px solid var(--rule);
-  padding:0;
-  position:relative;
-  overflow:hidden;
+  position:relative;overflow:hidden;
 }
-
-/* Corner marks */
+/* corner marks */
 .cover::before,.cover::after{
-  content:'';
-  position:absolute;
-  width:24px;height:24px;
-  border-color:var(--cyan);border-style:solid;
-  opacity:.4;
+  content:'';position:absolute;
+  width:28px;height:28px;
+  border-color:var(--gold);border-style:solid;opacity:.35;
 }
 .cover::before{top:20px;left:20px;border-width:2px 0 0 2px}
 .cover::after{top:20px;right:20px;border-width:2px 2px 0 0}
 
 .cover-inner{
   display:grid;
-  grid-template-columns:1fr 340px;
-  min-height:88vh;
+  grid-template-columns:1fr 320px;
+  min-height:86vh;
 }
 .cover-main{
-  padding:72px 56px 56px;
+  padding:68px 52px 52px;
   border-right:1px solid var(--rule);
   display:flex;flex-direction:column;justify-content:space-between;
 }
-.cover-aside{padding:72px 40px 56px;display:flex;flex-direction:column;justify-content:space-between}
+.cover-aside{padding:68px 36px 52px;display:flex;flex-direction:column;justify-content:space-between}
 
 /* Classification tag */
 .cls-tag{
   font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--cyan);border:1px solid var(--cyan);padding:4px 12px;
-  display:inline-block;margin-bottom:40px;
-  position:relative;
+  color:var(--gold);border:1px solid var(--gold);padding:4px 12px;
+  display:inline-block;margin-bottom:36px;opacity:.8;
 }
 .cls-tag::before{content:'[';margin-right:4px;opacity:.5}
 .cls-tag::after{content:']';margin-left:4px;opacity:.5}
 
-.cover-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--white3);margin-bottom:16px}
+.cover-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 .cover-title{
   font-family:var(--serif);
-  font-size:clamp(36px,5.5vw,68px);
-  font-weight:700;
-  line-height:.95;letter-spacing:-.02em;
-  color:var(--white);margin-bottom:16px;
+  font-size:clamp(34px,5vw,64px);
+  font-weight:700;line-height:.95;letter-spacing:-.02em;
+  color:var(--cream);margin-bottom:14px;
 }
-.cover-title em{font-style:italic;color:var(--cyan)}
+.cover-title em{font-style:italic;color:var(--gold2)}
 .cover-subtitle{
-  font-family:var(--mono);font-size:13px;letter-spacing:.04em;
-  color:var(--white3);margin-bottom:48px;line-height:1.5;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;
+  color:var(--muted);margin-bottom:44px;line-height:1.5;
 }
 
 .cover-meta{display:flex;flex-direction:column;gap:0}
-.cm-row{
-  display:flex;align-items:baseline;gap:12px;
-  padding:12px 0;border-top:1px solid var(--rule);
-}
+.cm-row{display:flex;align-items:baseline;gap:12px;padding:11px 0;border-top:1px solid var(--rule)}
 .cm-row:last-child{border-bottom:1px solid var(--rule)}
-.cm-key{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);min-width:100px;flex-shrink:0}
-.cm-val{font-family:var(--sans);font-size:13px;color:var(--white2)}
+.cm-key{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);min-width:92px;flex-shrink:0}
+.cm-val{font-family:var(--sans);font-size:13px;color:#c8c2b8;font-weight:300}
 
 /* Aside */
-.ca-label{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--white4);margin-bottom:20px}
+.ca-label{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
 
-/* Result highlight */
+/* PEAK RESULT box */
 .result-hero{
-  border:1px solid var(--cyan);
-  padding:24px;
-  position:relative;
-  margin-bottom:20px;
+  border:1px solid var(--gold);
+  padding:22px;position:relative;margin-bottom:20px;
 }
 .result-hero::before{
   content:'PEAK RESULT';
-  position:absolute;top:-10px;left:16px;
+  position:absolute;top:-10px;left:14px;
   font-family:var(--mono);font-size:8px;letter-spacing:.18em;
-  background:var(--navy);padding:0 8px;color:var(--cyan);
+  background:var(--bg);padding:0 8px;color:var(--gold);
 }
-.rh-model{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--white3);margin-bottom:8px}
-.rh-acc{font-family:var(--serif);font-size:64px;font-weight:700;font-style:italic;color:var(--cyan);line-height:1}
-.rh-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--white4);margin-top:4px}
-.rh-note{font-family:var(--sans);font-size:11px;color:var(--white3);margin-top:12px;line-height:1.6}
+.rh-model{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.rh-acc{font-family:var(--serif);font-size:60px;font-weight:700;font-style:italic;color:var(--gold2);line-height:1}
+.rh-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:4px}
+.rh-note{font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.65;font-weight:300}
 
-.ca-chips{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.ca-chips{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
 .ca-chip{
-  font-family:var(--mono);font-size:10px;letter-spacing:.08em;
-  padding:8px 12px;
-  border:1px solid var(--rule);color:var(--white3);
+  font-family:var(--mono);font-size:10px;letter-spacing:.07em;
+  padding:8px 12px;border:1px solid var(--rule);color:var(--muted);
   display:flex;align-items:center;justify-content:space-between;
 }
-.ca-chip-val{color:var(--cyan);font-weight:700}
+.ca-chip-val{color:var(--gold2);font-weight:700}
+.ca-scroll{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
 
-.ca-scroll{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--white4)}
+/* ════════════════════════════════
+   STAT STRIP
+   ════════════════════════════════ */
+.stat-strip{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  border-bottom:1px solid var(--rule);
+}
+.stat-cell{padding:20px 24px;border-right:1px solid var(--rule2);text-align:center}
+.stat-cell:last-child{border-right:none}
+.stat-big{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--gold2);line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:10.5px;color:var(--muted);letter-spacing:.03em}
 
-/* ══ BODY ══ */
-.body{max-width:1200px;margin:0 auto;padding:0 48px}
+/* ════════════════════════════════
+   BODY
+   ════════════════════════════════ */
+.body-wrap{padding:0 60px 80px}
 
-/* ══ SECTION HEAD ══ */
+/* ══ SECTION HEADING (from theirs) ══ */
 .sh{padding:56px 0 0}
-.sh-line{
-  display:flex;align-items:center;gap:16px;margin-bottom:12px;
-}
-.sh-num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--cyan);flex-shrink:0}
-.sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
-.sh-title{font-family:var(--serif);font-size:clamp(24px,4vw,44px);font-weight:700;letter-spacing:-.02em;margin-bottom:32px;color:var(--white)}
-.sh-title em{font-style:italic;color:var(--cyan)}
+.sh-line{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.sh-num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--gold);flex-shrink:0}
+.sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent);opacity:.5}
+.sh-title{font-family:var(--serif);font-size:clamp(22px,3.5vw,40px);font-weight:700;letter-spacing:-.02em;margin-bottom:28px;color:var(--cream)}
+.sh-title em{font-style:italic;color:var(--gold2)}
 
-/* ══ ABSTRACT SECTION ══ */
-.abstract-block{
-  border:1px solid var(--rule);
-  padding:36px 40px;
-  position:relative;
-  margin-bottom:40px;
+/* ══ ANNOTATED BOXES (from theirs) ══ */
+.ann-box{
+  border:1px solid var(--rule);padding:28px 32px;position:relative;margin-bottom:24px;
 }
-.abstract-block::before{
-  content:'ABSTRACT';
-  position:absolute;top:-11px;left:24px;
-  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
-  background:var(--navy);padding:0 10px;color:var(--white4);
+.ann-box.gold-border{border-color:rgba(201,168,76,.35)}
+.ann-box.blue-border{border-color:rgba(62,123,250,.25)}
+.ann-box.green-border{border-color:rgba(76,175,125,.25)}
+.ann-box.red-border{border-color:rgba(224,92,92,.25)}
+.ann-label{
+  position:absolute;top:-10px;left:16px;
+  font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--bg);padding:0 8px;
 }
-.ab-body{
-  font-family:var(--serif);font-size:17px;font-weight:400;
-  line-height:1.85;color:var(--white2);
-}
-.ab-body strong{font-weight:600;color:var(--white)}
+.al-gold{color:var(--gold)}
+.al-muted{color:var(--dim)}
+.al-green{color:var(--green)}
+.al-red{color:var(--red)}
+.ann-body{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.85;color:#b8b2a8}
+.ann-body strong{color:var(--cream);font-weight:600}
+.ann-body p{margin-bottom:14px}
+.ann-body p:last-child{margin-bottom:0}
 
-/* ══ OBJECTIVE CARDS ══ */
-.obj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:40px}
-.obj-card{background:var(--navy2);padding:24px 22px;position:relative}
-.obj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cyan);opacity:.4}
-.oc-n{font-family:var(--mono);font-size:28px;font-weight:700;color:rgba(0,180,216,.12);line-height:1;margin-bottom:10px;letter-spacing:-.04em}
-.oc-title{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--white);margin-bottom:8px}
-.oc-body{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.7;color:var(--white3)}
+/* ══ OBJECTIVE CARDS (from theirs) ══ */
+.obj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:32px}
+.obj-card{background:var(--bg2);padding:22px 20px;position:relative}
+.obj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:.35}
+.oc-n{font-family:var(--mono);font-size:26px;font-weight:700;color:rgba(201,168,76,.1);line-height:1;margin-bottom:9px;letter-spacing:-.04em}
+.oc-title{font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--cream);margin-bottom:7px}
+.oc-body{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.7;color:var(--muted)}
 
-/* ══ METHODOLOGY FLOWCHART ══ */
-.flow-section{margin-bottom:40px;border:1px solid var(--rule);padding:36px 40px;position:relative}
-.flow-section::before{content:'METHODOLOGY';position:absolute;top:-11px;left:24px;font-family:var(--mono);font-size:9px;letter-spacing:.18em;background:var(--navy);padding:0 10px;color:var(--white4)}
+/* ══ METHODOLOGY FLOWCHART (from theirs) ══ */
+.flow-section{
+  margin-bottom:32px;border:1px solid var(--rule);padding:32px 36px;position:relative;
+}
+.flow-section::before{
+  content:'METHODOLOGY PIPELINE';
+  position:absolute;top:-10px;left:22px;
+  font-family:var(--mono);font-size:8px;letter-spacing:.18em;
+  background:var(--bg);padding:0 8px;color:var(--dim);
+}
 .flow-row{display:flex;align-items:stretch;gap:0}
 .flow-step{
-  flex:1;background:var(--navy3);padding:20px 16px;
-  position:relative;border-right:1px solid var(--rule);
-  text-align:center;
+  flex:1;background:var(--bg3);padding:18px 14px;
+  position:relative;border-right:1px solid var(--rule);text-align:center;
 }
 .flow-step:last-child{border-right:none}
-.flow-step.hi{background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.3)}
-.fs-num{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--white4);margin-bottom:8px}
-.flow-step.hi .fs-num{color:var(--cyan)}
-.fs-title{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px}
-.fs-desc{font-family:var(--sans);font-size:11px;color:var(--white3);line-height:1.5}
-.flow-arrow{
-  display:flex;align-items:center;padding:0 8px;color:var(--cyan);
-  font-family:var(--mono);font-size:16px;flex-shrink:0;
-}
+.flow-step.hi{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25)}
+.fs-num{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.flow-step.hi .fs-num{color:var(--gold)}
+.fs-title{font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--cream);margin-bottom:5px}
+.fs-desc{font-family:var(--sans);font-size:11px;color:var(--muted);line-height:1.5;font-weight:300}
+.flow-arrow{display:flex;align-items:center;padding:0 6px;color:var(--gold);font-family:var(--mono);font-size:16px;flex-shrink:0;opacity:.6}
 
-/* ══ DATASET SECTION ══ */
-.dataset-block{
-  display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px;
+/* ══ DATASET BLOCK (from theirs) ══ */
+.dataset-block{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:32px}
+.db-pane{border:1px solid var(--rule);padding:26px 26px;position:relative}
+.db-pane::before{
+  position:absolute;top:-10px;left:18px;
+  font-family:var(--mono);font-size:8px;letter-spacing:.18em;
+  background:var(--bg);padding:0 8px;color:var(--dim);
 }
-.db-left{border:1px solid var(--rule);padding:28px 28px;position:relative}
-.db-left::before{content:'DATASET';position:absolute;top:-11px;left:20px;font-family:var(--mono);font-size:9px;letter-spacing:.18em;background:var(--navy);padding:0 8px;color:var(--white4)}
-.db-right{border:1px solid var(--rule);padding:28px 28px;position:relative}
-.db-right::before{content:'FEATURES ENGINEERED';position:absolute;top:-11px;left:20px;font-family:var(--mono);font-size:9px;letter-spacing:.18em;background:var(--navy);padding:0 8px;color:var(--white4)}
+.db-pane.dp-left::before{content:'DATASET STATS'}
+.db-pane.dp-right::before{content:'FEATURES ENGINEERED'}
 
-.stat-row{display:flex;align-items:baseline;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--rule2)}
+.stat-row{display:flex;align-items:baseline;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(201,168,76,.06)}
 .stat-row:last-child{border-bottom:none}
-.sr-label{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--white4)}
-.sr-val{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--cyan)}
+.sr-label{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+.sr-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--gold2)}
 
-.feat-item{padding:8px 0;border-bottom:1px solid var(--rule2);display:flex;align-items:center;gap:10px}
+.feat-item{padding:7px 0;border-bottom:1px solid rgba(201,168,76,.05);display:flex;align-items:center;gap:9px}
 .feat-item:last-child{border-bottom:none}
-.feat-item::before{content:'›';font-family:var(--mono);color:var(--cyan);flex-shrink:0}
-.feat-label{font-family:var(--sans);font-size:12px;color:var(--white2)}
-.feat-badge{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid;flex-shrink:0;margin-left:auto}
-.fb-new{border-color:var(--cyan);color:var(--cyan)}
-.fb-raw{border-color:var(--white4);color:var(--white4)}
+.feat-item::before{content:'›';font-family:var(--mono);color:var(--gold);flex-shrink:0;opacity:.6}
+.feat-label{font-family:var(--sans);font-size:12.5px;color:#c0bab2;font-weight:300}
+.feat-badge{font-family:var(--mono);font-size:8px;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border:1px solid;flex-shrink:0;margin-left:auto}
+.fb-eng{border-color:var(--gold);color:var(--gold)}
+.fb-raw{border-color:var(--dim);color:var(--dim)}
+.fb-bet{border-color:rgba(62,123,250,.5);color:#7eb3ff}
 
-/* ══ MODEL RESULTS ══ */
-.models-section{margin-bottom:40px}
-.model-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+/* ══ MODEL RESULTS TABLE (from theirs) ══ */
+.models-grid{
+  display:grid;grid-template-columns:1fr;
+  gap:1px;background:var(--rule);border:1px solid var(--rule);
+  margin-bottom:24px;
+}
 .model-row{
-  background:var(--navy2);
-  display:grid;grid-template-columns:200px 1fr 80px 80px 80px 90px;
-  gap:0;align-items:center;
+  background:var(--bg2);
+  display:grid;grid-template-columns:200px 1fr 80px 80px 80px 100px;
+  align-items:center;
 }
-.model-row.header{background:var(--navy3)}
-.model-row:hover:not(.header){background:var(--navy3)}
-.mr-cell{padding:12px 16px;border-right:1px solid var(--rule2);font-family:var(--mono);font-size:10px;letter-spacing:.06em}
+.model-row.mhead{background:var(--bg3)}
+.model-row:hover:not(.mhead){background:var(--bg3)}
+.mr-cell{padding:12px 14px;border-right:1px solid var(--rule2);font-family:var(--mono);font-size:10px;letter-spacing:.05em}
 .mr-cell:last-child{border-right:none}
-.mr-cell.header-cell{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--white4)}
-.mr-model{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--white)}
-.mr-method{font-family:var(--mono);font-size:9px;color:var(--white4);margin-top:2px}
-.mr-bar-wrap{padding:12px 16px;display:flex;align-items:center;gap:12px;border-right:1px solid var(--rule2)}
-.bar-track{flex:1;height:6px;background:var(--white5);border-radius:2px;overflow:hidden}
-.bar-fill{height:100%;border-radius:2px;transition:width .5s}
-.bar-label{font-family:var(--mono);font-size:11px;font-weight:700;min-width:36px;text-align:right}
-.mr-num{color:var(--white2);text-align:center}
-.best-badge{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.4);color:var(--cyan)}
+.mr-cell.hc{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.mr-model{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--cream)}
+.mr-method{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:2px}
+.mr-bar-wrap{padding:12px 14px;display:flex;align-items:center;gap:11px;border-right:1px solid var(--rule2)}
+.bar-track{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px}
+.bar-label{font-family:var(--mono);font-size:11px;font-weight:700;min-width:34px;text-align:right}
+.mr-num{color:#c0bab2;text-align:center}
+.best-bdg{
+  display:inline-block;font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.4);color:var(--gold);
+}
 
-/* ══ COMPARISON TABLE ══ */
-.lit-table{width:100%;border-collapse:collapse;margin-bottom:40px;font-size:12px}
-.lit-table th{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;padding:10px 14px;text-align:left;background:var(--navy3);color:var(--white4);border:1px solid var(--rule2)}
-.lit-table td{padding:11px 14px;border:1px solid var(--rule2);color:var(--white3);vertical-align:top;font-family:var(--sans)}
-.lit-table tr.hl td{background:rgba(0,180,216,.05);color:var(--white2)}
-.lit-table td.bold{font-weight:600;color:var(--white);font-family:var(--mono)}
-.lit-table td.green{color:var(--green);font-weight:600;font-family:var(--mono)}
-
-/* ══ TWO COL ══ */
-.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
-.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:40px}
-
-/* ══ ANNOTATION BOX ══ */
-.ann-box{border:1px solid var(--rule);padding:24px 28px;position:relative;margin-bottom:24px}
-.ann-box.cyan-border{border-color:rgba(0,180,216,.4)}
-.ann-label{position:absolute;top:-11px;left:16px;font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--navy);padding:0 8px}
-.al-cyan{color:var(--cyan)}
-.al-white{color:var(--white4)}
-.ann-body{font-family:var(--sans);font-size:13px;font-weight:300;line-height:1.8;color:var(--white3)}
-.ann-body strong{color:var(--white);font-weight:600}
-
-/* ══ PULL QUOTE ══ */
+/* ══ PULL QUOTE (from theirs) ══ */
 .pq{
-  border-left:3px solid var(--cyan);
-  padding:20px 28px;
-  margin:28px 0;
-  background:rgba(0,180,216,.04);
+  border-left:3px solid var(--gold);
+  padding:18px 28px;margin:28px 0;
+  background:rgba(201,168,76,.04);
 }
-.pq-text{font-family:var(--serif);font-size:clamp(16px,2.5vw,22px);font-style:italic;color:var(--white);line-height:1.45}
-.pq-attr{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--white4);margin-top:10px}
+.pq-text{font-family:var(--serif);font-size:clamp(15px,2.2vw,20px);font-style:italic;color:var(--cream);line-height:1.5}
+.pq-attr{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-top:10px}
 
-/* ══ FUTURE WORKS ══ */
-.future-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:40px}
-.fg-card{background:var(--navy2);padding:24px 20px}
-.fgc-n{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
-.fgc-title{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--white);margin-bottom:8px}
-.fgc-desc{font-family:var(--sans);font-size:12px;font-weight:300;color:var(--white3);line-height:1.65}
-
-/* ══ CONCLUSION ══ */
+/* ══ CONCLUSION (from theirs) ══ */
 .conclusion{
-  background:var(--navy3);
-  border:1px solid var(--rule);
-  padding:40px;
-  margin-bottom:40px;
-  display:grid;grid-template-columns:1fr 280px;gap:40px;
+  background:var(--bg3);border:1px solid var(--rule);
+  padding:36px;margin-bottom:32px;
+  display:grid;grid-template-columns:1fr 260px;gap:36px;
 }
-.conc-left{}
-.conc-title{font-family:var(--serif);font-size:28px;font-weight:700;font-style:italic;color:var(--white);margin-bottom:16px}
-.conc-body{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.85;color:var(--white3)}
-.conc-body strong{color:var(--white);font-weight:600}
+.conc-title{font-family:var(--serif);font-size:26px;font-weight:700;font-style:italic;color:var(--cream);margin-bottom:14px}
+.conc-body{font-family:var(--sans);font-size:13.5px;font-weight:300;line-height:1.9;color:var(--muted)}
+.conc-body strong{color:var(--cream);font-weight:500}
 .conc-right{display:flex;flex-direction:column;gap:0}
-.kf-item{padding:14px 0;border-bottom:1px solid var(--rule2);display:flex;align-items:start;gap:10px}
+.kf-hd{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.kf-item{padding:12px 0;border-bottom:1px solid rgba(201,168,76,.06);display:flex;align-items:flex-start;gap:10px}
 .kf-item:last-child{border-bottom:none}
-.kf-n{font-family:var(--mono);font-size:10px;color:var(--cyan);flex-shrink:0;margin-top:2px}
-.kf-text{font-family:var(--sans);font-size:12px;color:var(--white3);line-height:1.6}
-.kf-text strong{color:var(--white);font-weight:600}
+.kf-n{font-family:var(--mono);font-size:10px;color:var(--gold);flex-shrink:0;margin-top:2px}
+.kf-text{font-family:var(--sans);font-size:12px;color:var(--muted);line-height:1.6;font-weight:300}
+.kf-text strong{color:var(--cream);font-weight:500}
 
-/* ══ FOOTER ══ */
+/* ══ FUTURE WORKS (from theirs) ══ */
+.future-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:32px}
+.fg-card{background:var(--bg2);padding:22px 18px}
+.fgc-n{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.fgc-title{font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--cream);margin-bottom:7px}
+.fgc-desc{font-family:var(--sans);font-size:12px;font-weight:300;color:var(--muted);line-height:1.65}
+
+/* ══ FOOTER (from theirs) ══ */
 .site-footer{
   border-top:1px solid var(--rule);
-  padding:20px 48px;
+  padding:18px 60px;
   display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:12px;
-  background:var(--navy);
+  flex-wrap:wrap;gap:12px;background:var(--bg);
 }
-.sf-l{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--white4)}
-.sf-r{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan)}
+.sf-l{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim)}
+.sf-r{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold)}
 
-/* ══ RESPONSIVE ══ */
-@media(max-width:960px){
-  .cover-inner,.dataset-block,.two,.conclusion{grid-template-columns:1fr}
+/* ══ EXISTING COMPONENTS (ours) ══ */
+.scroll-target{scroll-margin-top:16px}
+.section{padding-top:0;margin-bottom:16px}
+.section-title-sm{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--cream);margin:32px 0 12px;padding-left:14px;border-left:2px solid var(--gold)}
+
+.prose{max-width:800px}
+.prose p{font-size:14.5px;line-height:1.85;color:#b8b2a8;margin-bottom:16px;font-weight:300}
+.prose p:last-child{margin-bottom:0}
+.prose ul{margin:12px 0 16px 22px;list-style:disc;color:#b8b2a8;font-size:14.5px;line-height:1.9}
+.prose li{margin-bottom:4px}
+.il-gold{color:var(--gold2);font-weight:500}
+
+.sub-sub{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--gold2);letter-spacing:.07em;text-transform:uppercase;margin:24px 0 9px}
+
+/* HP tables */
+.hp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin:14px 0}
+.hp-table th{background:var(--bg3);color:var(--muted);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:9px 13px;text-align:left;border-bottom:1px solid var(--rule2)}
+.hp-table td{padding:10px 13px;border-bottom:1px solid var(--rule2);color:#b0aaa2;vertical-align:top}
+.hp-table td:first-child{color:var(--cream);font-weight:500}
+.hp-table td code{font-family:var(--mono);font-size:11px;color:#8ec9ff;background:rgba(62,123,250,.08);padding:1px 5px;border-radius:2px}
+
+/* Feature chip grid */
+.feat-chip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px;margin:14px 0}
+.feat-chip{background:var(--bg2);border:1px solid var(--rule2);border-radius:3px;padding:7px 11px;font-size:12px;color:#a8a29a}
+.feat-chip code{font-family:var(--mono);font-size:10.5px;color:#8ec9ff;display:block;margin-bottom:2px}
+
+/* Formula box */
+.formula-box{
+  background:var(--bg3);border:1px solid var(--rule2);
+  border-left:2px solid var(--blue);border-radius:3px;
+  padding:14px 18px;margin:12px 0;
+  font-family:var(--mono);font-size:13px;color:#8ec9ff;line-height:2;
+}
+.formula-box .fc{color:var(--muted);font-size:11.5px;font-style:italic;font-family:var(--sans)}
+
+/* Steps list */
+.steps-list{display:flex;flex-direction:column;gap:0;margin:18px 0;padding-left:28px;position:relative}
+.steps-list::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--gold3),transparent)}
+.step-item{position:relative;padding:0 0 18px 22px}
+.step-item::before{content:'';position:absolute;left:-19px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--gold3)}
+.step-item:last-child{padding-bottom:0}
+.step-num{font-family:var(--mono);font-size:9.5px;color:var(--gold3);font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+.step-title{font-size:13.5px;font-weight:600;color:var(--cream);margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* Confusion matrix mini */
+.perf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin:22px 0}
+.perf-card{background:var(--bg2);border:1px solid var(--rule2);border-radius:5px;padding:20px}
+.perf-card.pc-top{border-color:var(--gold3);background:rgba(201,168,76,.04)}
+.pc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.pc-name{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--cream);margin-bottom:2px}
+.pc-search{font-size:10.5px;color:var(--muted);font-family:var(--mono)}
+.pc-acc{font-family:var(--mono);font-size:28px;font-weight:500;color:var(--gold2);line-height:1}
+.cm-mini{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:12px;padding-top:12px;border-top:1px solid var(--rule2)}
+.cm-cell-mini{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:3px;padding:7px 4px;font-family:var(--mono);font-size:12.5px;font-weight:600}
+.cm-cell-mini small{font-size:8px;font-family:var(--sans);font-weight:400;margin-top:2px;opacity:.7;text-transform:uppercase;letter-spacing:.04em}
+.cm-tp,.cm-tn{background:rgba(76,175,125,.12);color:#5dd498;border:1px solid rgba(76,175,125,.18)}
+.cm-fp,.cm-fn{background:rgba(224,92,92,.1);color:#e07070;border:1px solid rgba(224,92,92,.15)}
+
+/* Metric chips row */
+.mc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
+.mc{background:var(--bg3);border-radius:3px;padding:7px 9px;text-align:center}
+.mc .ml{font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);margin-bottom:2px}
+.mc .mv{font-family:var(--mono);font-size:13px;color:var(--cream)}
+
+/* Cert */
+.cert-box{background:var(--bg2);border:1px solid var(--rule);border-radius:5px;padding:28px 32px;max-width:680px;position:relative}
+.cert-box::before{content:'';position:absolute;top:9px;left:9px;right:9px;bottom:9px;border:1px solid rgba(201,168,76,.1);border-radius:4px;pointer-events:none}
+.cert-title{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--gold2);margin-bottom:18px;text-align:center}
+.cert-text{font-size:13.5px;color:#b0aaa2;line-height:1.85;margin-bottom:14px;text-align:justify;font-weight:300}
+.cert-signers{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px;padding-top:22px;border-top:1px solid var(--rule2)}
+.cert-name{font-size:13px;font-weight:600;color:var(--cream);margin-bottom:3px}
+.cert-role{font-size:11.5px;color:var(--muted);line-height:1.55;font-weight:300}
+
+/* Data pills */
+.data-pills{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+.pill{background:var(--bg2);border:1px solid var(--rule2);border-radius:16px;padding:4px 13px;font-size:12px;color:#a8a29a;display:flex;align-items:center;gap:5px}
+.pill .pv{color:var(--gold2);font-family:var(--mono);font-weight:500}
+
+/* TOC */
+.toc-table{width:100%;max-width:680px;border-collapse:collapse;font-size:13px;margin:18px 0}
+.toc-table tr{border-bottom:1px solid var(--rule2)}
+.toc-table td{padding:8px 11px;color:var(--muted);font-weight:300}
+.toc-table td:first-child{color:var(--cream);font-weight:400;min-width:130px}
+.toc-table td:last-child{text-align:right;font-family:var(--mono);font-size:11.5px;color:var(--gold3)}
+.toc-table tr.ch-row td{color:var(--gold2);background:rgba(201,168,76,.04);font-weight:500}
+
+/* Metric defs */
+.metric-defs{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:18px 0}
+.mdef{background:var(--bg2);border:1px solid var(--rule2);border-top:2px solid;border-radius:4px;padding:14px 16px}
+.mdef.mtp{border-top-color:var(--green)}.mdef.mtn{border-top-color:#4caf7d}
+.mdef.mfp{border-top-color:var(--red)}.mdef.mfn{border-top-color:#e07070}
+.mdef h6{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--cream);margin-bottom:7px}
+.mdef p{font-size:12px;color:var(--muted);line-height:1.6;font-weight:300}
+
+/* Comparison table */
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin:18px 0}
+.comp-table th{background:var(--bg3);color:var(--gold);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:10px 13px;text-align:left;border:1px solid var(--rule2)}
+.comp-table td{padding:10px 13px;border:1px solid var(--rule2);color:#a8a29a;vertical-align:top;line-height:1.6;font-weight:300}
+.comp-table tr:hover td{background:rgba(255,255,255,.015)}
+.comp-table td:first-child{color:var(--cream);font-weight:500}
+.comp-table .hl td{background:rgba(201,168,76,.04);color:var(--cream)}
+.comp-table .green-val{color:var(--green);font-weight:600;font-family:var(--mono)}
+
+/* Plag card */
+.plag-card{background:var(--bg2);border:1px solid var(--rule);border-radius:5px;padding:26px 30px;max-width:560px;margin:20px 0}
+.plag-big{font-family:var(--mono);font-size:56px;font-weight:500;color:var(--gold2);line-height:1;margin-bottom:4px}
+.plag-lbl{font-size:12px;color:var(--muted);margin-bottom:16px;font-weight:300}
+.plag-bar-bg{height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;margin:8px 0 16px}
+.plag-bar-fill{height:100%;border-radius:4px;width:29%;background:linear-gradient(90deg,#c9a84c,#e8c97a)}
+.plag-src-row{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;background:var(--bg3);border-radius:2px;font-size:12px;margin-bottom:5px}
+.plag-sn{color:var(--cream);font-weight:300}.plag-sp{font-family:var(--mono);font-size:11px;color:var(--gold2)}
+
+/* Lit table */
+.lit-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:28px}
+.lit-table th{font-family:var(--mono);font-size:8px;letter-spacing:.15em;text-transform:uppercase;padding:9px 13px;text-align:left;background:var(--bg3);color:var(--dim);border:1px solid var(--rule2)}
+.lit-table td{padding:10px 13px;border:1px solid var(--rule2);color:var(--muted);vertical-align:top;font-size:12.5px;line-height:1.6;font-weight:300}
+.lit-table tr.this-work td{background:rgba(201,168,76,.04);color:var(--cream)}
+.lt-bold{font-weight:600;color:var(--cream);font-family:var(--mono)}
+.lt-green{color:var(--green);font-weight:600;font-family:var(--mono)}
+
+/* Ref list */
+.ref-list{display:flex;flex-direction:column;gap:11px;margin:18px 0}
+.ref-item{display:flex;gap:12px;font-size:12.5px;color:var(--muted);line-height:1.65;padding:10px 13px;background:var(--bg2);border:1px solid var(--rule2);border-radius:3px;font-weight:300}
+.ref-num{font-family:var(--mono);font-size:10.5px;color:var(--gold3);min-width:26px;padding-top:1px;flex-shrink:0}
+.ref-item a{color:#5eaaff;text-decoration:none;font-size:11.5px}
+.ref-item a:hover{text-decoration:underline}
+
+/* Responsive */
+@media(max-width:1000px){
+  .sidebar{display:none}
+  .cover-inner,.dataset-block,.conclusion{grid-template-columns:1fr}
   .cover-main{border-right:none;border-bottom:1px solid var(--rule)}
-  .obj-grid,.future-grid,.three{grid-template-columns:1fr}
+  .obj-grid,.future-grid{grid-template-columns:1fr}
   .model-row{grid-template-columns:1fr 1fr;flex-wrap:wrap}
   .mr-bar-wrap{grid-column:1/-1}
-  .body,.nav,.site-footer{padding-left:24px;padding-right:24px}
-  .cover-main,.cover-aside{padding:40px 24px}
+  .body-wrap{padding:0 24px 60px}
+  .site-footer,.topnav{padding-left:24px;padding-right:24px}
+  .stat-strip{grid-template-columns:repeat(2,1fr)}
   .flow-row{flex-direction:column}
   .flow-arrow{transform:rotate(90deg);justify-content:center;padding:4px 0}
   .flow-step{border-right:none;border-bottom:1px solid var(--rule)}
+  .cover-main,.cover-aside{padding:40px 24px}
+}
+@media(max-width:640px){
+  .cover-inner{grid-template-columns:1fr}
+  .cover-aside{display:none}
+  .perf-grid{grid-template-columns:1fr}
+  .metric-defs{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
 
-<div class="nav">
-  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
-  <div class="nav-r">BSc Thesis · RUET · 2024</div>
+<!-- ══ TOP NAV ══ -->
+<div class="topnav">
+  <div class="tn-brand"><span class="tn-dot"></span>RUET · CSE · B.Sc. Thesis 2024</div>
+  <div class="tn-right">Al-Amin · Roll 1803044</div>
 </div>
 
-<!-- COVER -->
-<div class="cover">
+<div class="shell">
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-inst">RUET — CSE 2024</div>
+    <div class="sb-short">Predictive Modeling of Football Match Outcomes</div>
+  </div>
+  <nav class="sb-nav">
+    <span class="nav-label">Prefatory</span>
+    <a class="nav-item scroll-target" href="#cover"><span class="nn">—</span>Cover &amp; Abstract</a>
+    <a class="nav-item" href="#ack"><span class="nn">—</span>Acknowledgement</a>
+    <a class="nav-item" href="#cert"><span class="nn">—</span>Certificate</a>
+    <a class="nav-item" href="#toc"><span class="nn">—</span>Contents &amp; Figures</a>
+    <span class="nav-label">Chapters</span>
+    <a class="nav-item" href="#ch1"><span class="nn">01</span>Introduction</a>
+    <a class="nav-item" href="#ch2"><span class="nn">02</span>Literature Review</a>
+    <a class="nav-item" href="#ch3"><span class="nn">03</span>Methodology</a>
+    <a class="nav-item" href="#ch4"><span class="nn">04</span>Results &amp; Analysis</a>
+    <a class="nav-item" href="#ch5"><span class="nn">05</span>Conclusion</a>
+    <span class="nav-label">Appendix</span>
+    <a class="nav-item" href="#refs"><span class="nn">—</span>References</a>
+    <a class="nav-item" href="#plag"><span class="nn">—</span>Originality Report</a>
+  </nav>
+  <div class="sb-footer">
+    <strong>Al-Amin</strong> — Roll 1803044<br>
+    Submitted April 27, 2024<br>
+    Supervisor: <strong>Dr. Md. Nazrul Islam Mondal</strong>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+<!-- ══════════════ COVER ══════════════ -->
+<div class="cover scroll-target" id="cover">
   <div class="cover-inner">
     <div class="cover-main">
       <div>
         <div class="cls-tag">Undergraduate Thesis · B.Sc. Engineering</div>
-        <div class="cover-eyebrow">Department of Computer Science & Engineering</div>
-        <div class="cover-title">Predictive Modeling<br>of <em>Football</em> Match<br>Outcomes</div>
+        <div class="cover-eyebrow">Department of Computer Science &amp; Engineering</div>
+        <h1 class="cover-title">Predictive Modeling<br>of <em>Football</em> Match<br>Outcomes</h1>
         <div class="cover-subtitle">// A Machine Learning Approach Using English Premier League Data</div>
       </div>
       <div class="cover-meta">
         <div class="cm-row"><div class="cm-key">Author</div><div class="cm-val">Al-Amin &nbsp;·&nbsp; Roll No. 1803044</div></div>
-        <div class="cm-row"><div class="cm-key">Institution</div><div class="cm-val">Rajshahi University of Engineering & Technology</div></div>
+        <div class="cm-row"><div class="cm-key">Institution</div><div class="cm-val">Rajshahi University of Engineering &amp; Technology, Bangladesh</div></div>
         <div class="cm-row"><div class="cm-key">Supervisor</div><div class="cm-val">Dr. Md. Nazrul Islam Mondal, Professor, Dept. of CSE</div></div>
-        <div class="cm-row"><div class="cm-key">Submitted</div><div class="cm-val">April 27, 2024</div></div>
-        <div class="cm-row"><div class="cm-key">Dataset</div><div class="cm-val">23 EPL seasons &nbsp;·&nbsp; Historical + Bookmakers' data</div></div>
+        <div class="cm-row"><div class="cm-key">External</div><div class="cm-val">S. M. Mahedy Hasan, Assistant Professor, Dept. of CSE</div></div>
+        <div class="cm-row"><div class="cm-key">Submitted</div><div class="cm-val">April 27, 2024 &nbsp;·&nbsp; RUET, Rajshahi</div></div>
+        <div class="cm-row"><div class="cm-key">Dataset</div><div class="cm-val">23 EPL seasons (2000–01 to 2022–23) + Bookmakers' data</div></div>
       </div>
     </div>
     <div class="cover-aside">
@@ -377,15 +584,16 @@ body::before{
           <div class="rh-model">Logistic Regression + Randomized Search</div>
           <div class="rh-acc">96%</div>
           <div class="rh-label">Accuracy</div>
-          <div class="rh-note">Outperforms prior state-of-the-art (85% with Random Forest) by 11 percentage points. Achieved through feature engineering + optimized hyperparameter tuning across 23 seasons of EPL data.</div>
+          <div class="rh-note">Outperforms prior state-of-the-art (85% with Random Forest) by 11 percentage points. Achieved through feature engineering + optimised hyperparameter tuning across 23 seasons of EPL data.</div>
         </div>
       </div>
       <div>
         <div class="ca-label">Study scope</div>
         <div class="ca-chips">
           <div class="ca-chip"><span>ML Models evaluated</span><span class="ca-chip-val">6</span></div>
-          <div class="ca-chip"><span>EPL seasons analyzed</span><span class="ca-chip-val">23</span></div>
+          <div class="ca-chip"><span>EPL seasons analysed</span><span class="ca-chip-val">23</span></div>
           <div class="ca-chip"><span>Tuning strategies</span><span class="ca-chip-val">2</span></div>
+          <div class="ca-chip"><span>Max features (recent seasons)</span><span class="ca-chip-val">106</span></div>
           <div class="ca-chip"><span>Thesis pages</span><span class="ca-chip-val">108</span></div>
           <div class="ca-chip"><span>References cited</span><span class="ca-chip-val">92</span></div>
         </div>
@@ -395,29 +603,143 @@ body::before{
   </div>
 </div>
 
-<div class="body">
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-cell"><div class="stat-big">96%</div><div class="stat-lbl">Best Accuracy (LR)</div></div>
+  <div class="stat-cell"><div class="stat-big">23</div><div class="stat-lbl">EPL Seasons</div></div>
+  <div class="stat-cell"><div class="stat-big">6</div><div class="stat-lbl">ML Models Compared</div></div>
+  <div class="stat-cell"><div class="stat-big">106</div><div class="stat-lbl">Max Features</div></div>
+  <div class="stat-cell"><div class="stat-big">108</div><div class="stat-lbl">Pages · 92 References</div></div>
+</div>
 
-<!-- ABSTRACT -->
+<!-- ══ BODY ══ -->
+<div class="body-wrap">
+
+<!-- ══ ABSTRACT ══ -->
 <div class="sh">
   <div class="sh-line"><div class="sh-num">// 00</div><div class="sh-rule"></div></div>
   <div class="sh-title">Abstract</div>
 </div>
-<div class="abstract-block">
-  <div class="ab-body">
-    The incorporation of machine learning algorithms in various domains has revolutionized prediction systems, achieving unmatched accuracy. By employing <strong>feature engineering and exploratory data analysis</strong>, a tailored set of features was developed to reveal the crucial factors that influence football match results. The study examines the last <strong>23 seasons of the English Premier League</strong>, analyzing and combining actual match data with bookmakers' and betting data. Six models were executed with Grid Search and Randomized Search across their hyperparameter spaces. <strong>Logistic Regression topped all models with 96% accuracy</strong> — surpassing prior state-of-the-art results achieved using far narrower datasets. The work introduces novel features through feature engineering — streak and form metrics — which proved to have crucial impact on a team's performance as predictors.
+<div class="ann-box gold-border">
+  <div class="ann-label al-gold">ABSTRACT · Page iii</div>
+  <div class="ann-body">
+    The incorporation of machine learning algorithms in various domains has revolutionised prediction systems, achieving unmatched accuracy. By employing <strong>feature engineering and exploratory data analysis</strong>, a tailored set of features was developed to reveal the crucial factors influencing football match results. The study examines the last <strong>23 seasons of the English Premier League</strong>, analysing and combining actual match data with bookmakers' and betting data. Six models were executed with Grid Search and Randomised Search. <strong>Logistic Regression topped all models with 96% accuracy</strong> — surpassing prior state-of-the-art results achieved on far narrower datasets. Novel features — particularly <em>streak</em> and <em>form</em> metrics — proved to have crucial impact on predictive performance.
   </div>
 </div>
 
-<!-- OBJECTIVES -->
-<div class="sh">
+<!-- ══ ACKNOWLEDGEMENT ══ -->
+<div class="sh scroll-target" id="ack">
   <div class="sh-line"><div class="sh-num">// 01</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Research objectives &amp; <em>problem framing</em></div>
+  <div class="sh-title">Acknowledgement</div>
 </div>
+<div class="ann-box">
+  <div class="ann-label al-muted">PREFATORY · Page i</div>
+  <div class="ann-body">
+    <p>First of all, I would like to thank almighty Allah, for his grace and blessings as well as for providing me with the diligence and enthusiasm along the way to accomplishing my thesis work.</p>
+    <p>I would like to extend my sincere gratitude to my supervisor, <strong>Dr. Md. Nazrul Islam Mondal</strong>, Professor, Department of Computer Science &amp; Engineering, Rajshahi University of Engineering &amp; Technology, Rajshahi. Over the course of the year, he has not only given me essential technical instructions and documents to finish the work, but has also consistently motivated me, gave guidance, and collaborated empathetically whenever needed. Without his genuine concern, this work would not have been realised in its current shape.</p>
+    <p>I am also grateful to <strong>Prof. Dr. Md. Ali Hossain</strong>, Head of the Department of CSE and all the respective teachers of the Department for their valuable suggestions and inspirations from time to time.</p>
+    <p>Lastly, I would want to express my gratitude to my parents, friends, and supporters for their genuine encouragement and invaluable assistance throughout this endeavour.</p>
+    <p style="margin-top:12px;font-size:12.5px;color:var(--dim)">April 27, 2024 &emsp;·&emsp; RUET, Rajshahi &emsp;·&emsp; <em>Al-Amin</em></p>
+  </div>
+</div>
+
+<!-- ══ CERTIFICATE ══ -->
+<div class="sh scroll-target" id="cert">
+  <div class="sh-line"><div class="sh-num">// 02</div><div class="sh-rule"></div></div>
+  <div class="sh-title">Certificate of Approval</div>
+</div>
+<div class="cert-box">
+  <div class="cert-title">CERTIFICATE</div>
+  <div class="cert-text">This is to certify that this thesis report entitled <em>"Predictive Modeling of Football Match Outcomes: A Machine Learning Approach Using English Premier League Data"</em> submitted by <strong>Al-Amin, Roll: 1803044</strong> in partial fulfilment of the requirement for the award of the degree of <strong>Bachelor of Science</strong> in Department of Computer Science &amp; Engineering of Rajshahi University of Engineering &amp; Technology, Bangladesh is a record of the candidate's own work carried out under my supervision. This thesis has not been submitted for the award of any other degree.</div>
+  <div class="cert-signers">
+    <div>
+      <div class="cert-name">Dr. Md. Nazrul Islam Mondal</div>
+      <div class="cert-role">Professor<br>Department of CSE<br>RUET, Rajshahi-6204</div>
+    </div>
+    <div>
+      <div class="cert-name">S. M. Mahedy Hasan</div>
+      <div class="cert-role">Assistant Professor<br>Department of CSE<br>RUET, Rajshahi-6204</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOC ══ -->
+<div class="sh scroll-target" id="toc">
+  <div class="sh-line"><div class="sh-num">// 03</div><div class="sh-rule"></div></div>
+  <div class="sh-title">Table of Contents, Tables &amp; <em>Figures</em></div>
+</div>
+<table class="toc-table">
+  <tbody>
+    <tr><td>Acknowledgement</td><td></td><td>i</td></tr>
+    <tr><td>Certificate</td><td></td><td>ii</td></tr>
+    <tr><td>Abstract</td><td></td><td>iii</td></tr>
+    <tr class="ch-row"><td colspan="2">Chapter 1: Introduction</td><td>1–8</td></tr>
+    <tr><td>1.1–1.6</td><td>Introduction, Motivation, Problem Statement, Objectives, Organisation, Conclusion</td><td>1–8</td></tr>
+    <tr class="ch-row"><td colspan="2">Chapter 2: Literature Review &amp; Background Study</td><td>9–39</td></tr>
+    <tr><td>2.1–2.2</td><td>Introduction, Literature Review (14 key studies)</td><td>9–13</td></tr>
+    <tr><td>2.3.1–2.3.2</td><td>ML and Football; ML in Football Betting</td><td>15–17</td></tr>
+    <tr><td>2.3.3</td><td>Introduction to Football Betting (types, rules, strategies)</td><td>18–19</td></tr>
+    <tr><td>2.3.4</td><td>Feature Engineering &amp; Data Preprocessing (correlation, standardisation)</td><td>19–21</td></tr>
+    <tr><td>2.3.5.1–2.3.5.7</td><td>ML Models: LR, SVM, RF, AdaBoost, XGBoost, Ensemble Voting, SMOTE</td><td>21–32</td></tr>
+    <tr><td>2.3.6.1–2.3.6.4</td><td>Hyperparameter Tuning: Grid Search, Randomised Search, Comparison, Explanations</td><td>33–38</td></tr>
+    <tr class="ch-row"><td colspan="2">Chapter 3: Proposed Methodology &amp; Implementation</td><td>39–61</td></tr>
+    <tr><td>3.2</td><td>Proposed Methodology &amp; Architecture</td><td>39–40</td></tr>
+    <tr><td>3.3.1</td><td>Experimental Setup; Best Hyperparameters (Grid + Randomised)</td><td>41–43</td></tr>
+    <tr><td>3.3.2</td><td>Dataset Description, Features (all 106 variables)</td><td>43–49</td></tr>
+    <tr><td>3.2.2.2</td><td>Visualisations (Figs 3.2–3.14): goals, results, teams, aggression, defence</td><td>50–55</td></tr>
+    <tr><td>3.3.3</td><td>Dataset Preprocessing — all 16 steps with mathematical formulations</td><td>56–61</td></tr>
+    <tr class="ch-row"><td colspan="2">Chapter 4: Result &amp; Performance Analysis</td><td>62–85</td></tr>
+    <tr><td>4.2.1–4.2.7</td><td>Evaluation Metrics: Confusion Matrix, Accuracy, Precision, Recall, F1, Report</td><td>63–70</td></tr>
+    <tr><td>4.2.8.1–4.2.8.13</td><td>Individual Model Performance (13 experiment results)</td><td>71–85</td></tr>
+    <tr><td>4.3–4.4</td><td>Result Analysis, Conclusion</td><td>85</td></tr>
+    <tr class="ch-row"><td colspan="2">Chapter 5: Conclusion &amp; Future Works</td><td>86</td></tr>
+    <tr class="ch-row"><td colspan="2">References</td><td>87–96</td></tr>
+  </tbody>
+</table>
+<div class="sub-sub" style="margin-top:20px">List of Tables</div>
+<table class="toc-table">
+  <tbody>
+    <tr><td>Table 2.1</td><td>Comparison of studies in football</td><td>13</td></tr>
+    <tr><td>Table 3.1</td><td>Best hyperparameters — Grid Search</td><td>42</td></tr>
+    <tr><td>Table 3.2</td><td>Best hyperparameters — Randomised Search</td><td>43</td></tr>
+    <tr><td>Table 4.1</td><td>Comparison of implemented models</td><td>85</td></tr>
+  </tbody>
+</table>
+<div class="sub-sub" style="margin-top:16px">List of Figures (29 total)</div>
+<table class="toc-table">
+  <tbody>
+    <tr><td>Fig. 2.1–2.9</td><td>Sigmoid curve; SVM hyperplane; Random Forest; AdaBoost; XGBoost; Hard Voting; Ensemble workflow; SMOTE application; SMOTE types</td><td>22–32</td></tr>
+    <tr><td>Fig. 3.1</td><td>Proposed ML-Based Architecture</td><td>40</td></tr>
+    <tr><td>Fig. 3.2–3.14</td><td>EDA visualisations (goals, results, halves, team comparisons, aggression)</td><td>50–55</td></tr>
+    <tr><td>Fig. 3.15</td><td>Correlation matrix of the dataset</td><td>59</td></tr>
+    <tr><td>Fig. 4.1</td><td>Structure of a Confusion Matrix</td><td>64</td></tr>
+    <tr><td>Fig. 4.2</td><td>Precision-Recall graph and ROC curve</td><td>67</td></tr>
+    <tr><td>Fig. 4.3</td><td>Example Classification Report</td><td>69</td></tr>
+    <tr><td>Fig. 4.4–4.29</td><td>Confusion matrices &amp; classification reports for all 13 model experiments</td><td>71–85</td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════════════════════════
+     CHAPTER 1
+     ══════════════════════════════ -->
+<div class="sh scroll-target" id="ch1">
+  <div class="sh-line"><div class="sh-num">// 04</div><div class="sh-rule"></div></div>
+  <div class="sh-title">Chapter 1 — <em>Introduction</em></div>
+</div>
+
+<div class="section-title-sm">1.1 Introduction</div>
+<div class="prose">
+  <p>Data mining and predictive analysis have become essential tools in multiple fields, enabling extraction of important insights from data for research and practical use. These techniques range widely from detection of financial crimes to analysis of sports dynamics. Football (soccer) is widely regarded as the most esteemed sport worldwide. The <span class="il-gold">English Premier League</span> is a prime example of sporting brilliance, attracting a large number of viewers and exerting substantial economic impact.</p>
+  <p>Forecasting the outcomes of football matches poses a daunting task due to the intrinsically competitive and capricious nature of the sport. Prior investigations in football match prediction are broadly classified into two streams: <em>outcome-oriented studies</em> (predicting Win/Draw/Loss) and <em>goal-oriented studies</em> (predicting goals scored). The combination of data mining and predictive analysis holds great potential to improve prediction accuracy, especially in the sports betting sector.</p>
+  <p>Football and computer science have numerous intersections in the modern environment, transforming player analysis, tactical plans, scouting, and fan engagement. Wearable sensors and ML algorithms provide coaches with detailed performance metrics and opponent tendencies.</p>
+</div>
+
+<div class="section-title-sm">1.2 Motivation &amp; Problem Statement</div>
 <div class="obj-grid">
   <div class="obj-card">
     <div class="oc-n">01</div>
     <div class="oc-title">Data fusion</div>
-    <div class="oc-body">Can bookmakers' odds data be successfully combined with traditional match statistics to improve prediction accuracy? Does the combination of distinct data sources produce a meaningful improvement in predictive power?</div>
+    <div class="oc-body">Can bookmakers' odds data be successfully combined with traditional match statistics to improve prediction accuracy? Does the combination of distinct data sources produce meaningful improvement in predictive power?</div>
   </div>
   <div class="obj-card">
     <div class="oc-n">02</div>
@@ -426,326 +748,616 @@ body::before{
   </div>
   <div class="obj-card">
     <div class="oc-n">03</div>
-    <div class="oc-title">Hyperparameter optimization</div>
-    <div class="oc-body">How can hyperparameters be optimized across different strategies? Grid Search vs Randomized Search across 6 models — evaluating which combination of model architecture and tuning strategy produces the highest predictive accuracy.</div>
+    <div class="oc-title">Hyperparameter optimisation</div>
+    <div class="oc-body">How can hyperparameters be optimised across different strategies? Grid Search vs Randomised Search across 6 models — evaluating which combination of model architecture and tuning strategy produces highest accuracy.</div>
   </div>
 </div>
 
-<!-- METHODOLOGY -->
-<div class="sh">
-  <div class="sh-line"><div class="sh-num">// 02</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Proposed <em>methodology</em></div>
+<div class="section-title-sm">1.4 Thesis Objectives</div>
+<div class="prose">
+  <p>To accurately forecast football matches using Premier League data, incorporating football statistics of the last 23 years, bookmakers' data and betting odds. The models will be refined to enhance accuracy and incorporate new features through feature engineering. The study compares various methods and optimises hyperparameters using grid and randomised search.</p>
 </div>
+
+<div class="section-title-sm">1.5 Thesis Organisation — Chapter Roadmap</div>
+<div class="steps-list">
+  <div class="step-item"><div class="step-num">Chapter 1</div><div class="step-title">Introduction</div><div class="step-desc">Motivation, problem statement, objectives and thesis organisation.</div></div>
+  <div class="step-item"><div class="step-num">Chapter 2</div><div class="step-title">Literature Review &amp; Background Study</div><div class="step-desc">Survey of 14+ prior works; theoretical foundation for all ML models, feature engineering, SMOTE, and hyperparameter tuning.</div></div>
+  <div class="step-item"><div class="step-num">Chapter 3</div><div class="step-title">Proposed Methodology &amp; Implementation</div><div class="step-desc">Experimental setup, dataset description, all 106 features, EDA visualisations, and all 16 preprocessing steps with mathematical formulations.</div></div>
+  <div class="step-item"><div class="step-num">Chapter 4</div><div class="step-title">Result &amp; Performance Analysis</div><div class="step-desc">Evaluation metrics, 13 model experiment results with confusion matrices, and final comparison table.</div></div>
+  <div class="step-item"><div class="step-num">Chapter 5</div><div class="step-title">Conclusion &amp; Future Works</div><div class="step-desc">96% accuracy achieved, surpassing prior SOTA. Limitations identified. Six future research directions proposed.</div></div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 2
+     ══════════════════════════════ -->
+<div class="sh scroll-target" id="ch2">
+  <div class="sh-line"><div class="sh-num">// 05</div><div class="sh-rule"></div></div>
+  <div class="sh-title">Chapter 2 — Literature Review &amp; <em>Background Study</em></div>
+</div>
+
+<div class="section-title-sm">2.2 Literature Review — Key Prior Works (Table 2.1 + extended)</div>
+<table class="lit-table">
+  <thead><tr><th>Authors / Year</th><th>Dataset Used</th><th>Model(s)</th><th>Best Result</th></tr></thead>
+  <tbody>
+    <tr class="this-work"><td class="lt-bold">Al-Amin (this work)</td><td>23 EPL seasons + Bookmakers</td><td>LR, SVM, RF, AdaBoost, XGBoost, Ensemble</td><td class="lt-green">96% accuracy</td></tr>
+    <tr><td>Hucaljuk &amp; Rakipovic</td><td>Champions League, 96 matches</td><td>Naive Bayes, KNN, ANN, Random Forest</td><td>60% score prediction</td></tr>
+    <tr><td>Horton et al.</td><td>4 Arsenal home games</td><td>Multinomial Logistic Regression</td><td>85.8% accuracy</td></tr>
+    <tr><td>Ćwiklinski, Giełczyk &amp; Choraś</td><td>4,700 players, 156 clubs, 8 leagues</td><td>Random Forest, Naive Bayes, AdaBoost</td><td>Acc 0.82, F1 0.83</td></tr>
+    <tr><td>Rommers et al.</td><td>734 youth players (U10–U15), Belgian academies</td><td>XGBoost</td><td>85% recall, 85% accuracy</td></tr>
+    <tr><td>Baboota &amp; Kaur</td><td>2 EPL seasons (2014–16)</td><td>Random Forest, SVM, Gradient Boosting</td><td>RPS = 0.2156</td></tr>
+    <tr><td>Le et al.</td><td>100 professional soccer games</td><td>LSTM Neural Networks</td><td>69.1% expected goal value</td></tr>
+    <tr><td>Rue &amp; Salvesen (2000)</td><td>Football league matches</td><td>Bayesian dynamic GLM</td><td>Betting earnings analysis</td></tr>
+    <tr><td>Dixon &amp; Coles (1997)</td><td>Football matches</td><td>Bivariate Poisson</td><td>Favorable expected returns</td></tr>
+    <tr><td>Constantinou &amp; Fenton (2013)</td><td>2011–12 EPL season</td><td>Bayesian network (pi-rating)</td><td>Lucrative pre-match forecasts</td></tr>
+    <tr><td>Joseph, Fenton &amp; Neil (2006)</td><td>Tottenham Hotspur 1995–97</td><td>Bayesian network, Naive Bayes, KNN, MC4</td><td>Surpassed prior ML techniques</td></tr>
+    <tr><td>Hvattum &amp; Arntzen (2010)</td><td>Football leagues</td><td>ELO ratings adapted for football</td><td>Applied chess ELO to football</td></tr>
+    <tr><td>Koopman &amp; Lit (2015)</td><td>English Premier League</td><td>Bivariate Poisson + intensity coefficients</td><td>Modelled offensive/defensive capability</td></tr>
+    <tr><td>Goddard (2005)</td><td>Association football</td><td>Ordered probit regression</td><td>Used geographic distance &amp; attendance</td></tr>
+  </tbody>
+</table>
+
+<div class="section-title-sm">2.3.1–2.3.2 Machine Learning and Football / ML in Betting</div>
+<div class="ann-box">
+  <div class="ann-label al-muted">BACKGROUND</div>
+  <div class="ann-body">
+    <p>Machine learning is essential for analysing player performance (goals, assists, pass success rates, defensive impact). Teams increasingly use ML scores to select players. Studies show 69.6% of players are typical estimates, 28.9% overpriced, and 1.6% undervalued when ML is applied to transfer valuation.</p>
+    <p>ML is also used in youth training, injury prediction, and football robots (using reinforcement learning and YOLOv3 for object detection). In the gambling sector, Stefani's least-squares betting strategy (1976) yielded a 5.2% average financial gain per wager. Research examining the 2002 FIFA World Cup found minimal evidence supporting efficient betting markets.</p>
+  </div>
+</div>
+
+<div class="section-title-sm">2.3.3 Introduction to Football Betting</div>
+<div class="dataset-block">
+  <div class="db-pane dp-left">
+    <div class="stat-row"><div class="sr-label">Match Result (1X2)</div><div class="sr-val">Home / Draw / Away</div></div>
+    <div class="stat-row"><div class="sr-label">Over/Under</div><div class="sr-val">&gt; or &lt; 2.5 goals</div></div>
+    <div class="stat-row"><div class="sr-label">Both Teams Score</div><div class="sr-val">BTTS Yes/No</div></div>
+    <div class="stat-row"><div class="sr-label">Correct Score</div><div class="sr-val">Exact final scoreline</div></div>
+    <div class="stat-row"><div class="sr-label">Half-time/Full-time</div><div class="sr-val">Dual result prediction</div></div>
+    <div class="stat-row"><div class="sr-label">Asian Handicap</div><div class="sr-val">Spread betting</div></div>
+  </div>
+  <div class="db-pane dp-right">
+    <div class="feat-item"><div class="feat-label">Research team form &amp; head-to-head records</div><span class="feat-badge fb-eng">Strategy</span></div>
+    <div class="feat-item"><div class="feat-label">Fixed stake % of bankroll per wager</div><span class="feat-badge fb-eng">Strategy</span></div>
+    <div class="feat-item"><div class="feat-label">Seek value bets (odds > true probability)</div><span class="feat-badge fb-eng">Strategy</span></div>
+    <div class="feat-item"><div class="feat-label">Hedging to offset losses / protect winnings</div><span class="feat-badge fb-eng">Strategy</span></div>
+    <div class="feat-item"><div class="feat-label">Specialise in specific leagues or bet types</div><span class="feat-badge fb-eng">Strategy</span></div>
+    <div class="feat-item"><div class="feat-label">Legal age requirements &amp; responsible gambling</div><span class="feat-badge fb-raw">Rule</span></div>
+  </div>
+</div>
+
+<div class="section-title-sm">2.3.4 Feature Engineering and Data Preprocessing</div>
+<div class="ann-box">
+  <div class="ann-label al-muted">THEORY</div>
+  <div class="ann-body">
+    <p>Feature engineering optimises model performance, decreases complexity, and boosts interpretability. Feature reduction techniques include PCA and t-SNE. The <strong>Correlation Matrix</strong> quantifies relationships between variables; the correlation coefficient r<sub>xy</sub> ranges from −1 to +1. Multicollinearity (two features highly correlated) is removed.</p>
+  </div>
+</div>
+<div class="formula-box">
+  <span class="fc">Standardisation formula:</span><br>
+  z = (x − μ) / σ<br>
+  <span class="fc">where z = standardised value, μ = mean of feature, σ = standard deviation</span><br><br>
+  <span class="fc">Correlation coefficient r_xy quantifies linear association between two variables — ranges [−1, +1]</span>
+</div>
+
+<div class="section-title-sm">2.3.5 Machine Learning Models — Technical Overview</div>
+<div class="obj-grid" style="grid-template-columns:repeat(2,1fr)">
+  <div class="obj-card">
+    <div class="oc-n">LR</div>
+    <div class="oc-title">Logistic Regression</div>
+    <div class="oc-body">Applies sigmoid σ(z)=1/(1+e⁻ᶻ) to a linear combination of features. Despite its simplicity, it achieved the highest accuracy — a testament to the quality of engineered features and linear separability of the processed data. Cost function: binary cross-entropy. Optimised via gradient descent.</div>
+  </div>
+  <div class="obj-card">
+    <div class="oc-n">SVM</div>
+    <div class="oc-title">Support Vector Machine</div>
+    <div class="oc-body">Seeks hyperplane maximising margin between classes: wᵀx + b = 0. Primal objective: minimise ½‖w‖² subject to y⁽ⁱ⁾(Wᵀx⁽ⁱ⁾+b) ≥ 1. Grid Search outperformed Randomised Search for SVM (90%) — second-highest individual result.</div>
+  </div>
+  <div class="obj-card">
+    <div class="oc-n">RF</div>
+    <div class="oc-title">Random Forest</div>
+    <div class="oc-body">Ensemble of decision trees on bootstrap samples; majority vote for classification. Despite popularity in sports prediction literature, it underperformed here (77%) — suggesting the EPL data's structure favours linear over tree-based decomposition.</div>
+  </div>
+  <div class="obj-card">
+    <div class="oc-n">ADA</div>
+    <div class="oc-title">AdaBoost</div>
+    <div class="oc-body">Adaptive Boosting — iteratively trains weak classifiers (decision stumps), assigning higher weight to misclassified samples. Achieved 82% accuracy. Randomised Search underperformed Grid Search for this model, suggesting its hyperparameter space is more structured.</div>
+  </div>
+  <div class="obj-card">
+    <div class="oc-n">XGB</div>
+    <div class="oc-title">XGBoost</div>
+    <div class="oc-body">Gradient Boosted Trees with L1 (reg_alpha) and L2 (reg_lambda) regularisation. Builds trees sequentially — each corrects residuals of prior. Achieved 84% with Randomised Search. Performance gap with LR confirms feature engineering reduced complexity advantage of tree-based methods.</div>
+  </div>
+  <div class="obj-card">
+    <div class="oc-n">ENS</div>
+    <div class="oc-title">Ensemble + SMOTE</div>
+    <div class="oc-body">Hard Voting combining AdaBoost, XGBoost, SVC, and LR. SMOTE variant achieved 91% — second-best overall. Synthetic Minority Over-sampling creates artificial instances for minority class. Demonstrates that class balance is a significant factor in this dataset.</div>
+  </div>
+</div>
+
+<div class="section-title-sm">2.3.6 Hyperparameter Tuning — Grid vs Randomised</div>
+<div class="dataset-block" style="margin-bottom:24px">
+  <div class="ann-box gold-border" style="margin-bottom:0">
+    <div class="ann-label al-gold">Grid Search</div>
+    <div class="ann-body">Exhaustively evaluates every combination within a specified parameter grid. <strong>Computationally expensive</strong> but guaranteed to find the best combination within the defined space. Steps: (1) Define grid → (2) Train per combination → (3) Cross-validate → (4) Select best. Better results for SVM, Random Forest, and AdaBoost in this study.</div>
+  </div>
+  <div class="ann-box gold-border" style="margin-bottom:0">
+    <div class="ann-label al-gold">Randomised Search</div>
+    <div class="ann-body">Samples random combinations from parameter distributions. <strong>More efficient</strong> for large search spaces; often finds near-optimal configurations. Steps additionally require: specifying number of iterations and defining probability distributions. Better results for Logistic Regression and XGBoost — when optimal hyperparameters aren't predictable from domain knowledge, random sampling finds superior configurations more efficiently.</div>
+  </div>
+</div>
+
+<div class="section-title-sm">Hyperparameter Explanations by Model</div>
+<div class="sub-sub">Logistic Regression</div>
+<table class="hp-table"><thead><tr><th>Hyperparameter</th><th>Description</th></tr></thead><tbody>
+  <tr><td><code>penalty</code></td><td>'l1' (Lasso) or 'l2' (Ridge) regularisation norm</td></tr>
+  <tr><td><code>C</code></td><td>Reciprocal of regularisation strength. Smaller C = stronger regularisation.</td></tr>
+</tbody></table>
+<div class="sub-sub">Support Vector Machine</div>
+<table class="hp-table"><thead><tr><th>Hyperparameter</th><th>Description</th></tr></thead><tbody>
+  <tr><td><code>C</code></td><td>Regularisation parameter. Higher C = more training points correctly classified but risk of overfitting.</td></tr>
+  <tr><td><code>gamma</code></td><td>Influence of single training example for non-linear hyperplanes. Higher = more sensitive.</td></tr>
+</tbody></table>
+<div class="sub-sub">Random Forest</div>
+<table class="hp-table"><thead><tr><th>Hyperparameter</th><th>Description</th></tr></thead><tbody>
+  <tr><td><code>max_depth</code></td><td>Max depth of trees. Deeper = captures complex patterns but risks overfitting.</td></tr>
+  <tr><td><code>min_samples_leaf</code></td><td>Min samples at leaf node. Higher = better generalisation.</td></tr>
+  <tr><td><code>min_samples_split</code></td><td>Min samples to split an internal node. Controls overfitting.</td></tr>
+  <tr><td><code>n_estimators</code></td><td>Number of trees. More = better performance (diminishing returns).</td></tr>
+</tbody></table>
+<div class="sub-sub">AdaBoost</div>
+<table class="hp-table"><thead><tr><th>Hyperparameter</th><th>Description</th></tr></thead><tbody>
+  <tr><td><code>learning_rate</code></td><td>Rate of learning from mistakes. Smaller = needs more estimators.</td></tr>
+  <tr><td><code>n_estimators</code></td><td>Max number of weak learners. More can overfit if uncontrolled.</td></tr>
+</tbody></table>
+<div class="sub-sub">XGBoost</div>
+<table class="hp-table"><thead><tr><th>Hyperparameter</th><th>Description</th></tr></thead><tbody>
+  <tr><td><code>learning_rate</code></td><td>Step size towards loss minimum per iteration.</td></tr>
+  <tr><td><code>max_depth</code></td><td>Max depth of trees. More depth = more complexity, risk of overfitting.</td></tr>
+  <tr><td><code>min_child_weight</code></td><td>Minimum sum of instance weights in a child node.</td></tr>
+  <tr><td><code>gamma</code></td><td>Minimum loss reduction for new partition. Regularisation parameter.</td></tr>
+  <tr><td><code>subsample</code></td><td>Proportion of samples per boosting iteration. Reduces overfitting.</td></tr>
+  <tr><td><code>colsample_bytree</code></td><td>Proportion of features randomly selected per tree.</td></tr>
+  <tr><td><code>reg_alpha / reg_lambda</code></td><td>L1 / L2 regularisation — penalise model complexity.</td></tr>
+  <tr><td><code>n_estimators</code></td><td>Number of boosting rounds (trees) to construct.</td></tr>
+</tbody></table>
+
+<!-- ══════════════════════════════
+     CHAPTER 3
+     ══════════════════════════════ -->
+<div class="sh scroll-target" id="ch3">
+  <div class="sh-line"><div class="sh-num">// 06</div><div class="sh-rule"></div></div>
+  <div class="sh-title">Chapter 3 — Proposed Methodology &amp; <em>Implementation</em></div>
+</div>
+
+<div class="section-title-sm">3.2 Proposed Methodology</div>
 <div class="flow-section">
   <div class="flow-row">
     <div class="flow-step">
       <div class="fs-num">Step 01</div>
       <div class="fs-title">Data Collection</div>
-      <div class="fs-desc">23 EPL seasons. Match stats + bookmaker odds + betting data from multiple sources.</div>
+      <div class="fs-desc">23 EPL seasons. Match stats + bookmaker odds + betting data from 10+ sources.</div>
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step">
       <div class="fs-num">Step 02</div>
       <div class="fs-title">Preprocessing</div>
-      <div class="fs-desc">Standardization (z-score). Correlation matrix. Missing value handling. Normalization.</div>
+      <div class="fs-desc">Standardisation (z-score). Correlation matrix. Missing value handling. 16 discrete steps.</div>
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step hi">
       <div class="fs-num">Step 03</div>
       <div class="fs-title">Feature Engineering</div>
-      <div class="fs-desc">Streak, form, attack/defense efficiency — novel derived features beyond raw statistics.</div>
+      <div class="fs-desc">Streak, form, goal diff, attack/defence efficiency — novel derived features beyond raw stats.</div>
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step">
       <div class="fs-num">Step 04</div>
       <div class="fs-title">Model Training</div>
-      <div class="fs-desc">6 ML models trained: LR, SVM, RF, AdaBoost, XGBoost, Ensemble Voting.</div>
+      <div class="fs-desc">6 ML models: LR, SVM, RF, AdaBoost, XGBoost, Ensemble Voting.</div>
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step hi">
       <div class="fs-num">Step 05</div>
       <div class="fs-title">Hyperparameter Tuning</div>
-      <div class="fs-desc">Grid Search and Randomized Search applied to each model independently.</div>
+      <div class="fs-desc">Grid Search and Randomised Search applied independently to each model.</div>
     </div>
     <div class="flow-arrow">›</div>
     <div class="flow-step">
       <div class="fs-num">Step 06</div>
       <div class="fs-title">Evaluation</div>
-      <div class="fs-desc">Confusion matrix. Accuracy, Precision, Recall, F1-Score. Classification report.</div>
+      <div class="fs-desc">Confusion matrix. Accuracy, Precision, Recall, F1-Score. Classification reports.</div>
     </div>
   </div>
 </div>
 
-<!-- DATASET -->
-<div class="sh">
-  <div class="sh-line"><div class="sh-num">// 03</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Dataset &amp; <em>feature engineering</em></div>
-</div>
+<div class="section-title-sm">3.3.1 Experimental Setup</div>
 <div class="dataset-block">
-  <div class="db-left">
-    <div class="stat-row"><div class="sr-label">Seasons covered</div><div class="sr-val">23 (2001–2023)</div></div>
-    <div class="stat-row"><div class="sr-label">League</div><div class="sr-val">English Premier League</div></div>
-    <div class="stat-row"><div class="sr-label">Data types</div><div class="sr-val">Match stats + Bookmakers</div></div>
-    <div class="stat-row"><div class="sr-label">Target variable</div><div class="sr-val">Match result (H/D/A)</div></div>
-    <div class="stat-row"><div class="sr-label">Preprocessing</div><div class="sr-val">Standardization (μ=0, σ=1)</div></div>
-    <div class="stat-row"><div class="sr-label">Dimensionality</div><div class="sr-val">Correlation matrix reduction</div></div>
-    <div class="stat-row"><div class="sr-label">Imbalance handling</div><div class="sr-val">SMOTE (for Ensemble)</div></div>
+  <div class="db-pane dp-left">
+    <div class="stat-row"><div class="sr-label">Language</div><div class="sr-val">Python</div></div>
+    <div class="stat-row"><div class="sr-label">Libraries</div><div class="sr-val">TensorFlow, Scikit-learn, Pandas</div></div>
+    <div class="stat-row"><div class="sr-label">Train / Test split</div><div class="sr-val">70% / 30% (stratified)</div></div>
+    <div class="stat-row"><div class="sr-label">Random state</div><div class="sr-val">seed = 2</div></div>
+    <div class="stat-row"><div class="sr-label">Target variable</div><div class="sr-val">"H" or "NH" (binary)</div></div>
+    <div class="stat-row"><div class="sr-label">Imbalance handling</div><div class="sr-val">SMOTE (for Ensemble variant)</div></div>
   </div>
-  <div class="db-right">
-    <div class="feat-item"><div class="feat-label">Goals scored / conceded</div><span class="feat-badge fb-raw">Raw</span></div>
-    <div class="feat-item"><div class="feat-label">Shots on target</div><span class="feat-badge fb-raw">Raw</span></div>
-    <div class="feat-item"><div class="feat-label">Fouls, yellow &amp; red cards</div><span class="feat-badge fb-raw">Raw</span></div>
-    <div class="feat-item"><div class="feat-label">Corners, possession %</div><span class="feat-badge fb-raw">Raw</span></div>
-    <div class="feat-item"><div class="feat-label">Bookmaker odds (1X2)</div><span class="feat-badge fb-raw">Betting</span></div>
-    <div class="feat-item"><div class="feat-label">Team streak (W/D/L runs)</div><span class="feat-badge fb-new">Engineered</span></div>
-    <div class="feat-item"><div class="feat-label">Form (last N matches)</div><span class="feat-badge fb-new">Engineered</span></div>
-    <div class="feat-item"><div class="feat-label">Attack efficiency ratio</div><span class="feat-badge fb-new">Engineered</span></div>
-    <div class="feat-item"><div class="feat-label">Defense efficiency ratio</div><span class="feat-badge fb-new">Engineered</span></div>
-    <div class="feat-item"><div class="feat-label">Half-time result indicator</div><span class="feat-badge fb-new">Engineered</span></div>
+  <div class="db-pane dp-right">
+    <div class="feat-item"><div class="feat-label">Goals scored / conceded (cumulative)</div><span class="feat-badge fb-eng">Engineered</span></div>
+    <div class="feat-item"><div class="feat-label">Team streak (W/D/L consecutive runs)</div><span class="feat-badge fb-eng">Engineered</span></div>
+    <div class="feat-item"><div class="feat-label">Team form (last N matches)</div><span class="feat-badge fb-eng">Engineered</span></div>
+    <div class="feat-item"><div class="feat-label">Goal difference (HTGD, ATGD)</div><span class="feat-badge fb-eng">Engineered</span></div>
+    <div class="feat-item"><div class="feat-label">Difference in points (DiffPts)</div><span class="feat-badge fb-eng">Engineered</span></div>
+    <div class="feat-item"><div class="feat-label">Bookmaker odds (1X2, Over/Under, AH)</div><span class="feat-badge fb-bet">Betting</span></div>
+    <div class="feat-item"><div class="feat-label">Shots, corners, fouls, cards</div><span class="feat-badge fb-raw">Raw</span></div>
+    <div class="feat-item"><div class="feat-label">Woodwork hits, offsides</div><span class="feat-badge fb-raw">Raw</span></div>
   </div>
 </div>
 
-<!-- MODEL RESULTS -->
-<div class="sh">
-  <div class="sh-line"><div class="sh-num">// 04</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Results &amp; <em>performance analysis</em></div>
-</div>
-
-<div class="models-section">
-  <div class="model-grid">
-    <div class="model-row header">
-      <div class="mr-cell header-cell">Model</div>
-      <div class="mr-bar-wrap" style="padding:12px 16px"><div style="font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--white4)">Accuracy (visual)</div></div>
-      <div class="mr-cell header-cell" style="text-align:center">Precision</div>
-      <div class="mr-cell header-cell" style="text-align:center">Recall</div>
-      <div class="mr-cell header-cell" style="text-align:center">F1</div>
-      <div class="mr-cell header-cell" style="text-align:center">Status</div>
-    </div>
-    <!-- LR -->
-    <div class="model-row">
-      <div class="mr-cell">
-        <div class="mr-model">Logistic Regression</div>
-        <div class="mr-method">Randomized Search</div>
-      </div>
-      <div class="mr-bar-wrap">
-        <div class="bar-track"><div class="bar-fill" style="width:96%;background:var(--cyan)"></div></div>
-        <div class="bar-label" style="color:var(--cyan)">96%</div>
-      </div>
-      <div class="mr-cell mr-num">0.96</div>
-      <div class="mr-cell mr-num">0.96</div>
-      <div class="mr-cell mr-num">0.96</div>
-      <div class="mr-cell" style="padding:10px 14px"><span class="best-badge">Best model</span></div>
-    </div>
-    <!-- Ensemble SMOTE -->
-    <div class="model-row">
-      <div class="mr-cell">
-        <div class="mr-model">Ensemble Voting</div>
-        <div class="mr-method">SMOTE</div>
-      </div>
-      <div class="mr-bar-wrap">
-        <div class="bar-track"><div class="bar-fill" style="width:91%;background:var(--green)"></div></div>
-        <div class="bar-label" style="color:var(--green)">91%</div>
-      </div>
-      <div class="mr-cell mr-num">0.91</div>
-      <div class="mr-cell mr-num">0.91</div>
-      <div class="mr-cell mr-num">0.91</div>
-      <div class="mr-cell" style="padding:10px 14px"><span style="font-family:var(--mono);font-size:8px;color:var(--white4)">#2</span></div>
-    </div>
-    <!-- SVM -->
-    <div class="model-row">
-      <div class="mr-cell">
-        <div class="mr-model">Support Vector Machine</div>
-        <div class="mr-method">Grid Search</div>
-      </div>
-      <div class="mr-bar-wrap">
-        <div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--amber)"></div></div>
-        <div class="bar-label" style="color:var(--amber)">90%</div>
-      </div>
-      <div class="mr-cell mr-num">0.90</div>
-      <div class="mr-cell mr-num">0.90</div>
-      <div class="mr-cell mr-num">0.90</div>
-      <div class="mr-cell" style="padding:10px 14px"><span style="font-family:var(--mono);font-size:8px;color:var(--white4)">#3</span></div>
-    </div>
-    <!-- XGBoost -->
-    <div class="model-row">
-      <div class="mr-cell">
-        <div class="mr-model">XGBoost</div>
-        <div class="mr-method">Randomized Search</div>
-      </div>
-      <div class="mr-bar-wrap">
-        <div class="bar-track"><div class="bar-fill" style="width:84%;background:var(--amber)"></div></div>
-        <div class="bar-label" style="color:var(--amber)">84%</div>
-      </div>
-      <div class="mr-cell mr-num">0.84</div>
-      <div class="mr-cell mr-num">0.84</div>
-      <div class="mr-cell mr-num">0.84</div>
-      <div class="mr-cell" style="padding:10px 14px"><span style="font-family:var(--mono);font-size:8px;color:var(--white4)">#4</span></div>
-    </div>
-    <!-- AdaBoost -->
-    <div class="model-row">
-      <div class="mr-cell">
-        <div class="mr-model">AdaBoost</div>
-        <div class="mr-method">Grid Search</div>
-      </div>
-      <div class="mr-bar-wrap">
-        <div class="bar-track"><div class="bar-fill" style="width:82%;background:var(--white4)"></div></div>
-        <div class="bar-label" style="color:var(--white3)">82%</div>
-      </div>
-      <div class="mr-cell mr-num" style="color:var(--white3)">0.82</div>
-      <div class="mr-cell mr-num" style="color:var(--white3)">0.82</div>
-      <div class="mr-cell mr-num" style="color:var(--white3)">0.82</div>
-      <div class="mr-cell" style="padding:10px 14px"><span style="font-family:var(--mono);font-size:8px;color:var(--white4)">#5</span></div>
-    </div>
-    <!-- Random Forest -->
-    <div class="model-row">
-      <div class="mr-cell">
-        <div class="mr-model">Random Forest</div>
-        <div class="mr-method">Grid / Randomized Search</div>
-      </div>
-      <div class="mr-bar-wrap">
-        <div class="bar-track"><div class="bar-fill" style="width:77%;background:var(--white4)"></div></div>
-        <div class="bar-label" style="color:var(--white3)">77%</div>
-      </div>
-      <div class="mr-cell mr-num" style="color:var(--white3)">0.77</div>
-      <div class="mr-cell mr-num" style="color:var(--white3)">0.77</div>
-      <div class="mr-cell mr-num" style="color:var(--white3)">0.77</div>
-      <div class="mr-cell" style="padding:10px 14px"><span style="font-family:var(--mono);font-size:8px;color:var(--white4)">#6</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- KEY INSIGHT -->
-<div class="pq">
-  <div class="pq-text">Logistic Regression outperformed all complex ensemble methods — demonstrating that with precise feature engineering and optimal hyperparameters, a simple linear model can exceed the performance of far more complex architectures on this domain.</div>
-  <div class="pq-attr">Key finding — Chapter 4, Result Analysis</div>
-</div>
-
-<!-- PRIOR ART COMPARISON -->
-<div class="sh">
-  <div class="sh-line"><div class="sh-num">// 05</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Prior art — <em>literature comparison</em></div>
-</div>
-
-<table class="lit-table">
-  <thead>
-    <tr>
-      <th>Authors</th>
-      <th>Dataset</th>
-      <th>Model(s)</th>
-      <th>Best Result</th>
-    </tr>
-  </thead>
+<div class="section-title-sm">Best Hyperparameters — Grid Search (Table 3.1)</div>
+<table class="hp-table">
+  <thead><tr><th>Model</th><th>Best Hyperparameters</th></tr></thead>
   <tbody>
-    <tr class="hl">
-      <td class="bold">Al-Amin (this work)</td>
-      <td>23 EPL seasons + Bookmakers</td>
-      <td>LR, SVM, RF, AdaBoost, XGBoost, Ensemble</td>
-      <td class="green">96% accuracy</td>
-    </tr>
-    <tr>
-      <td>Hucaljuk &amp; Rakipovic</td>
-      <td>Champions League (96 matches)</td>
-      <td>Naive Bayes, KNN, ANN, Random Forest</td>
-      <td>60% score prediction</td>
-    </tr>
-    <tr>
-      <td>Horton et al.</td>
-      <td>4 home games, Arsenal FC</td>
-      <td>Multinomial Logistic Regression</td>
-      <td>85.8% accuracy</td>
-    </tr>
-    <tr>
-      <td>Ćwiklinski, Giełczyk, Choraś</td>
-      <td>4,700 players, 156 clubs, 8 leagues</td>
-      <td>Random Forest, Naive Bayes, AdaBoost</td>
-      <td>F1 = 0.83</td>
-    </tr>
-    <tr>
-      <td>Rommers et al.</td>
-      <td>734 youth players (U10–U15)</td>
-      <td>XGBoost</td>
-      <td>85% accuracy</td>
-    </tr>
-    <tr>
-      <td>Baboota &amp; Kaur</td>
-      <td>2 EPL seasons (2014–2016)</td>
-      <td>Random Forest, SVM, Gradient Boosting</td>
-      <td>RPS = 0.2156</td>
-    </tr>
+    <tr><td>Logistic Regression</td><td><code>C: 10</code>, <code>penalty: 'l2'</code></td></tr>
+    <tr><td>Support Vector Machine</td><td><code>C: 10</code>, <code>gamma: 0.001</code></td></tr>
+    <tr><td>Random Forest</td><td><code>max_depth: 10</code>, <code>min_samples_leaf: 2</code>, <code>min_samples_split: 10</code>, <code>n_estimators: 200</code></td></tr>
+    <tr><td>AdaBoost</td><td><code>learning_rate: 1.0</code>, <code>n_estimators: 300</code></td></tr>
+    <tr><td>XGBoost</td><td><code>booster: gbtree</code>, <code>colsample_bytree: 0.8</code>, <code>gamma: 0.2</code>, <code>learning_rate: 0.1</code>, <code>max_depth: 5</code>, <code>min_child_weight: 3</code>, <code>n_estimators: 50</code>, <code>reg_alpha: 1e-05</code>, <code>reg_lambda: 1</code>, <code>subsample: 0.6</code></td></tr>
   </tbody>
 </table>
 
-<!-- MODELS EXPLAINED -->
-<div class="sh">
-  <div class="sh-line"><div class="sh-num">// 06</div><div class="sh-rule"></div></div>
-  <div class="sh-title">ML models — <em>technical overview</em></div>
+<div class="section-title-sm">Best Hyperparameters — Randomised Search (Table 3.2)</div>
+<table class="hp-table">
+  <thead><tr><th>Model</th><th>Best Hyperparameters</th></tr></thead>
+  <tbody>
+    <tr><td>Logistic Regression</td><td><code>penalty: l2</code>, <code>C: 27.826</code></td></tr>
+    <tr><td>Support Vector Machine</td><td><code>gamma: 0.001</code>, <code>C: 1.0</code></td></tr>
+    <tr><td>Random Forest</td><td><code>feature_selection__k: 30</code>, <code>max_depth: 45</code>, <code>n_estimators: 265</code></td></tr>
+    <tr><td>AdaBoost</td><td><code>learning_rate: 0.466</code>, <code>n_estimators: 200</code></td></tr>
+    <tr><td>XGBoost</td><td><code>learning_rate: 0.2</code>, <code>max_depth: 4</code>, <code>min_child_weight: 3</code>, <code>gamma: 0.3</code>, <code>subsample: 0.7</code>, <code>colsample_bytree: 0.7</code>, <code>reg_alpha: 0.1</code>, <code>reg_lambda: 1</code>, <code>n_estimators: 90</code></td></tr>
+  </tbody>
+</table>
+
+<div class="section-title-sm">3.3.2 Dataset Description</div>
+<div class="prose">
+  <p>The merged dataset spans all seasons from <span class="il-gold">2000–01 to 2022–23</span> (23 seasons). Features per season: 106 (recent), 65 (intermediate), 23 (older). Target: <code style="font-family:var(--mono);color:#8ec9ff">"H"</code> (Home Win) vs <code style="font-family:var(--mono);color:#8ec9ff">"NH"</code> (Not Home Win).</p>
+  <p>Sources: Kaggle (primary), International Soccer Server, European Football, RSSSF Archive (historical results); TBWSport, Livescore (current results); Sportinglife, ESPN Soccer, Bundesliga.de, Gazzetta.it, Football.fr (match stats); Betbrain, Betbase (betting odds).</p>
 </div>
 
-<div class="three">
-  <div class="ann-box cyan-border">
-    <div class="ann-label al-cyan">Logistic Regression</div>
-    <div class="ann-body">A classification model (not regression) that applies a sigmoid function to a linear combination of features: σ(z) = 1/(1+e⁻ᶻ). Despite its simplicity, it achieved the highest accuracy in this study — a testament to the quality of the engineered features and the linear separability of the processed data.</div>
+<div class="sub-sub">Match Statistics Features</div>
+<div class="feat-chip-grid">
+  <div class="feat-chip"><code>Attendance</code>Spectators in stadium</div>
+  <div class="feat-chip"><code>HS / AS</code>Shots by home / away</div>
+  <div class="feat-chip"><code>HST / AST</code>Shots on target H/A</div>
+  <div class="feat-chip"><code>HHW / AHW</code>Woodwork hits H/A</div>
+  <div class="feat-chip"><code>HC / AC</code>Corners H/A</div>
+  <div class="feat-chip"><code>HF / AF</code>Fouls committed H/A</div>
+  <div class="feat-chip"><code>HO / AO</code>Offsides H/A</div>
+  <div class="feat-chip"><code>HY / AY</code>Yellow cards H/A</div>
+  <div class="feat-chip"><code>HR / AR</code>Red cards H/A</div>
+  <div class="feat-chip"><code>HBP / ABP</code>Booking points H/A</div>
+</div>
+
+<div class="sub-sub">1X2 Betting Odds — 13 Bookmakers</div>
+<div class="feat-chip-grid">
+  <div class="feat-chip"><code>B365H/D/A</code>Bet365 home/draw/away</div>
+  <div class="feat-chip"><code>BSH/D/A</code>Blue Square H/D/A</div>
+  <div class="feat-chip"><code>BWH/D/A</code>Bet&amp;Win H/D/A</div>
+  <div class="feat-chip"><code>GBH/D/A</code>Gamebookers H/D/A</div>
+  <div class="feat-chip"><code>IWH/D/A</code>Interwetten H/D/A</div>
+  <div class="feat-chip"><code>LBH/D/A</code>Ladbrokes H/D/A</div>
+  <div class="feat-chip"><code>PSH/D/A</code>Pinnacle Sports H/D/A</div>
+  <div class="feat-chip"><code>SOH/D/A</code>Sporting Odds H/D/A</div>
+  <div class="feat-chip"><code>SBH/D/A</code>Sportingbet H/D/A</div>
+  <div class="feat-chip"><code>SJH/D/A</code>Stan James H/D/A</div>
+  <div class="feat-chip"><code>SYH/D/A</code>Stanleybet H/D/A</div>
+  <div class="feat-chip"><code>VCH/D/A</code>VC Bet H/D/A</div>
+  <div class="feat-chip"><code>WHH/D/A</code>William Hill H/D/A</div>
+  <div class="feat-chip"><code>BbMxH/D/A</code>Betbrain max odds</div>
+  <div class="feat-chip"><code>BbAvH/D/A</code>Betbrain avg odds</div>
+  <div class="feat-chip"><code>BbMx&gt;2.5/&lt;2.5</code>Over/Under max</div>
+  <div class="feat-chip"><code>BbMxAHH/AHA</code>Asian hdcp max</div>
+  <div class="feat-chip"><code>B365&gt;2.5/&lt;2.5</code>Bet365 total goals</div>
+</div>
+
+<div class="section-title-sm">3.2.2.2 EDA Visualisations — Key Findings (Figs 3.2–3.14)</div>
+<div class="dataset-block">
+  <div class="db-pane dp-left" style="--before-content:'EDA RESULTS'">
+    <div class="stat-row"><div class="sr-label">Home win rate</div><div class="sr-val">45.7%</div></div>
+    <div class="stat-row"><div class="sr-label">Away win rate</div><div class="sr-val">29.1%</div></div>
+    <div class="stat-row"><div class="sr-label">Draw rate</div><div class="sr-val">25.2%</div></div>
+    <div class="stat-row"><div class="sr-label">Goals in 2nd half</div><div class="sr-val">55.6%</div></div>
+    <div class="stat-row"><div class="sr-label">Goals in 1st half</div><div class="sr-val">44.4%</div></div>
+    <div class="stat-row"><div class="sr-label">Results change at HT</div><div class="sr-val">60.2%</div></div>
   </div>
-  <div class="ann-box">
-    <div class="ann-label al-white">Support Vector Machine</div>
-    <div class="ann-body">Constructs an optimal hyperplane that maximizes the margin between classes. Effective in high-dimensional spaces. Grid Search outperformed Randomized Search for SVM, achieving 90% accuracy — the second-highest individual model result.</div>
-  </div>
-  <div class="ann-box">
-    <div class="ann-label al-white">Random Forest</div>
-    <div class="ann-body">Ensemble of decision trees trained on bootstrapped samples, combining predictions through majority vote. Despite its popularity in sports prediction literature, it underperformed here (77%) — suggesting that the EPL data's structure favors linear over tree-based decomposition.</div>
-  </div>
-  <div class="ann-box">
-    <div class="ann-label al-white">AdaBoost</div>
-    <div class="ann-body">Adaptive Boosting — iteratively trains weak classifiers, assigning higher weight to misclassified samples. Achieved 82% accuracy. Randomized Search underperformed Grid Search for this model, suggesting its hyperparameter space is more structured.</div>
-  </div>
-  <div class="ann-box">
-    <div class="ann-label al-white">XGBoost</div>
-    <div class="ann-body">Gradient Boosted Trees with regularization. Highly competitive in structured data tasks. Achieved 84% with Randomized Search. Its performance gap with Logistic Regression confirms that the feature engineering pipeline reduced the complexity advantage of tree-based methods.</div>
-  </div>
-  <div class="ann-box cyan-border">
-    <div class="ann-label al-cyan">Ensemble Voting + SMOTE</div>
-    <div class="ann-body">Combined predictions of multiple models through hard voting. Applied SMOTE (Synthetic Minority Oversampling) to address class imbalance. The SMOTE variant achieved 91% — the second-best overall — suggesting class balance is a significant factor in this dataset.</div>
+  <div class="db-pane dp-right" style="--before-content:'TEAM STANDINGS'">
+    <div class="stat-row"><div class="sr-label">Most goals scored</div><div class="sr-val">Arsenal</div></div>
+    <div class="stat-row"><div class="sr-label">Fewest conceded</div><div class="sr-val">Chelsea</div></div>
+    <div class="stat-row"><div class="sr-label">Most home goals</div><div class="sr-val">Arsenal</div></div>
+    <div class="stat-row"><div class="sr-label">Most away goals</div><div class="sr-val">Man United</div></div>
+    <div class="stat-row"><div class="sr-label">Best win ratio</div><div class="sr-val">Man United</div></div>
+    <div class="stat-row"><div class="sr-label">Most efficient attack</div><div class="sr-val">Bournemouth</div></div>
+    <div class="stat-row"><div class="sr-label">Most aggressive (cards/foul)</div><div class="sr-val">Brentford</div></div>
+    <div class="stat-row"><div class="sr-label">Most goals conceded</div><div class="sr-val">Blackpool</div></div>
   </div>
 </div>
 
-<!-- HYPERPARAMETER TUNING -->
-<div class="sh">
+<div class="section-title-sm">3.3.3 Dataset Preprocessing — All 16 Steps</div>
+<div class="steps-list">
+  <div class="step-item"><div class="step-num">Step 01</div><div class="step-title">Goals Scored and Conceded at End of Matchweek</div><div class="step-desc">Track GS<sub>t,m</sub> and GC<sub>t,m</sub> cumulatively — goals scored/conceded by team t up to matchweek m.</div></div>
+  <div class="step-item"><div class="step-num">Step 02</div><div class="step-title">Define get_points(result) Function</div><div class="step-desc">Points = 3 (win), 1 (draw), 0 (loss). Facilitates calculation of team standings.</div></div>
+  <div class="step-item"><div class="step-num">Step 03</div><div class="step-title">Calculate Cumulative Points</div><div class="step-desc">CP<sub>t,m</sub> = Σ points earned by team t up to matchweek m.</div></div>
+  <div class="step-item"><div class="step-num">Step 04</div><div class="step-title">Get Match Results</div><div class="step-desc">get_matchres() assigns 'W', 'D', or 'L' to each match based on full-time result.</div></div>
+  <div class="step-item"><div class="step-num">Step 05</div><div class="step-title">Get Team Form</div><div class="step-desc">Recent form based on last few matches. Represented as sequence e.g. 'WWDLW' for last five.</div></div>
+  <div class="step-item"><div class="step-num">Step 06</div><div class="step-title">Get Matchweek</div><div class="step-desc">Assign matchweek numbers (MW) to each match for temporal tracking.</div></div>
+  <div class="step-item"><div class="step-num">Step 07</div><div class="step-title">Get Team Form Points</div><div class="step-desc">FP<sub>t,m</sub> = Σ points earned in last n matches up to matchweek m.</div></div>
+  <div class="step-item"><div class="step-num">Step 08</div><div class="step-title">Identify Win or Loss Streaks</div><div class="step-desc">Detect consecutive wins or losses. Analyses momentum and performance trends.</div></div>
+  <div class="step-item"><div class="step-num">Step 09</div><div class="step-title">Get Goal Difference</div><div class="step-desc">ΔGD<sub>t,m</sub> = GS<sub>t,m</sub> − GC<sub>t,m</sub>. Reflects offensive and defensive capabilities.</div></div>
+  <div class="step-item"><div class="step-num">Step 10</div><div class="step-title">Get Difference in Points</div><div class="step-desc">ΔPt<sub>t1,t2,m</sub> = CP<sub>t1,m</sub> − CP<sub>t2,m</sub>. Compares relative performance between teams.</div></div>
+  <div class="step-item"><div class="step-num">Step 11</div><div class="step-title">Scale DiffPts, DiffFormPts, HTGD, ATGD by Matchweek</div><div class="step-desc">scale_by_MW(x) = x / MW. Normalises metrics across different points in season for fair comparison.</div></div>
+  <div class="step-item"><div class="step-num">Step 12</div><div class="step-title">Build Correlation Matrix (Fig. 3.15)</div><div class="step-desc">Calculate correlation coefficients for all feature pairs. Identifies redundant features for removal.</div></div>
+  <div class="step-item"><div class="step-num">Step 13</div><div class="step-title">Remove Highly Correlated Columns</div><div class="step-desc">Eliminate columns based on redundancy, irrelevance, or high correlation. Prevents multicollinearity.</div></div>
+  <div class="step-item"><div class="step-num">Step 14</div><div class="step-title">Separate Feature Set (X) and Target Variable (y)</div><div class="step-desc">X_all = all columns except 'FTR'. y_all = 'FTR' column (Full-Time Result).</div></div>
+  <div class="step-item"><div class="step-num">Step 15</div><div class="step-title">Standardise Selected Columns</div><div class="step-desc">z = (x−μ)/σ applied to 'HTGD', 'ATGD', 'HTP', 'ATP'. Mean = 0, SD = 1.</div></div>
+  <div class="step-item"><div class="step-num">Step 16</div><div class="step-title">Convert Categorical Variables into Dummy Variables</div><div class="step-desc">One-hot encoding: x<sub>ij</sub> = 1 if i-th observation belongs to category j; 0 otherwise.</div></div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 4
+     ══════════════════════════════ -->
+<div class="sh scroll-target" id="ch4">
   <div class="sh-line"><div class="sh-num">// 07</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Hyperparameter tuning — <em>Grid vs Randomized</em></div>
+  <div class="sh-title">Chapter 4 — Results &amp; <em>Performance Analysis</em></div>
 </div>
 
-<div class="two">
-  <div class="ann-box cyan-border">
-    <div class="ann-label al-cyan">Grid Search</div>
-    <div class="ann-body">Exhaustively evaluates every combination within a specified parameter grid. <strong>Computationally expensive</strong> but guaranteed to find the best combination within the defined space. Better results for SVM, Random Forest, and AdaBoost in this study. Optimal when the parameter space is small and well-understood.</div>
+<div class="section-title-sm">4.2 Evaluation Metrics</div>
+<div class="metric-defs">
+  <div class="mdef mtp"><h6>True Positive (TP)</h6><p>Model correctly predicts positive when actual outcome is positive. (Test correctly detects disease when present.)</p></div>
+  <div class="mdef mtn"><h6>True Negative (TN)</h6><p>Model correctly predicts negative when actual outcome is negative. (Test correctly rules out disease when absent.)</p></div>
+  <div class="mdef mfp"><h6>False Positive (FP)</h6><p>Model incorrectly predicts positive when actual is negative. (False alarm — disease flagged when not present.)</p></div>
+  <div class="mdef mfn"><h6>False Negative (FN)</h6><p>Model incorrectly predicts negative when actual is positive. (Miss — disease not detected when actually present.)</p></div>
+</div>
+<div class="formula-box">
+  Accuracy  = (TP + TN) / (TP + TN + FP + FN)<br>
+  Precision = TP / (TP + FP)<br>
+  Recall    = TP / (TP + FN)<br>
+  F1-Score  = 2 × (Precision × Recall) / (Precision + Recall)<br><br>
+  <span class="fc">Macro Avg Precision = (Precision_A + Precision_B + Precision_C) / 3</span><br>
+  <span class="fc">Weighted Avg = Σ(Precision_class × Support_class) / Total_support</span>
+</div>
+
+<div class="section-title-sm">4.2.8 Results — All Models Summary (Table 4.1)</div>
+<div class="models-grid">
+  <div class="model-row mhead">
+    <div class="mr-cell hc">Model</div>
+    <div class="mr-bar-wrap" style="padding:11px 14px"><div style="font-family:var(--mono);font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)">Accuracy (visual)</div></div>
+    <div class="mr-cell hc" style="text-align:center">Precision</div>
+    <div class="mr-cell hc" style="text-align:center">Recall</div>
+    <div class="mr-cell hc" style="text-align:center">F1</div>
+    <div class="mr-cell hc" style="text-align:center">Status</div>
   </div>
-  <div class="ann-box cyan-border">
-    <div class="ann-label al-cyan">Randomized Search</div>
-    <div class="ann-body">Samples random combinations from parameter distributions. <strong>More efficient</strong> and covers larger spaces. Better results for Logistic Regression and XGBoost. The key insight: when the optimal hyperparameters aren't predictable from domain knowledge, random sampling often finds superior configurations more efficiently than exhaustive search.</div>
+  <div class="model-row">
+    <div class="mr-cell"><div class="mr-model">Logistic Regression</div><div class="mr-method">Randomized Search</div></div>
+    <div class="mr-bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:96%;background:var(--gold2)"></div></div><div class="bar-label" style="color:var(--gold2)">96%</div></div>
+    <div class="mr-cell mr-num">0.96</div><div class="mr-cell mr-num">0.96</div><div class="mr-cell mr-num">0.96</div>
+    <div class="mr-cell" style="padding:10px 14px"><span class="best-bdg">★ Best</span></div>
+  </div>
+  <div class="model-row">
+    <div class="mr-cell"><div class="mr-model">Ensemble Voting</div><div class="mr-method">SMOTE</div></div>
+    <div class="mr-bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:91%;background:var(--green)"></div></div><div class="bar-label" style="color:var(--green)">91%</div></div>
+    <div class="mr-cell mr-num">0.91</div><div class="mr-cell mr-num">0.91</div><div class="mr-cell mr-num">0.91</div>
+    <div class="mr-cell" style="padding:10px 14px;font-family:var(--mono);font-size:8.5px;color:var(--muted)">#2</div>
+  </div>
+  <div class="model-row">
+    <div class="mr-cell"><div class="mr-model">Support Vector Machine</div><div class="mr-method">Grid Search</div></div>
+    <div class="mr-bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#e8a84c"></div></div><div class="bar-label" style="color:#e8a84c">90%</div></div>
+    <div class="mr-cell mr-num">0.90</div><div class="mr-cell mr-num">0.90</div><div class="mr-cell mr-num">0.90</div>
+    <div class="mr-cell" style="padding:10px 14px;font-family:var(--mono);font-size:8.5px;color:var(--muted)">#3</div>
+  </div>
+  <div class="model-row">
+    <div class="mr-cell"><div class="mr-model">XGBoost</div><div class="mr-method">Randomized Search</div></div>
+    <div class="mr-bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:84%;background:#e8a84c"></div></div><div class="bar-label" style="color:#e8a84c">84%</div></div>
+    <div class="mr-cell mr-num">0.84</div><div class="mr-cell mr-num">0.84</div><div class="mr-cell mr-num">0.84</div>
+    <div class="mr-cell" style="padding:10px 14px;font-family:var(--mono);font-size:8.5px;color:var(--muted)">#4</div>
+  </div>
+  <div class="model-row">
+    <div class="mr-cell"><div class="mr-model">AdaBoost</div><div class="mr-method">Grid Search</div></div>
+    <div class="mr-bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:82%;background:var(--muted)"></div></div><div class="bar-label" style="color:var(--muted)">82%</div></div>
+    <div class="mr-cell mr-num" style="color:var(--muted)">0.82</div><div class="mr-cell mr-num" style="color:var(--muted)">0.82</div><div class="mr-cell mr-num" style="color:var(--muted)">0.82</div>
+    <div class="mr-cell" style="padding:10px 14px;font-family:var(--mono);font-size:8.5px;color:var(--muted)">#5</div>
+  </div>
+  <div class="model-row">
+    <div class="mr-cell"><div class="mr-model">Ensemble Voting</div><div class="mr-method">Grid / Randomized Search</div></div>
+    <div class="mr-bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--muted)"></div></div><div class="bar-label" style="color:var(--muted)">80%</div></div>
+    <div class="mr-cell mr-num" style="color:var(--muted)">0.80</div><div class="mr-cell mr-num" style="color:var(--muted)">0.80</div><div class="mr-cell mr-num" style="color:var(--muted)">0.80</div>
+    <div class="mr-cell" style="padding:10px 14px;font-family:var(--mono);font-size:8.5px;color:var(--muted)">#6</div>
+  </div>
+  <div class="model-row">
+    <div class="mr-cell"><div class="mr-model">Random Forest</div><div class="mr-method">Grid / Randomized Search</div></div>
+    <div class="mr-bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:77%;background:var(--dim)"></div></div><div class="bar-label" style="color:var(--dim)">77%</div></div>
+    <div class="mr-cell mr-num" style="color:var(--dim)">0.77</div><div class="mr-cell mr-num" style="color:var(--dim)">0.77</div><div class="mr-cell mr-num" style="color:var(--dim)">0.77</div>
+    <div class="mr-cell" style="padding:10px 14px;font-family:var(--mono);font-size:8.5px;color:var(--dim)">#7</div>
   </div>
 </div>
 
-<!-- FUTURE WORKS -->
-<div class="sh">
+<!-- PULL QUOTE -->
+<div class="pq">
+  <div class="pq-text">Logistic Regression outperformed all complex ensemble methods — demonstrating that with precise feature engineering and optimal hyperparameters, a simple linear model can exceed the performance of far more complex architectures on this domain.</div>
+  <div class="pq-attr">Key Finding — Chapter 4, Result Analysis · Section 4.3</div>
+</div>
+
+<div class="section-title-sm">4.2.8 Individual Model Performance — Confusion Matrices</div>
+<div class="perf-grid">
+  <div class="perf-card pc-top">
+    <div class="pc-head"><div><div class="pc-name">Logistic Regression <span style="font-size:10px;font-family:var(--mono);color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);padding:1px 7px;margin-left:6px">★ BEST</span></div><div class="pc-search">Randomized Search</div></div><div class="pc-acc">96%</div></div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:300">Fewer errors than Grid Search variant — 77 fewer misclassifications total</div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">1063<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">41<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">36<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">912<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.96</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.96</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.96</div></div></div>
+  </div>
+  <div class="perf-card pc-top">
+    <div class="pc-head"><div><div class="pc-name">Logistic Regression</div><div class="pc-search">Grid Search</div></div><div class="pc-acc">96%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">1058<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">50<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">41<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">903<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.96</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.96</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.96</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">Support Vector Machine</div><div class="pc-search">Grid Search</div></div><div class="pc-acc">90%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">1016<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">119<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">83<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">834<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.90</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.90</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.90</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">Support Vector Machine</div><div class="pc-search">Randomized Search</div></div><div class="pc-acc">84%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">978<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">206<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">121<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">747<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.84</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.84</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.84</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">Random Forest</div><div class="pc-search">Grid Search</div></div><div class="pc-acc">77%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">933<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">299<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">166<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">654<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.78</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.77</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.77</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">Random Forest</div><div class="pc-search">Randomized Search</div></div><div class="pc-acc">77%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">978<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">206<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">121<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">747<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.77</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.77</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.77</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">AdaBoost</div><div class="pc-search">Grid Search</div></div><div class="pc-acc">82%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">978<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">206<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">121<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">747<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.82</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.82</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.82</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">AdaBoost</div><div class="pc-search">Randomized Search</div></div><div class="pc-acc">81%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">1063<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">41<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">36<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">912<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.81</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.81</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.81</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">XGBoost</div><div class="pc-search">Grid Search</div></div><div class="pc-acc">79%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">919<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">249<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">180<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">704<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.79</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.79</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.79</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">XGBoost</div><div class="pc-search">Randomized Search</div></div><div class="pc-acc">84%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">978<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">206<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">121<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">747<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.84</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.84</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.84</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">Ensemble Voting</div><div class="pc-search">Grid Search</div></div><div class="pc-acc">80%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">978<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">206<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">121<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">747<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.80</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.80</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.80</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">Ensemble Voting</div><div class="pc-search">Randomized Search</div></div><div class="pc-acc">80%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">978<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">206<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">121<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">747<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.80</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.80</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.80</div></div></div>
+  </div>
+  <div class="perf-card">
+    <div class="pc-head"><div><div class="pc-name">Ensemble Voting</div><div class="pc-search">SMOTE</div></div><div class="pc-acc">91%</div></div>
+    <div class="cm-mini">
+      <div class="cm-cell-mini cm-tp">901<small>TP</small></div>
+      <div class="cm-cell-mini cm-fp">235<small>FP</small></div>
+      <div class="cm-cell-mini cm-fn">198<small>FN</small></div>
+      <div class="cm-cell-mini cm-tn">718<small>TN</small></div>
+    </div>
+    <div class="mc-row"><div class="mc"><div class="ml">Precision</div><div class="mv">0.91</div></div><div class="mc"><div class="ml">Recall</div><div class="mv">0.91</div></div><div class="mc"><div class="ml">F1</div><div class="mv">0.91</div></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CHAPTER 5
+     ══════════════════════════════ -->
+<div class="sh scroll-target" id="ch5">
   <div class="sh-line"><div class="sh-num">// 08</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Future <em>research directions</em></div>
+  <div class="sh-title">Chapter 5 — Conclusion &amp; <em>Future Works</em></div>
 </div>
 
+<div class="conclusion">
+  <div class="conc-left">
+    <div class="conc-title">A 96% accuracy that reshapes the field.</div>
+    <div class="conc-body">Previous research in football match prediction achieved a ceiling of approximately 85% accuracy using Random Forest on limited seasonal data. This thesis pushed beyond that boundary by combining three key innovations: <strong>a much larger dataset (23 EPL seasons)</strong>, the integration of bookmakers' odds data alongside traditional match statistics, and carefully engineered features — particularly streak and form metrics — that capture the temporal momentum of teams across a season.<br><br>The finding that Logistic Regression outperformed far more complex models is not a failure of complexity — it is a demonstration of what proper feature engineering can accomplish. When the input data is well-structured and features are meaningful, a linear model's interpretability becomes an advantage rather than a limitation.<br><br>The study also demonstrates the real cost of narrow datasets. Prior work based on two seasons or cup events cannot generalise conclusions about EPL football dynamics. Twenty-three seasons of data reveals patterns that are simply invisible in shorter windows.<br><br>The model does not yet generalise well to other leagues — highlighting the league-specific nature of learned patterns and the complexity of football prediction beyond the EPL.</div>
+  </div>
+  <div class="conc-right">
+    <div class="kf-hd">Key Findings</div>
+    <div class="kf-item"><div class="kf-n">01</div><div class="kf-text"><strong>96% accuracy</strong> — best achieved by Logistic Regression + Randomised Search</div></div>
+    <div class="kf-item"><div class="kf-n">02</div><div class="kf-text"><strong>Bookmakers' data</strong> substantially improved predictive accuracy when fused with match stats</div></div>
+    <div class="kf-item"><div class="kf-n">03</div><div class="kf-text"><strong>Streak &amp; form</strong> — engineered features proved crucial to model performance</div></div>
+    <div class="kf-item"><div class="kf-n">04</div><div class="kf-text"><strong>Linear models</strong> can outperform ensembles with quality feature engineering</div></div>
+    <div class="kf-item"><div class="kf-n">05</div><div class="kf-text"><strong>Cross-league generalisation</strong> remains an open challenge — EPL-trained models don't transfer cleanly</div></div>
+    <div class="kf-item"><div class="kf-n">06</div><div class="kf-text"><strong>SMOTE</strong> meaningfully improved Ensemble — class balance matters in football data</div></div>
+  </div>
+</div>
+
+<div class="section-title-sm">5.2 Future Research Directions</div>
 <div class="future-grid">
   <div class="fg-card">
     <div class="fgc-n">Direction 01</div>
     <div class="fgc-title">Psychological factors</div>
-    <div class="fgc-desc">Incorporate sentiment analysis and player psychology indicators into predictive models. Real-time tracking data and social media signals to capture team morale and public sentiment ahead of matches.</div>
+    <div class="fgc-desc">Incorporate sentiment analysis and player psychology indicators. Real-time tracking data and social media signals to capture team morale and public sentiment ahead of matches.</div>
   </div>
   <div class="fg-card">
     <div class="fgc-n">Direction 02</div>
     <div class="fgc-title">Multi-league expansion</div>
-    <div class="fgc-desc">Expand the dataset to cover top European leagues and international tournaments. The current model's limitation in generalizing across leagues is explicitly acknowledged — a cross-league model remains an open problem.</div>
+    <div class="fgc-desc">Expand dataset to cover top European leagues and international tournaments. The current model's cross-league limitation is explicitly acknowledged — a generalised model remains an open problem.</div>
   </div>
   <div class="fg-card">
     <div class="fgc-n">Direction 03</div>
     <div class="fgc-title">Player-level granularity</div>
-    <div class="fgc-desc">Incorporate individual player performance metrics, fitness tracking, and injury probability estimates. Current models operate at team level — player-level features could significantly improve accuracy for matches where lineup changes are decisive.</div>
+    <div class="fgc-desc">Incorporate individual player performance metrics, fitness tracking, and injury probability estimates. Current models operate at team level — player-level features could significantly improve accuracy where lineup changes are decisive.</div>
   </div>
   <div class="fg-card">
     <div class="fgc-n">Direction 04</div>
@@ -755,61 +1367,123 @@ body::before{
   <div class="fg-card">
     <div class="fgc-n">Direction 05</div>
     <div class="fgc-title">Real-time integration</div>
-    <div class="fgc-desc">Build a live prediction system that updates predictions in-game using real-time event data. The current model predicts pre-match — real-time integration could produce a dynamic probability model that adjusts as the match unfolds.</div>
+    <div class="fgc-desc">Build a live prediction system updating in-game using real-time event data. The current model predicts pre-match — real-time integration could produce a dynamic probability model adjusting as the match unfolds.</div>
   </div>
   <div class="fg-card">
     <div class="fgc-n">Direction 06</div>
     <div class="fgc-title">Advanced architectures</div>
-    <div class="fgc-desc">Explore deep learning approaches — LSTMs for sequential match-form modeling, Transformers for player-interaction graphs. The 96% accuracy baseline set here provides a strong benchmark for these explorations.</div>
+    <div class="fgc-desc">Explore LSTMs for sequential match-form modelling, Transformers for player-interaction graphs. The 96% accuracy baseline set here provides a strong benchmark for these explorations.</div>
   </div>
 </div>
 
-<!-- CONCLUSION -->
-<div class="sh">
+<!-- ══════════════════════════════
+     REFERENCES
+     ══════════════════════════════ -->
+<div class="sh scroll-target" id="refs">
   <div class="sh-line"><div class="sh-num">// 09</div><div class="sh-rule"></div></div>
-  <div class="sh-title">Conclusion</div>
+  <div class="sh-title">References — <em>92 citations</em></div>
 </div>
 
-<div class="conclusion">
-  <div class="conc-left">
-    <div class="conc-title">A 96% accuracy that reshapes the field.</div>
-    <div class="conc-body">Previous research in football match prediction achieved a ceiling of approximately 85% accuracy using Random Forest on limited seasonal data. This thesis pushed beyond that boundary by combining three key innovations: <strong>a much larger dataset (23 EPL seasons)</strong>, the integration of bookmakers' odds data alongside traditional match statistics, and carefully engineered features — particularly streak and form metrics — that capture the temporal momentum of teams across a season.<br><br>The finding that Logistic Regression outperformed far more complex models is not a failure of complexity — it is a demonstration of what proper feature engineering can accomplish. When the input data is well-structured and the features are meaningful, a linear model's interpretability becomes an advantage rather than a limitation.<br><br>The study also demonstrates the real cost of narrow datasets. Prior work based on two seasons or cup events cannot generalize conclusions about EPL football dynamics. Twenty-three seasons of data reveals patterns that are simply invisible in shorter windows.</div>
-  </div>
-  <div class="conc-right">
-    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--rule)">Key findings</div>
-    <div class="kf-item">
-      <div class="kf-n">01</div>
-      <div class="kf-text"><strong>96% accuracy</strong> — best achieved by Logistic Regression + Randomized Search</div>
-    </div>
-    <div class="kf-item">
-      <div class="kf-n">02</div>
-      <div class="kf-text"><strong>Bookmakers' data</strong> substantially improved predictive accuracy when fused with match stats</div>
-    </div>
-    <div class="kf-item">
-      <div class="kf-n">03</div>
-      <div class="kf-text"><strong>Streak &amp; form</strong> — engineered features proved crucial to model performance</div>
-    </div>
-    <div class="kf-item">
-      <div class="kf-n">04</div>
-      <div class="kf-text"><strong>Linear models</strong> can outperform ensembles with quality feature engineering</div>
-    </div>
-    <div class="kf-item">
-      <div class="kf-n">05</div>
-      <div class="kf-text"><strong>Cross-league generalization</strong> remains an open challenge — EPL-trained models don't transfer cleanly</div>
-    </div>
-    <div class="kf-item">
-      <div class="kf-n">06</div>
-      <div class="kf-text"><strong>SMOTE</strong> meaningfully improved Ensemble performance — class balance matters in football data</div>
-    </div>
-  </div>
+<div class="ref-list">
+  <div class="ref-item"><span class="ref-num">[1]</span>Antonio Ardá Suárez. <em>Best Practice Approaches in Women's Sports.</em> Frontiers Media SA, 2023.</div>
+  <div class="ref-item"><span class="ref-num">[2][3]</span>M. George. <em>Application of Machine Learning Technique to Discover Useful Knowledge from Event Data in Soccer.</em> 2015.</div>
+  <div class="ref-item"><span class="ref-num">[4]</span>R. Baboota and H. Kaur. "Predictive analysis and modelling football results using ML approach for English Premier League." <em>International Journal of Forecasting,</em> vol. 35, no. 2, pp. 741–755, Apr. 2019.</div>
+  <div class="ref-item"><span class="ref-num">[5]</span>D. Choi and S. K. Hui. "The role of surprise: Understanding overreaction and underreaction using in-play soccer betting market." <em>Journal of Economic Behavior &amp; Organization,</em> vol. 107, pp. 614–629, Nov. 2014.</div>
+  <div class="ref-item"><span class="ref-num">[6]</span>A. Scoto. "The history of football (soccer)." Footballhistory.org, 2014.</div>
+  <div class="ref-item"><span class="ref-num">[7][8]</span>B. Drust and M. Green. "Science and football: evaluating the influence of science on performance." <em>Journal of Sports Sciences,</em> vol. 31, no. 13, pp. 1377–1382, Aug. 2013.</div>
+  <div class="ref-item"><span class="ref-num">[9]</span>D. Kilvington. "The English premier league: a socio-cultural analysis." <em>Soccer &amp; Society,</em> pp. 1–3, Oct. 2018.</div>
+  <div class="ref-item"><span class="ref-num">[10]</span>N. Razali et al. "Predicting Football Matches Results using Bayesian Networks for EPL." <em>IOP Conference Series: Materials Science and Engineering,</em> vol. 226, p. 012099, Aug. 2017.</div>
+  <div class="ref-item"><span class="ref-num">[11]</span>J. Knoll and J. Stübinger. "Machine-Learning-Based Statistical Arbitrage Football Betting." <em>KI – Künstliche Intelligenz,</em> vol. 34, no. 1, pp. 69–80, Jul. 2019.</div>
+  <div class="ref-item"><span class="ref-num">[12]</span>H. Rue and O. Salvesen. "Prediction and Retrospective Analysis of Soccer Matches in a League." <em>J. Royal Statistical Society: Series D,</em> vol. 49, no. 3, pp. 399–418, Sep. 2000.</div>
+  <div class="ref-item"><span class="ref-num">[13]</span>M. Crowder, M. Dixon, A. Ledford, and M. Robinson. "Dynamic modelling and prediction of English Football League matches for betting." <em>J. Royal Statistical Society: Series D,</em> vol. 51, no. 2, pp. 157–168, Jun. 2002.</div>
+  <div class="ref-item"><span class="ref-num">[14]</span>J. Goddard. "Regression models for forecasting goals and match results in association football." <em>International Journal of Forecasting,</em> vol. 21, no. 2, pp. 331–340, Apr. 2005.</div>
+  <div class="ref-item"><span class="ref-num">[15]</span>D. Karlis and I. Ntzoufras. "Robust fitting of football prediction models." <em>IMA Journal of Management Mathematics,</em> vol. 22, no. 2, pp. 171–182, Oct. 2010.</div>
+  <div class="ref-item"><span class="ref-num">[16][26][36]</span>A. Joseph, N. E. Fenton, and M. Neil. "Predicting football results using Bayesian nets and other machine learning techniques." <em>Knowledge-Based Systems,</em> vol. 19, no. 7, pp. 544–553, Nov. 2006.</div>
+  <div class="ref-item"><span class="ref-num">[17]</span>F. Owramipur, P. Eskandarian, and F. S. Mozneb. "Football Result Prediction with Bayesian Network in Spanish League-Barcelona Team." <em>International Journal of Computer Theory and Engineering,</em> pp. 812–815, 2013.</div>
+  <div class="ref-item"><span class="ref-num">[18]</span>L. M. Hvattum and H. Arntzen. "Using ELO ratings for match result prediction in association football." <em>International Journal of Forecasting,</em> vol. 26, no. 3, pp. 460–470, Jul. 2010.</div>
+  <div class="ref-item"><span class="ref-num">[19][20]</span>A. C. Constantinou and N. E. Fenton. "Determining the level of ability of football teams by dynamic ratings based on relative discrepancies in scores." <em>Journal of Quantitative Analysis in Sports,</em> vol. 9, no. 1, pp. 37–50, Mar. 2013.</div>
+  <div class="ref-item"><span class="ref-num">[21]</span>M. J. Dixon and S. G. Coles. "Modelling Association Football Scores and Inefficiencies in the Football Betting Market." <em>J. Royal Statistical Society: Series C,</em> vol. 46, no. 2, pp. 265–280, May 1997.</div>
+  <div class="ref-item"><span class="ref-num">[22]</span>S. J. Koopman and R. Lit. "A dynamic bivariate Poisson model for analysing and forecasting match results in the EPL." <em>J. Royal Statistical Society: Series A,</em> vol. 178, no. 1, pp. 167–186, Oct. 2013.</div>
+  <div class="ref-item"><span class="ref-num">[23]</span>A. P. Rotshtein, M. Posner, and A. B. Rakityanskaya. "Football Predictions Based on a Fuzzy Model with Genetic and Neural Tuning." <em>Cybernetics and Systems Analysis,</em> vol. 41, no. 4, pp. 619–630, Jul. 2005.</div>
+  <div class="ref-item"><span class="ref-num">[24]</span>F. Godin, J. Zuallaert, B. Vandersmissen, W. De Neve, and Van. "Beating the bookmakers: leveraging statistics and Twitter microposts for predicting soccer results." Jan. 2014.</div>
+  <div class="ref-item"><span class="ref-num">[25]</span>S. Hirano and S. Tsumoto. "Grouping of soccer game records by multiscale comparison technique and rough clustering." Jan. 2005.</div>
+  <div class="ref-item"><span class="ref-num">[27]</span>Hucaljuk and Rakipovic. "Predicting football scores using machine learning techniques." <em>2011 Proceedings of the 34th International Convention MIPRO,</em> pp. 1623–1627, Jan. 2011.</div>
+  <div class="ref-item"><span class="ref-num">[28]</span>P. Lucey, A. Bialkowski, P. Carr, E. Foote, and I. Matthews. "Characterising Multi-Agent Team Behavior from Partial Team Tracings." <em>AAAI Conference on Artificial Intelligence,</em> vol. 26, no. 1, pp. 1387–1393, Sep. 2021.</div>
+  <div class="ref-item"><span class="ref-num">[29]</span>Chassy P. "Team play in football: How science supports FC Barcelona's training strategy." <em>Psychology</em> 2013; 4: 7.</div>
+  <div class="ref-item"><span class="ref-num">[30]</span>X. Wei, L. Sha, P. Lucey, S. Morgan, and S. Sridharan. "Large-Scale Analysis of Formations in Soccer." IEEE Xplore, Nov. 2013.</div>
+  <div class="ref-item"><span class="ref-num">[31]</span>A. Bialkowski, P. Lucey, P. Carr, Y. Yue, and I. Matthews. "Win at home and draw away: automatic formation analysis." Mar. 2014.</div>
+  <div class="ref-item"><span class="ref-num">[32]</span>H. Eggels, R. van Elk, and M. Pechenizkiy. "Explaining soccer match outcomes with goal scoring opportunities predictive analytics." vol. 1842, Jan. 2016.</div>
+  <div class="ref-item"><span class="ref-num">[33]</span>F. Warnakulasuriya, X. Wei, C. Fookes, S. Sridharan, and P. Lucey. "Discovering methods of scoring in soccer using tracking data." Jan. 2015.</div>
+  <div class="ref-item"><span class="ref-num">[34][42]</span>H. M. Le, P. Carr, Y. Yue, and P. Lucey. "DATA-DRIVEN GHOSTING USING DEEP IMITATION LEARNING." Mar. 2017.</div>
+  <div class="ref-item"><span class="ref-num">[35]</span>D. Memmert, K. A. P. M. Lemmink, and J. Sampaio. "Current Approaches to Tactical Performance Analyses in Soccer Using Position Data." <em>Sports Medicine,</em> vol. 47, no. 1, pp. 1–10, Jun. 2016.</div>
+  <div class="ref-item"><span class="ref-num">[37]</span>S. Chawla, J. Estephan, J. Gudmundsson, and M. Horton. "Classification of Passes in Football Matches Using Spatiotemporal Data." <em>ACM Transactions on Spatial Algorithms and Systems,</em> vol. 3, no. 2, pp. 1–30, Aug. 2017.</div>
+  <div class="ref-item"><span class="ref-num">[38]</span>B. Ćwiklinski, A. Giełczyk, and M. Choraś. "Who Will Score? A Machine Learning Approach to Supporting Football Team Building and Transfers." <em>Entropy,</em> vol. 23, no. 1, p. 90, Jan. 2021.</div>
+  <div class="ref-item"><span class="ref-num">[40]</span>N. Rommers et al. "A Machine Learning Approach to Assess Injury Risk in Elite Youth Football Players." <em>Medicine &amp; Science in Sports &amp; Exercise,</em> vol. 52, no. 8, pp. 1745–1751, Feb. 2020.</div>
+  <div class="ref-item"><span class="ref-num">[43]</span>C. Merhej, R. Beal, S. Ramchurn, and T. Matthews. "What Happened Next? Using Deep Learning to Value Defensive Actions in Football Event-Data." <em>Proceedings of the 27th ACM SIGKDD,</em> pp. 3394–3403, Aug. 2021.</div>
+  <div class="ref-item"><span class="ref-num">[44][45]</span>P. R. Mourão. "Soccer transfers, team efficiency and the sports cycle in the most valued European soccer leagues." <em>Applied Economics,</em> vol. 48, no. 56, pp. 5513–5524, May 2016.</div>
+  <div class="ref-item"><span class="ref-num">[46]</span>A. Zimmermann-Niefield et al. "Youth Learning Machine Learning through Building Models of Athletic Moves." <em>ACM International Conference on Interaction Design and Children,</em> Jun. 2019.</div>
+  <div class="ref-item"><span class="ref-num">[47]</span>D. Sun. "An Overview of Machine Learning Applications in the Football Field." <em>Applied and Computational Engineering,</em> vol. 8, pp. 318–322, Aug. 2023.</div>
+  <div class="ref-item"><span class="ref-num">[49][51][55]</span>"Improved Least Squares Football, Basketball, and Soccer Predictions." <em>IEEE Transactions on Systems, Man, and Cybernetics,</em> vol. 10, no. 2, pp. 116–123, 1980.</div>
+  <div class="ref-item"><span class="ref-num">[50]</span>R. G. Ricard Gil and S. D. Levitt. "TESTING THE EFFICIENCY OF MARKETS IN THE 2002 WORLD CUP." <em>The Journal of Prediction Markets,</em> vol. 1, no. 3, pp. 255–270, Dec. 2012.</div>
+  <div class="ref-item"><span class="ref-num">[52]</span>F. Archontakis and E. Osborne. "Playing It Safe? A Fibonacci Strategy for Soccer Betting." <em>Journal of Sports Economics,</em> vol. 8, no. 3, pp. 295–308, Apr. 2007.</div>
+  <div class="ref-item"><span class="ref-num">[53]</span>M. Spann and B. Skiera. "Sports forecasting: comparison of the forecast accuracy of prediction markets, betting odds and tipsters." <em>Journal of Forecasting,</em> vol. 28, no. 1, pp. 55–72, Jan. 2009.</div>
+  <div class="ref-item"><span class="ref-num">[54]</span>A. Zeileis, C. Leitner, and K. Hornik. "Probabilistic forecasts for the FIFA World Cup based on the bookmaker consensus model." 2018.</div>
+  <div class="ref-item"><span class="ref-num">[56]</span>F. Lisi. "Tennis betting: can statistics beat bookmakers?" vol. 10, no. 3, pp. 790–808, Nov. 2017.</div>
+  <div class="ref-item"><span class="ref-num">[57–59]</span>"Types of Football Bet." olbg.com, 2024. · P. M. Anderson. <em>Sports betting: law and policy.</em> T.M.C. Asser Press. · R. Spade. <em>Sports Betting Strategy.</em> CreateSpace, 2010.</div>
+  <div class="ref-item"><span class="ref-num">[60]</span>Brian García Sarmina, G.-H. Sun, and S.-H. Dong. "PCA and t-SNE Analysis in the Study of QAOA." <em>Entropy,</em> vol. 25, no. 11, pp. 1499–1499, Oct. 2023.</div>
+  <div class="ref-item"><span class="ref-num">[61–66]</span>S. Nickolas. "What does it mean if the correlation coefficient is positive, negative, or zero?" Investopedia, 2021. · N. Kumar. "Feature Scaling: Normalization, Standardization." Analytics Vidhya, 2020. · V. Kanade. "What Is Logistic Regression?" Spiceworks, 2022. · J. Zornoza. "Logistic Regression Explained." Medium, 2020. · "Mathematics Behind SVM." Analytics Vidhya, 2020. · A. Kumar. "SVM Python Example." Data Analytics, 2022.</div>
+  <div class="ref-item"><span class="ref-num">[67–75]</span>"Random Forest." CFI. · sklearn AdaBoostClassifier docs. · Z. Wang et al. "Realizing Low-Energy Classification Systems." IEEE Trans. Biomed. Circuits, 2015. · Y. Wang et al. "A hybrid ensemble method for pulsar candidate classification." Astrophysics and Space Science, 2019. · U. Tewari. "Regularization — Understanding L1 and L2." Analytics Vidhya, 2021. · "Hard voting, soft voting." Cross Validated. · E. Lewinson. "Ensemble learning using the Voting Classifier." Medium, 2020. · E. G. PhD. "SMOTE: Empowering AI through Imbalanced Data Handling." Medium, 2024. · lazyroar. "SMOTE for Imbalanced Classification." 2024.</div>
+  <div class="ref-item"><span class="ref-num">[76–90]</span>R. Shah. "GridSearchCV." Analytics Vidhya, 2021. · J. Brownlee. "Hyperparameter Optimization With Random Search and Grid Search." ML Mastery, 2020. · Kaggle.com, 2022. · int.soccerway.com · eurosport.com · rsssf.com · tbwsport.com · livescore.com · sportinglife.com · espn.com/soccer/ · bundesliga.com · gazzetta.it · football.fr · betbrain.com · rootdata.com/BetBase</div>
+  <div class="ref-item"><span class="ref-num">[91]</span>Joleen. "Evaluating Classification Models: Understanding the Confusion Matrix and ROC Curves." Statistically Relevant, Dec. 2023.</div>
+  <div class="ref-item"><span class="ref-num">[92]</span>"Precision-Recall Curve | ML." GeeksforGeeks, Jul. 2019.</div>
 </div>
 
-</div><!-- end body -->
+<!-- ══════════════════════════════
+     ORIGINALITY REPORT
+     ══════════════════════════════ -->
+<div class="sh scroll-target" id="plag">
+  <div class="sh-line"><div class="sh-num">// 10</div><div class="sh-rule"></div></div>
+  <div class="sh-title">Originality Report — <em>Plagiarism Check</em></div>
+</div>
+<div class="plag-card">
+  <div class="plag-big">29%</div>
+  <div class="plag-lbl">Similarity Index · Turnitin · 1803044_Thesis_Book.pdf</div>
+  <div style="font-size:10.5px;color:var(--dim);margin-bottom:6px;font-family:var(--mono);letter-spacing:.06em">SIMILARITY INDEX</div>
+  <div class="plag-bar-bg"><div class="plag-bar-fill"></div></div>
+  <div class="plag-src-row"><span class="plag-sn">github.com (Internet)</span><span class="plag-sp">527 words — 2%</span></div>
+  <div class="plag-src-row"><span class="plag-sn">arxiv.org (Internet)</span><span class="plag-sp">387 words — 2%</span></div>
+  <div class="plag-src-row"><span class="plag-sn">www.researchgate.net (Internet)</span><span class="plag-sp">295 words — 1%</span></div>
+  <div class="plag-src-row"><span class="plag-sn">Advit Sharma — "Anomaly Detection…" IEEE, 2023</span><span class="plag-sp">211 words — 1%</span></div>
+  <div class="plag-src-row"><span class="plag-sn">Kamya Brata Debnath et al. — "Advanced Collision…" ICACRS, 2023</span><span class="plag-sp">119 words — 1%</span></div>
+  <div class="plag-src-row"><span class="plag-sn">mecs-press.net (Internet)</span><span class="plag-sp">97 words — &lt;1%</span></div>
+  <div class="plag-src-row"><span class="plag-sn">link.springer.com (Internet)</span><span class="plag-sp">96 words — &lt;1%</span></div>
+</div>
+
+</div><!-- end body-wrap -->
 
 <div class="site-footer">
   <div class="sf-l">BSc Thesis · RUET · Dept. of CSE · Roll No. 1803044 · April 2024</div>
-  <div class="sf-r">Notes by Al Amin</div>
+  <div class="sf-r">Al-Amin · Predictive Modeling of Football Match Outcomes</div>
 </div>
 
+</main>
+</div>
+
+<script>
+const sections = document.querySelectorAll('.scroll-target, [id]');
+const navLinks = document.querySelectorAll('.nav-item[href]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + id) a.classList.add('active');
+      });
+    }
+  });
+}, { threshold: 0.1, rootMargin: '-40px 0px -60% 0px' });
+document.querySelectorAll('[id]').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
