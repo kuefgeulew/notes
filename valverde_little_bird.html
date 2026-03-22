@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valverde — The Little Bird Takes Flight</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Barlow+Condensed:wght@600;700;900&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #F8F6F1; color: #0D0D0D; font-family: 'Source Serif 4', Georgia, serif; }
+
+.masthead { border-top: 6px solid #0D0D0D; border-bottom: 2px solid #0D0D0D; padding: 10px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; max-width: 980px; margin: 0 auto; }
+.mh-left { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #666; }
+.mh-mid  { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; }
+.mh-right{ font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #666; text-align: right; }
+
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 32px 64px; }
+
+.headline-block { border-bottom: 2px solid #0D0D0D; padding: 30px 0 22px; }
+.kicker { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: #C1121F; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.kicker::after { content: ''; flex: 1; height: 1px; background: #C1121F; }
+.headline { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; line-height: .93; letter-spacing: -.03em; margin-bottom: 16px; }
+.headline em { font-style: italic; color: #C1121F; }
+.deck { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 600; line-height: 1.35; color: #333; max-width: 680px; margin-bottom: 16px; }
+.byline-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.byline { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #555; }
+.score-pill { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 900; letter-spacing: .06em; background: #0D0D0D; color: #F8F6F1; padding: 4px 14px; border-radius: 2px; }
+.score-pill span { color: #C1121F; }
+
+.main-layout { display: grid; grid-template-columns: 1fr 260px; gap: 36px; padding-top: 28px; }
+
+.body-copy { font-size: 16px; line-height: 1.82; color: #1a1a1a; }
+.body-copy p { margin-bottom: 18px; }
+.body-copy p:first-child::first-letter { font-family: 'Playfair Display', serif; font-size: 74px; font-weight: 900; float: left; line-height: .82; margin: 8px 10px 0 0; color: #C1121F; }
+
+.col-rule { border-left: 1px solid #0D0D0D; padding-left: 28px; }
+
+.sidebar { display: flex; flex-direction: column; gap: 0; }
+.sb-section { border-top: 2px solid #0D0D0D; padding: 16px 0; }
+.sb-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: #C1121F; margin-bottom: 10px; }
+
+.goal-entry { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #ddd; }
+.goal-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.goal-num  { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; line-height: 1; color: #C1121F; }
+.goal-name { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-top: 2px; }
+.goal-desc { font-size: 12px; line-height: 1.65; color: #444; margin-top: 4px; font-style: italic; }
+
+.stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid #eee; }
+.stat-row:last-child { border-bottom: none; }
+.stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #666; }
+.stat-val { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; }
+
+.rx { padding: 12px; margin-bottom: 5px; }
+.rx:last-child { margin-bottom: 0; }
+.rx-quote { font-family: 'Playfair Display', serif; font-size: 13px; font-style: italic; line-height: 1.6; margin-bottom: 6px; }
+.rx-name  { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+
+.phase-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid #0D0D0D; margin: 24px 0; }
+.phase { padding: 14px 16px; border-right: 1px solid #0D0D0D; }
+.phase:last-child { border-right: none; }
+.phase-time { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+.phase-role { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; margin-bottom: 5px; }
+.phase-desc { font-size: 11px; line-height: 1.6; color: #555; }
+
+.pull-quote { border-top: 3px solid #0D0D0D; border-bottom: 1px solid #0D0D0D; padding: 18px 0; margin: 24px 0; }
+.pq-text { font-family: 'Playfair Display', serif; font-size: 24px; font-style: italic; font-weight: 700; line-height: 1.35; letter-spacing: -.01em; }
+.pq-attr { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #888; margin-top: 8px; }
+
+.ctx-strip { border-top: 2px solid #0D0D0D; padding-top: 20px; margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.ctx-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: #C1121F; margin-bottom: 8px; }
+.ctx-body  { font-size: 13px; line-height: 1.78; color: #333; }
+
+.footer-rule { border-top: 6px solid #0D0D0D; margin-top: 48px; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.ft-left  { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; font-style: italic; }
+.ft-right { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #888; }
+
+@media (max-width: 680px) {
+  .headline { font-size: 36px; }
+  .main-layout { grid-template-columns: 1fr; }
+  .col-rule { border-left: none; padding-left: 0; border-top: 2px solid #0D0D0D; padding-top: 24px; }
+  .phase-strip { grid-template-columns: 1fr; }
+  .phase { border-right: none; border-bottom: 1px solid #0D0D0D; }
+  .phase:last-child { border-bottom: none; }
+  .ctx-strip { grid-template-columns: 1fr; }
+  .wrap { padding: 0 20px 48px; }
+  .masthead { padding: 10px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="mh-left">Champions League · R16 · 2nd Leg</div>
+  <div class="mh-mid">The Bernabéu</div>
+  <div class="mh-right">Wed 11 Mar 2026</div>
+</div>
+
+<div class="wrap">
+
+  <div class="headline-block">
+    <div class="kicker">Match Report &nbsp;·&nbsp; Real Madrid vs Manchester City</div>
+    <div class="headline">The Little<br>Bird <em>flies</em></div>
+    <div class="deck">Valverde scores a 22-minute hat-trick, plays auxiliary right-back, and produces one of the great individual performances this stadium has ever staged</div>
+    <div class="byline-row">
+      <div class="byline">Real Madrid 3 – 0 Manchester City</div>
+      <div class="score-pill">Valverde <span>⚽ ⚽ ⚽</span></div>
+    </div>
+  </div>
+
+  <div class="main-layout">
+
+    <div>
+      <div class="body-copy">
+        <p>He walked out carrying a pennant, touched palms with the kids lining the tunnel, and stepped into the light. Forty-five minutes later he walked back inside, paused briefly, and clenched his fist. Low-key, all things considered — given what he had just done was barely believable, even by the standards of a stadium that has hosted a great many barely believable things.</p>
+        <p>On the tunnel wall there is a slogan from Alfredo Di Stéfano: no player is as good as all the players put together. That is true, of course. But it had been tested here — because Valverde sometimes seems to be all the players put together. A man with four lungs and three first-half goals, all of them brilliant.</p>
+      </div>
+
+      <div class="phase-strip">
+        <div class="phase">
+          <div class="phase-time">1′ – 20′</div>
+          <div class="phase-role">Right-back</div>
+          <div class="phase-desc">Madrid appeared overrun. Valverde dropped to protect, holding the structure together while the team found its footing.</div>
+        </div>
+        <div class="phase" style="background:#0D0D0D">
+          <div class="phase-time" style="color:#C1121F">20′ – 42′</div>
+          <div class="phase-role" style="color:#F8F6F1">The 7, 8, 9 &amp; 10</div>
+          <div class="phase-desc" style="color:#888">Three goals in 22 minutes. Everywhere across the attacking third — wide, central, in the box. One man, every position at once.</div>
+        </div>
+        <div class="phase">
+          <div class="phase-time">45′ – 90′</div>
+          <div class="phase-role">Right-back again</div>
+          <div class="phase-desc">Returned to defend. One last tackle. Clean sheet secured. Victory — his, above all.</div>
+        </div>
+      </div>
+
+      <div class="body-copy">
+        <p>The first goal set the tone. Courtois played an exceptional long diagonal to the right touchline where, with one touch and on the bounce, Valverde controlled and guided it past O'Reilly — who should have taken him down. Three touches, 100 yards, and Madrid had a lead that would prove unassailable. The second was taken in stride with his right and struck hard and low with his left. The third — Brahim's scooped ball, a nudge over Guéhi, a volley past Donnarumma — had a hint of Bergkamp to it, and might not even have been the best of the three.</p>
+      </div>
+
+      <div class="pull-quote">
+        <div class="pq-text">"I've run out of words. He's the most underrated footballer on the planet — and has been for years."</div>
+        <div class="pq-attr">— Trent Alexander-Arnold</div>
+      </div>
+
+      <div class="body-copy">
+        <p>This hasn't been an easy season for Valverde. He expressed displeasure at playing right-back, was whistled by his own fans, met with white hankies in the stands, and stood accused during Madrid's collapse. The No 8 shirt he wore tonight was Kroos's last gift to him. The weight of it was real.</p>
+        <p>He stood accused before. Tonight he stood taller than anyone. After the third goal, Bellingham's mouth fell open in a big O of disbelief — and then he just started laughing. In a different box, Mbappé clambered over a seat roaring. Valverde blew out his cheeks. Bloody hell. This wasn't supposed to happen. Only in this stadium, what's not supposed to happen is exactly what's supposed to happen.</p>
+      </div>
+
+      <div class="ctx-strip">
+        <div>
+          <div class="ctx-label">Arbeloa's verdict</div>
+          <div class="ctx-body">"A 21st-century Juanito." The late, loved striker was Madrid's patron saint of the impossible. "This shows that we are Real Madrid and you should never give us up for dead."</div>
+        </div>
+        <div>
+          <div class="ctx-label">A birthday coincidence</div>
+          <div class="ctx-body">Waiting at the tunnel was Pirri — the club's honorary president, turning 81 — the only other midfielder to score a European Cup hat-trick for this club. He had company now.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-rule sidebar">
+
+      <div class="sb-section">
+        <div class="sb-label">The three goals</div>
+        <div class="goal-entry">
+          <div class="goal-num">I</div>
+          <div class="goal-name">Three touches, 100 yards</div>
+          <div class="goal-desc">Courtois's diagonal, one touch on the bounce, past O'Reilly, all the way to the area. Donnarumma withdrew his hand. Valverde went past him.</div>
+        </div>
+        <div class="goal-entry">
+          <div class="goal-num">II</div>
+          <div class="goal-name">Right foot, then left</div>
+          <div class="goal-desc">Taken in stride with his right. Struck hard and low with his left. Not bad, as second goals go.</div>
+        </div>
+        <div class="goal-entry">
+          <div class="goal-num">III</div>
+          <div class="goal-name">A hint of Bergkamp</div>
+          <div class="goal-desc">Brahim's scooped ball. A nudge over Guéhi. A volley past Donnarumma. Possibly not even the best of the three.</div>
+        </div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-label">Numbers</div>
+        <div class="stat-row"><span class="stat-label">Goals</span><span class="stat-val">3</span></div>
+        <div class="stat-row"><span class="stat-label">Hat-trick span</span><span class="stat-val">22′</span></div>
+        <div class="stat-row"><span class="stat-label">Clean sheet</span><span class="stat-val">Yes</span></div>
+        <div class="stat-row"><span class="stat-label">Positions played</span><span class="stat-val">5+</span></div>
+        <div class="stat-row"><span class="stat-label">Match ball</span><span class="stat-val">Kept</span></div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-label">Reactions</div>
+        <div class="rx" style="background:#0D0D0D">
+          <div class="rx-quote" style="color:#F8F6F1">"His mouth fell open in a big O of disbelief. Then he just started laughing."</div>
+          <div class="rx-name" style="color:#666">Jude Bellingham</div>
+        </div>
+        <div class="rx" style="background:#C1121F">
+          <div class="rx-quote" style="color:#F8F6F1">Clambered over a seat roaring.</div>
+          <div class="rx-name" style="color:#F8F6F180">Kylian Mbappé</div>
+        </div>
+        <div class="rx" style="background:#F1EFE8;border:1px solid #ddd">
+          <div class="rx-quote" style="color:#1a1a1a">"It's been a long time since I enjoyed a night like this."</div>
+          <div class="rx-name" style="color:#888">Fede Valverde</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-rule">
+    <div class="ft-left">Real Madrid 3 – 0 Manchester City</div>
+    <div class="ft-right">Santiago Bernabéu · 11 March 2026 · UCL R16</div>
+  </div>
+
+</div>
+</body>
+</html>
