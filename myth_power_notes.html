@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Myth, Power & Mass Psychology — Structural Notes</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f5f4f0; color: #1a1a18; padding: 24px 16px; min-height: 100vh; }
+.page { max-width: 680px; margin: 0 auto; }
+
+/* Section label */
+.sl { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #888780; margin-bottom: 9px; }
+
+/* Divider */
+hr { border: none; border-top: 1px solid #D3D1C7; margin: 20px 0; }
+
+/* Section header */
+.sh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+.sn { font-size: 20px; font-weight: 700; color: #1a1a18; }
+.stag { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* Tiles row */
+.tiles { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.tile { min-width: 56px; padding: 0 10px; height: 60px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.tile .tl { font-size: 13px; font-weight: 700; line-height: 1.2; text-align: center; }
+.tile .tp { font-size: 10px; font-weight: 500; text-align: center; opacity: .8; }
+
+/* Tile colors */
+.t-red  { background: #E24B4A; } .t-red  .tl { color: #FCEBEB; } .t-red  .tp { color: #F7C1C1; }
+.t-dark { background: #2C2C2A; } .t-dark .tl { color: #F1EFE8; } .t-dark .tp { color: #B4B2A9; }
+.t-amber{ background: #BA7517; } .t-amber .tl { color: #FAEEDA; } .t-amber .tp { color: #FAC775; }
+.t-teal { background: #1D9E75; } .t-teal .tl { color: #E1F5EE; } .t-teal .tp { color: #9FE1CB; }
+.t-purple{background: #534AB7; } .t-purple .tl { color: #EEEDFE; } .t-purple .tp { color: #AFA9EC; }
+.t-gray { background: #888780; } .t-gray .tl { color: #F1EFE8; } .t-gray .tp { color: #D3D1C7; }
+.t-coral{ background: #D85A30; } .t-coral .tl { color: #FAECE7; } .t-coral .tp { color: #F5C4B3; }
+
+/* Info boxes */
+.box { border-radius: 8px; padding: 12px 15px; margin: 10px 0; font-size: 12px; line-height: 1.65; }
+.box b { font-weight: 700; }
+.box-red    { background: #FCEBEB; border: 1px solid #F09595; color: #791F1F; }
+.box-amber  { background: #FAEEDA; border: 1px solid #EF9F27; color: #412402; }
+.box-blue   { background: #EEEDFE; border: 1px solid #AFA9EC; color: #3C3489; }
+.box-teal   { background: #E1F5EE; border: 1px solid #5DCAA5; color: #085041; }
+.box-dark   { background: #2C2C2A; border: 1px solid #444441; color: #D3D1C7; }
+.box-gray   { background: #F1EFE8; border: 1px solid #B4B2A9; color: #2C2C2A; }
+
+/* Two-column grid */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin: 10px 0; }
+.gc { border-radius: 8px; padding: 11px 13px; }
+.gc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+.gc-body { font-size: 12px; line-height: 1.6; }
+
+/* Pipeline */
+.pipeline { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 10px 0; }
+.pipe-step { border-radius: 7px; padding: 8px 13px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pipe-arrow { font-size: 16px; color: #B4B2A9; padding: 0 4px; }
+
+/* Quote / compression block */
+.compression { border-radius: 10px; padding: 18px 20px; margin: 10px 0; }
+.comp-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; font-size: 14px; }
+.comp-row:last-child { margin-bottom: 0; }
+.comp-key { font-weight: 700; min-width: 80px; }
+.comp-val { font-size: 12px; line-height: 1.5; }
+
+/* Total card */
+.total { border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+.tot-lbl { font-size: 13px; font-weight: 600; }
+.tot-sub { font-size: 11px; margin-top: 3px; opacity: .75; }
+.tot-n { font-size: 28px; font-weight: 700; }
+
+/* Trade row */
+.trade { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 13px; }
+.trade-from { background: #FCEBEB; border: 1px solid #F09595; border-radius: 5px; padding: 4px 10px; font-weight: 700; color: #791F1F; }
+.trade-to { background: #E1F5EE; border: 1px solid #5DCAA5; border-radius: 5px; padding: 4px 10px; font-weight: 700; color: #085041; }
+.trade-arrow { color: #888780; font-size: 16px; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+thead tr { border-bottom: 1px solid #D3D1C7; }
+th { padding: 6px 8px; font-weight: 600; color: #888780; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; text-align: left; }
+td { padding: 7px 8px; border-bottom: 1px solid #E8E6E0; vertical-align: top; }
+tr.hl td { background: #FCEBEB; }
+
+/* Tag badge */
+.badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+.badge-red    { background: #FCEBEB; color: #A32D2D; border: 1px solid #F09595; }
+.badge-green  { background: #E1F5EE; color: #085041; border: 1px solid #5DCAA5; }
+.badge-amber  { background: #FAEEDA; color: #633806; border: 1px solid #EF9F27; }
+.badge-dark   { background: #2C2C2A; color: #D3D1C7; }
+
+/* Mono flow */
+.flow { font-family: monospace; font-size: 12px; line-height: 2; color: #1a1a18; background: #F1EFE8; border: 1px solid #B4B2A9; border-radius: 8px; padding: 14px 18px; margin: 10px 0; }
+.flow .fl { color: #888780; }
+
+.note { font-size: 11px; color: #888780; font-style: italic; margin-top: 5px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════════════════════════════════════ 1 -->
+<div class="sl">1 of 7 — Myth vs Reality</div>
+<div class="sh">
+  <span class="sn">Myth is not falsehood</span>
+  <span class="stag" style="background:#FAEEDA;color:#633806">Functional construct</span>
+</div>
+
+<div class="tiles">
+  <div class="tile t-gray" style="min-width:80px"><span class="tl">Primitive</span><span class="tp">symbolic stories</span></div>
+  <div class="tile t-amber" style="min-width:80px"><span class="tl">Social</span><span class="tp">binds groups</span></div>
+  <div class="tile t-red" style="min-width:80px"><span class="tl">Political</span><span class="tp">aligns behavior</span></div>
+</div>
+
+<div class="grid2">
+  <div class="gc box-red">
+    <div class="gc-title" style="color:#A32D2D">Reality</div>
+    <div class="gc-body">Fragmented · Complex · Indifferent</div>
+  </div>
+  <div class="gc box-teal">
+    <div class="gc-title" style="color:#085041">Myth</div>
+    <div class="gc-body">Simplified · Coherent · Emotionally satisfying</div>
+  </div>
+</div>
+
+<div class="box box-amber">
+  Humans default to <b>cognitive ease over objective accuracy</b> and <b>narrative coherence over factual precision</b>. Myth wins not because it is true, but because it is usable.
+</div>
+
+<div class="sl" style="margin-top:14px">Operational properties</div>
+<div class="grid3">
+  <div class="gc box-gray"><div class="gc-title">Compress</div><div class="gc-body">Complexity → symbols</div></div>
+  <div class="gc box-gray"><div class="gc-title">Create</div><div class="gc-body">Meaning where none is inherent</div></div>
+  <div class="gc box-gray"><div class="gc-title">Convert</div><div class="gc-body">Randomness → destiny</div></div>
+</div>
+
+<div class="box box-dark" style="margin-top:10px">
+  <b style="color:#F1EFE8">Control over myth = control over</b> <span style="color:#B4B2A9">interpretation of reality · moral framework · collective action</span>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ 2 -->
+<div class="sl">2 of 7 — Nature of Fascism</div>
+<div class="sh">
+  <span class="sn">Power-first. Ideology is packaging.</span>
+  <span class="stag" style="background:#FCEBEB;color:#A32D2D">System architecture</span>
+</div>
+
+<div class="grid2">
+  <div class="gc box-red">
+    <div class="gc-title" style="color:#A32D2D">1 — Ultra-nationalism</div>
+    <div class="gc-body">Nation elevated above individual. Identity becomes collective, not personal.</div>
+  </div>
+  <div class="gc" style="background:#2C2C2A;border:1px solid #444441">
+    <div class="gc-title" style="color:#D3D1C7">2 — Totalitarian structure</div>
+    <div class="gc-body" style="color:#B4B2A9">No separation between State · Society · Individual</div>
+  </div>
+  <div class="gc box-amber">
+    <div class="gc-title" style="color:#633806">3 — Myth engine</div>
+    <div class="gc-body">Glorious past · Existential threat · Destiny-driven future</div>
+  </div>
+  <div class="gc box-gray">
+    <div class="gc-title">4 — Emotional primacy</div>
+    <div class="gc-body">Logic suppressed. Fear · Pride · Anger amplified.</div>
+  </div>
+</div>
+
+<div class="sl" style="margin-top:14px">Control algorithm</div>
+<div class="pipeline">
+  <div class="pipe-step" style="background:#FCEBEB;color:#A32D2D">Create enemy</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#FAEEDA;color:#633806">Trigger fear</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#EEEDFE;color:#3C3489">Offer unity</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#2C2C2A;color:#F1EFE8">Demand obedience</div>
+</div>
+
+<div class="sl" style="margin-top:14px">Language engineering</div>
+<div class="tiles">
+  <div class="tile t-amber"><span class="tl">"Believe"</span><span class="tp">suspend doubt</span></div>
+  <div class="tile t-dark"><span class="tl">"Obey"</span><span class="tp">remove autonomy</span></div>
+  <div class="tile t-red"><span class="tl">"Fight"</span><span class="tp">channel aggression</span></div>
+</div>
+<div class="note">Short slogans replace complex reasoning. Repetition → internalization → belief.</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ 3 -->
+<div class="sl">3 of 7 — Mass Psychology</div>
+<div class="sh">
+  <span class="sn">Masses regress. Individuals don't.</span>
+  <span class="stag" style="background:#EEEDFE;color:#3C3489">Behavioral engine</span>
+</div>
+
+<div class="grid2">
+  <div class="gc box-teal">
+    <div class="gc-title" style="color:#085041">Individual</div>
+    <div class="gc-body">Analytical · Responsible · Self-aware</div>
+  </div>
+  <div class="gc box-red">
+    <div class="gc-title" style="color:#A32D2D">Mass</div>
+    <div class="gc-body">Emotional · Reactive · Anonymous</div>
+  </div>
+</div>
+
+<div class="grid3" style="margin-top:8px">
+  <div class="gc box-amber">
+    <div class="gc-title" style="color:#633806">1 — Illusion preference</div>
+    <div class="gc-body">Truth threatens stability. Illusion maintains comfort.</div>
+  </div>
+  <div class="gc box-gray">
+    <div class="gc-title">2 — Suggestibility</div>
+    <div class="gc-body">Repetition overrides reasoning. Authority replaces evidence.</div>
+  </div>
+  <div class="gc box-red">
+    <div class="gc-title" style="color:#A32D2D">3 — Contagion</div>
+    <div class="gc-body">Feelings spread faster than facts. Crowd amplifies intensity.</div>
+  </div>
+</div>
+
+<div class="sl" style="margin-top:14px">Psychological trade</div>
+<div class="trade"><div class="trade-from">Freedom</div><div class="trade-arrow">→</div><div class="trade-to">Certainty</div></div>
+<div class="trade"><div class="trade-from">Truth</div><div class="trade-arrow">→</div><div class="trade-to">Belonging</div></div>
+
+<div class="box box-dark" style="margin-top:10px">
+  <b style="color:#F1EFE8">Power rule:</b> <span style="color:#B4B2A9">Who supplies meaning → controls behavior</span>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ 4 -->
+<div class="sl">4 of 7 — Myth of Nationalism</div>
+<div class="sh">
+  <span class="sn">Nation is imagined and maintained.</span>
+  <span class="stag" style="background:#FAEEDA;color:#633806">Construction model</span>
+</div>
+
+<div class="grid3">
+  <div class="gc box-gray"><div class="gc-title">Shared story</div><div class="gc-body">History rewritten as destiny. Selective memory.</div></div>
+  <div class="gc box-amber"><div class="gc-title" style="color:#633806">Symbol system</div><div class="gc-body">Flag · Anthem · Rituals. Emotional anchors.</div></div>
+  <div class="gc box-red"><div class="gc-title" style="color:#A32D2D">Boundary creation</div><div class="gc-body">"Us" vs "Them" — identity through exclusion.</div></div>
+</div>
+
+<div class="sl" style="margin-top:14px">Transformation process</div>
+<div class="pipeline">
+  <div class="pipe-step" style="background:#F1EFE8;border:1px solid #B4B2A9;color:#2C2C2A">Individual</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#FAEEDA;color:#633806">Citizen</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#E24B4A;color:#FCEBEB">Believer</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#2C2C2A;color:#F1EFE8">Instrument</div>
+</div>
+
+<div class="grid2" style="margin-top:10px">
+  <div class="gc box-teal"><div class="gc-title" style="color:#085041">Function</div><div class="gc-body">Aligns millions under one identity · Reduces internal conflict · Enables large-scale coordination</div></div>
+  <div class="gc box-red"><div class="gc-title" style="color:#A32D2D">Risk</div><div class="gc-body">Suppresses individuality · Justifies external aggression · Enforces internal conformity</div></div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ 5 -->
+<div class="sl">5 of 7 — Hegel's Influence</div>
+<div class="sh">
+  <span class="sn">History has a direction. Spirit evolves.</span>
+  <span class="stag" style="background:#EEEDFE;color:#3C3489">Philosophical backbone</span>
+</div>
+
+<div class="grid2">
+  <div class="gc box-blue">
+    <div class="gc-title" style="color:#3C3489">Spirit (Geist)</div>
+    <div class="gc-body">Collective consciousness. Evolves through conflict.</div>
+  </div>
+  <div class="gc box-blue">
+    <div class="gc-title" style="color:#3C3489">Dialectic</div>
+    <div class="gc-body">Thesis → Antithesis → Synthesis. Conflict produces progress.</div>
+  </div>
+</div>
+
+<div class="box box-gray" style="margin-top:4px">
+  <b>State as highest form:</b> State = embodiment of rational will. Individual finds meaning within state.
+</div>
+
+<table style="margin-top:12px">
+  <thead><tr><th></th><th>Original Hegel</th><th>Fascist distortion</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="badge badge-green">Premise</span></td>
+      <td>State enables freedom through rational order</td>
+      <td style="color:#A32D2D">State demands submission as highest duty</td>
+    </tr>
+    <tr class="hl">
+      <td><span class="badge badge-red">Result</span></td>
+      <td>Philosophy as liberation</td>
+      <td><b style="color:#A32D2D">Philosophy as justification for authority</b></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ 6 -->
+<div class="sl">6 of 7 — Strategic Interpretation</div>
+<div class="sh">
+  <span class="sn">This is a system, not isolated ideas.</span>
+  <span class="stag" style="background:#2C2C2A;color:#D3D1C7">Power framework</span>
+</div>
+
+<div class="sl">Full pipeline</div>
+<div class="pipeline">
+  <div class="pipe-step" style="background:#FAEEDA;color:#633806">Create myth</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#FCEBEB;color:#A32D2D">Embed emotion</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#EEEDFE;color:#3C3489">Normalize belief</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#E24B4A;color:#FCEBEB">Enforce unity</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-step" style="background:#2C2C2A;color:#F1EFE8">Centralize power</div>
+</div>
+
+<div class="grid2" style="margin-top:12px">
+  <div class="gc box-teal">
+    <div class="gc-title" style="color:#085041">Stability conditions</div>
+    <div class="gc-body">Constant myth reinforcement<br>Continuous threat presence<br>Suppress counter-narratives</div>
+  </div>
+  <div class="gc box-red">
+    <div class="gc-title" style="color:#A32D2D">Failure conditions</div>
+    <div class="gc-body">Exposure to conflicting truth<br>Breakdown of emotional coherence<br>Loss of trust in narrative</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ 7 -->
+<div class="sl">7 of 7 — Personal Reflection</div>
+<div class="sh">
+  <span class="sn">"I rise from ashes" — internal myth</span>
+  <span class="stag" style="background:#E1F5EE;color:#085041">Transformation logic</span>
+</div>
+
+<div class="grid2">
+  <div class="gc box-red"><div class="gc-title" style="color:#A32D2D">Failure</div><div class="gc-body">→ Reinterpreted as foundation</div></div>
+  <div class="gc box-teal"><div class="gc-title" style="color:#085041">Pain</div><div class="gc-body">→ Reframed as growth signal</div></div>
+</div>
+
+<div class="box box-gray" style="margin-top:8px">
+  Personal myth operates the same as political myth: <b>Defines identity · Guides action · Sustains resilience</b>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ Unified model -->
+<div class="sl">Unified model</div>
+<div class="flow">
+<span style="color:#BA7517;font-weight:700">Reality</span>     <span class="fl">chaotic, indifferent, fragmented</span>
+  ↓
+<span style="color:#534AB7;font-weight:700">Myth</span>        <span class="fl">structured meaning, compressed truth</span>
+  ↓
+<span style="color:#E24B4A;font-weight:700">Emotion</span>     <span class="fl">binding force, irrational adhesive</span>
+  ↓
+<span style="color:#888780;font-weight:700">Mass alignment</span>  <span class="fl">individual dissolved into collective</span>
+  ↓
+<span style="color:#2C2C2A;font-weight:700">Power consolidation</span>  <span class="fl">control over meaning = control over people</span>
+</div>
+
+<!-- Final compression card -->
+<div class="total" style="background:#2C2C2A;margin-top:14px">
+  <div>
+    <div class="tot-lbl" style="color:#D3D1C7">Final compression — operating system of mass behavior</div>
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#E24B4A;font-weight:700">Truth fragments</span>
+      <span style="font-size:12px;color:#888780">·</span>
+      <span style="font-size:12px;color:#BA7517;font-weight:700">Myth unifies</span>
+      <span style="font-size:12px;color:#888780">·</span>
+      <span style="font-size:12px;color:#534AB7;font-weight:700">Emotion mobilizes</span>
+      <span style="font-size:12px;color:#888780">·</span>
+      <span style="font-size:12px;color:#F1EFE8;font-weight:700">Power exploits</span>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

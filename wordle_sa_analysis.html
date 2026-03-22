@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wordle 4-Word Greedy Analysis</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f5f4f0; color: #1a1a18; padding: 24px 16px; min-height: 100vh; }
+.page { max-width: 680px; margin: 0 auto; }
+.h1 { font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #888780; margin-bottom: 10px; }
+.pool { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.chip { display: flex; flex-direction: column; align-items: center; width: 40px; padding: 5px 3px; border-radius: 6px; }
+.chip .cl { font-size: 15px; font-weight: 700; line-height: 1.1; }
+.chip .cp { font-size: 10px; margin-top: 1px; }
+.cs { background: #E1F5EE; border: 1px solid #5DCAA5; } .cs .cl { color: #085041; } .cs .cp { color: #0F6E56; }
+.ca { background: #EEEDFE; border: 1px solid #AFA9EC; } .ca .cl { color: #26215C; } .ca .cp { color: #3C3489; }
+.cb { background: #FAEEDA; border: 1px solid #EF9F27; } .cb .cl { color: #412402; } .cb .cp { color: #633806; }
+.cc { background: #F1EFE8; border: 1px solid #B4B2A9; } .cc .cl { color: #2C2C2A; } .cc .cp { color: #5F5E5A; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.li { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #5F5E5A; }
+.ld { width: 10px; height: 10px; border-radius: 2px; }
+hr { border: none; border-top: 1px solid #D3D1C7; margin: 16px 0; }
+.sl { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #888780; margin-bottom: 9px; }
+.wh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.wn { font-size: 22px; font-weight: 700; }
+.ws { font-size: 13px; color: #5F5E5A; }
+.ws b { color: #1a1a18; font-size: 16px; font-weight: 700; }
+.tiles { display: flex; gap: 5px; margin-bottom: 7px; }
+.tile { width: 56px; height: 60px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; position: relative; }
+.tile .tl { font-size: 23px; font-weight: 700; line-height: 1; }
+.tile .tp { font-size: 11px; font-weight: 500; }
+.tile.dim { opacity: 0.38; }
+.tile.dim::after { content: "↩"; position: absolute; top: 3px; right: 4px; font-size: 8px; color: #fff; opacity: 0.8; }
+.tts { background: #1D9E75; } .tts .tl { color: #E1F5EE; } .tts .tp { color: #9FE1CB; }
+.tta { background: #534AB7; } .tta .tl { color: #EEEDFE; } .tta .tp { color: #AFA9EC; }
+.ttb { background: #BA7517; } .ttb .tl { color: #FAEEDA; } .ttb .tp { color: #FAC775; }
+.ttg { background: #888780; } .ttg .tl { color: #F1EFE8; } .ttg .tp { color: #D3D1C7; }
+.calc { font-size: 12px; color: #5F5E5A; line-height: 1.55; }
+.calc b { color: #1a1a18; }
+.note { font-size: 11px; color: #888780; font-style: italic; margin-top: 4px; }
+.red-box { background: #FCEBEB; border: 1px solid #F09595; border-radius: 8px; padding: 10px 14px; margin: 8px 0; font-size: 11px; color: #A32D2D; line-height: 1.55; }
+.red-box b { font-weight: 700; }
+.amber-box { background: #FAEEDA; border: 1px solid #EF9F27; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 12px; color: #412402; line-height: 1.6; }
+.amber-box b { font-weight: 700; }
+.blue-box { background: #EEEDFE; border: 1px solid #AFA9EC; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 12px; color: #3C3489; line-height: 1.6; }
+.blue-box b { font-weight: 700; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+thead tr { border-bottom: 1px solid #D3D1C7; }
+th { padding: 6px 8px; font-weight: 600; color: #888780; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+td { padding: 7px 8px; border-bottom: 1px solid #E8E6E0; }
+tr.best td { background: #E1F5EE; }
+.badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+.badge-green { background: #1D9E75; color: #E1F5EE; }
+.badge-red { background: #FCEBEB; color: #A32D2D; border: 1px solid #F09595; }
+.score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-bottom: 12px; }
+.sc { border-radius: 8px; padding: 10px 8px; text-align: center; }
+.sc-n { font-size: 17px; font-weight: 700; }
+.sc-s { font-size: 10px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-top: 3px; }
+.total { background: #1D9E75; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+.tot-lbl { font-size: 13px; font-weight: 600; color: #9FE1CB; }
+.tot-sub { font-size: 11px; color: #5DCAA5; margin-top: 3px; }
+.tot-n { font-size: 34px; font-weight: 700; color: #E1F5EE; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="h1">All 26 letters — S/A/B/C tier by frequency</div>
+<div class="legend">
+  <div class="li"><div class="ld" style="background:#1D9E75"></div>S-tier 30%+</div>
+  <div class="li"><div class="ld" style="background:#534AB7"></div>A-tier 15–29%</div>
+  <div class="li"><div class="ld" style="background:#BA7517"></div>B-tier 8–14% (word 4 pool)</div>
+  <div class="li"><div class="ld" style="background:#888780"></div>C-tier &lt;8% (word 4 pool)</div>
+</div>
+<div class="pool">
+  <div class="chip cs"><span class="cl">E</span><span class="cp">46%</span></div>
+  <div class="chip cs"><span class="cl">A</span><span class="cp">42%</span></div>
+  <div class="chip cs"><span class="cl">R</span><span class="cp">39%</span></div>
+  <div class="chip cs"><span class="cl">O</span><span class="cp">33%</span></div>
+  <div class="chip cs"><span class="cl">T</span><span class="cp">32%</span></div>
+  <div class="chip cs"><span class="cl">L</span><span class="cp">31%</span></div>
+  <div class="chip cs"><span class="cl">I</span><span class="cp">29%</span></div>
+  <div class="chip cs"><span class="cl">S</span><span class="cp">29%</span></div>
+  <div class="chip ca"><span class="cl">N</span><span class="cp">25%</span></div>
+  <div class="chip ca"><span class="cl">C</span><span class="cp">21%</span></div>
+  <div class="chip ca"><span class="cl">U</span><span class="cp">20%</span></div>
+  <div class="chip ca"><span class="cl">Y</span><span class="cp">18%</span></div>
+  <div class="chip ca"><span class="cl">D</span><span class="cp">17%</span></div>
+  <div class="chip ca"><span class="cl">H</span><span class="cp">17%</span></div>
+  <div class="chip ca"><span class="cl">P</span><span class="cp">16%</span></div>
+  <div class="chip cb"><span class="cl">G</span><span class="cp">13%</span></div>
+  <div class="chip cb"><span class="cl">M</span><span class="cp">13%</span></div>
+  <div class="chip cb"><span class="cl">B</span><span class="cp">12%</span></div>
+  <div class="chip cb"><span class="cl">F</span><span class="cp">10%</span></div>
+  <div class="chip cb"><span class="cl">W</span><span class="cp">9%</span></div>
+  <div class="chip cb"><span class="cl">K</span><span class="cp">9%</span></div>
+  <div class="chip cc"><span class="cl">V</span><span class="cp">6%</span></div>
+  <div class="chip cc"><span class="cl">X</span><span class="cp">2%</span></div>
+  <div class="chip cc"><span class="cl">Z</span><span class="cp">2%</span></div>
+  <div class="chip cc"><span class="cl">J</span><span class="cp">1%</span></div>
+  <div class="chip cc"><span class="cl">Q</span><span class="cp">1%</span></div>
+</div>
+
+<hr>
+
+<div class="sl">Word 1 — greedy: highest-sum valid word</div>
+<div class="wh"><span class="wn">ALERT</span><span class="ws">word sum = <b>190%</b></span></div>
+<div class="tiles">
+  <div class="tile tts"><span class="tl">A</span><span class="tp">42%</span></div>
+  <div class="tile tts"><span class="tl">L</span><span class="tp">31%</span></div>
+  <div class="tile tts"><span class="tl">E</span><span class="tp">46%</span></div>
+  <div class="tile tts"><span class="tl">R</span><span class="tp">39%</span></div>
+  <div class="tile tts"><span class="tl">T</span><span class="tp">32%</span></div>
+</div>
+<div class="calc"><b>46 + 42 + 39 + 32 + 31 = 190%</b> &nbsp;·&nbsp; All 5 are S-tier. IRATE / LATER also score 190%.</div>
+
+<hr>
+
+<div class="sl">Word 2 — greedy from remaining 10: O I S N C U Y D H P</div>
+<div class="wh"><span class="wn">PIONS</span><span class="ws">word sum = <b>132%</b></span></div>
+<div class="tiles">
+  <div class="tile tta"><span class="tl">P</span><span class="tp">16%</span></div>
+  <div class="tile tts"><span class="tl">I</span><span class="tp">29%</span></div>
+  <div class="tile tts"><span class="tl">O</span><span class="tp">33%</span></div>
+  <div class="tile tts"><span class="tl">N</span><span class="tp">25%</span></div>
+  <div class="tile tts"><span class="tl">S</span><span class="tp">29%</span></div>
+</div>
+<div class="calc"><b>33 + 29 + 29 + 25 + 16 = 132%</b></div>
+<div class="red-box"><b>Why not SONIC (137%)?</b> Its leftover letters U Y D H P cannot form any valid English word — dead end. PIONS at 132% is the true greedy maximum.</div>
+
+<hr>
+
+<div class="sl">Word 3 — 5 letters remain: D U C H Y (completely forced)</div>
+<div class="wh"><span class="wn">DUCHY</span><span class="ws">word sum = <b>93%</b></span></div>
+<div class="tiles">
+  <div class="tile tta"><span class="tl">D</span><span class="tp">17%</span></div>
+  <div class="tile tta"><span class="tl">U</span><span class="tp">20%</span></div>
+  <div class="tile tta"><span class="tl">C</span><span class="tp">21%</span></div>
+  <div class="tile tta"><span class="tl">H</span><span class="tp">17%</span></div>
+  <div class="tile tta"><span class="tl">Y</span><span class="tp">18%</span></div>
+</div>
+<div class="calc"><b>21 + 20 + 18 + 17 + 17 = 93%</b> &nbsp;·&nbsp; All A-tier. No choice — these are the only letters left.</div>
+
+<hr>
+
+<div class="sl">Word 4 — from remaining 11 letters: B F G J K M Q V W X Z</div>
+
+<div class="amber-box"><b>Critical constraint — zero vowels remain.</b> After 3 words, all 5 vowels (A E I O U) and semi-vowel Y are gone. The 11 remaining letters are all hard consonants. No English word can be spelled using only consonants from this set, so word 4 must reuse at least 2 vowels. The goal is to pack in as many of the 11 new letters as possible — maximum is 3.</div>
+
+<div class="sl" style="margin-top:14px">Candidate comparison</div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Word</th>
+      <th>New letters</th>
+      <th>New-letter sum</th>
+      <th>Reused</th>
+      <th>Full word sum</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="best">
+      <td><b style="color:#085041">GUMBO</b></td>
+      <td style="text-align:center;color:#085041;font-weight:700">G M B</td>
+      <td style="text-align:center;font-weight:700;color:#085041">38%</td>
+      <td style="text-align:center;color:#888780">U O</td>
+      <td style="text-align:center;font-weight:600;color:#085041">91%</td>
+      <td style="text-align:center"><span class="badge badge-green">Best</span></td>
+    </tr>
+    <tr>
+      <td>WOMBS</td>
+      <td style="text-align:center">W M B</td>
+      <td style="text-align:center;font-weight:600">34%</td>
+      <td style="text-align:center;color:#888780">O S</td>
+      <td style="text-align:center">87%</td>
+      <td style="text-align:center;font-size:11px;color:#888780">3 new, lower sum</td>
+    </tr>
+    <tr>
+      <td>GAWKS</td>
+      <td style="text-align:center">G W K</td>
+      <td style="text-align:center;font-weight:600">31%</td>
+      <td style="text-align:center;color:#888780">A S</td>
+      <td style="text-align:center">102%</td>
+      <td style="text-align:center;font-size:11px;color:#888780">3 new, lower new-sum</td>
+    </tr>
+    <tr>
+      <td>BOGEY</td>
+      <td style="text-align:center">G B</td>
+      <td style="text-align:center;font-weight:600">25%</td>
+      <td style="text-align:center;color:#888780">O E Y</td>
+      <td style="text-align:center">117%</td>
+      <td style="text-align:center;font-size:11px;color:#888780">only 2 new</td>
+    </tr>
+    <tr>
+      <td style="color:#A32D2D;text-decoration:line-through">SONIC</td>
+      <td style="text-align:center;color:#A32D2D">none</td>
+      <td style="text-align:center;color:#A32D2D">0%</td>
+      <td style="text-align:center;color:#A32D2D">all 5 used</td>
+      <td style="text-align:center;color:#A32D2D">137%</td>
+      <td style="text-align:center"><span class="badge badge-red">0 new letters</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="wh"><span class="wn">GUMBO</span><span class="ws">word sum = <b>91%</b></span></div>
+<div class="tiles">
+  <div class="tile ttb"><span class="tl">G</span><span class="tp">13%</span></div>
+  <div class="tile ttg dim"><span class="tl">U</span><span class="tp">20%</span></div>
+  <div class="tile ttb"><span class="tl">M</span><span class="tp">13%</span></div>
+  <div class="tile ttb"><span class="tl">B</span><span class="tp">12%</span></div>
+  <div class="tile ttg dim"><span class="tl">O</span><span class="tp">33%</span></div>
+</div>
+<div class="calc">
+  New letters: <b>G(13) + M(13) + B(12) = 38%</b><br>
+  Reused (↩ faded): U(20) + O(33) — already known from words 1–3<br>
+  Full word sum: <b>13 + 20 + 13 + 12 + 33 = 91%</b>
+</div>
+<div class="note">3 new letters is the hard ceiling for word 4 given zero vowels remain in the pool.</div>
+
+<hr>
+
+<div class="sl">Score summary — all 4 words</div>
+<div class="score-grid">
+  <div class="sc" style="background:#E1F5EE;border:1px solid #5DCAA5">
+    <div class="sc-n" style="color:#085041">ALERT</div>
+    <div class="sc-s" style="color:#0F6E56">190%</div>
+  </div>
+  <div class="sc" style="background:#EEEDFE;border:1px solid #AFA9EC">
+    <div class="sc-n" style="color:#26215C">PIONS</div>
+    <div class="sc-s" style="color:#3C3489">132%</div>
+  </div>
+  <div class="sc" style="background:#EEEDFE;border:1px solid #AFA9EC">
+    <div class="sc-n" style="color:#26215C">DUCHY</div>
+    <div class="sc-s" style="color:#3C3489">93%</div>
+  </div>
+  <div class="sc" style="background:#FAEEDA;border:1px solid #EF9F27">
+    <div class="sc-n" style="color:#412402">GUMBO</div>
+    <div class="sc-s" style="color:#633806">91%</div>
+  </div>
+</div>
+
+<div class="blue-box">
+  Words 1–3 cover all 15 S+A tier letters → fixed unique sum = <b>415%</b><br>
+  Word 4 adds 3 new letters G + M + B → <b>+38%</b> new unique coverage<br>
+  Total unique letter frequency across 4 words: <b>415 + 38 = 453%</b><br>
+  <span style="color:#534AB7;opacity:.7">Note: GUMBO's full word sum (91%) double-counts U and O — those are already known.</span>
+</div>
+
+<div class="total">
+  <div>
+    <div class="tot-lbl">Total unique coverage — ALERT + PIONS + DUCHY + GUMBO</div>
+    <div class="tot-sub">190 + 132 + 93 + 38 (new only from word 4)</div>
+  </div>
+  <div class="tot-n">453%</div>
+</div>
+
+</div>
+</body>
+</html>
