@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notes — AL</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; }
+
+/* ── Header ── */
+.header { background: #1a1a18; padding: 32px 24px 28px; }
+.header-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.header-title { font-size: 26px; font-weight: 700; color: #F1EFE8; letter-spacing: -.01em; }
+.header-sub { font-size: 13px; color: #888780; margin-top: 4px; }
+.header-count { font-size: 12px; color: #5F5E5A; font-weight: 600; }
+
+/* ── Filter bar ── */
+.filter-bar { background: #2C2C2A; padding: 10px 24px; position: sticky; top: 0; z-index: 10; }
+.filter-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.filter-btn { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 20px; border: 1px solid #444441; background: transparent; color: #888780; cursor: pointer; transition: all .15s; letter-spacing: .04em; text-transform: uppercase; }
+.filter-btn:hover { border-color: #888780; color: #D3D1C7; }
+.filter-btn.active { background: #F1EFE8; color: #1a1a18; border-color: transparent; }
+.search-wrap { margin-left: auto; }
+.search-input { background: #444441; border: 1px solid #5F5E5A; border-radius: 20px; padding: 5px 14px; font-size: 12px; color: #D3D1C7; width: 180px; outline: none; }
+.search-input::placeholder { color: #5F5E5A; }
+.search-input:focus { border-color: #888780; }
+
+/* ── Grid ── */
+.main { max-width: 720px; margin: 0 auto; padding: 28px 24px 60px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+
+/* ── Card ── */
+.card { background: #ffffff; border: 1px solid #D3D1C7; border-radius: 12px; padding: 18px 18px 14px; cursor: pointer; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: box-shadow .15s, transform .12s; position: relative; overflow: hidden; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.09); }
+.card-accent { height: 3px; border-radius: 2px; width: 32px; }
+.card-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: 4px; display: inline-block; align-self: flex-start; }
+.card-title { font-size: 15px; font-weight: 700; color: #1a1a18; line-height: 1.35; }
+.card-desc { font-size: 12px; color: #5F5E5A; line-height: 1.6; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 10px; border-top: 1px solid #E8E6E0; }
+.card-date { font-size: 11px; color: #888780; }
+.card-arrow { font-size: 14px; color: #B4B2A9; transition: transform .15s; }
+.card:hover .card-arrow { transform: translateX(3px); color: #5F5E5A; }
+.card.hidden { display: none; }
+
+/* ── Tag color themes ── */
+.theme-teal   .card-accent { background: #1D9E75; }
+.theme-teal   .card-tag    { background: #E1F5EE; color: #085041; }
+.theme-amber  .card-accent { background: #BA7517; }
+.theme-amber  .card-tag    { background: #FAEEDA; color: #633806; }
+.theme-purple .card-accent { background: #534AB7; }
+.theme-purple .card-tag    { background: #EEEDFE; color: #26215C; }
+.theme-red    .card-accent { background: #E24B4A; }
+.theme-red    .card-tag    { background: #FCEBEB; color: #791F1F; }
+.theme-dark   .card-accent { background: #2C2C2A; }
+.theme-dark   .card-tag    { background: #F1EFE8; color: #2C2C2A; }
+.theme-green  .card-accent { background: #3B6D11; }
+.theme-green  .card-tag    { background: #EAF3DE; color: #173404; }
+.theme-blue   .card-accent { background: #185FA5; }
+.theme-blue   .card-tag    { background: #E6F1FB; color: #042C53; }
+.theme-coral  .card-accent { background: #D85A30; }
+.theme-coral  .card-tag    { background: #FAECE7; color: #4A1B0C; }
+
+/* ── Empty state ── */
+.empty { text-align: center; padding: 60px 20px; color: #888780; }
+.empty-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: #444441; }
+.empty-sub { font-size: 13px; }
+
+/* ── Section label in grid ── */
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #888780; grid-column: 1 / -1; margin-top: 8px; padding-bottom: 4px; border-bottom: 1px solid #D3D1C7; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-title">Notes</div>
+      <div class="header-sub">Personal research · Analysis · Reference</div>
+    </div>
+    <div class="header-count" id="post-count"></div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <div id="tag-filters"></div>
+    <div class="search-wrap">
+      <input class="search-input" id="search" placeholder="Search notes..." type="text">
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="grid" id="grid"></div>
+  <div class="empty hidden" id="empty">
+    <div class="empty-title">No notes found</div>
+    <div class="empty-sub">Try a different search or filter</div>
+  </div>
+</div>
+
+<script src="posts.js"></script>
+<script>
+const grid = document.getElementById('grid');
+const tagFiltersWrap = document.getElementById('tag-filters');
+const postCount = document.getElementById('post-count');
+const emptyState = document.getElementById('empty');
+const searchInput = document.getElementById('search');
+
+let activeFilter = 'all';
+let searchQuery = '';
+
+const allTags = [...new Set(POSTS.map(p => p.tag))];
+
+allTags.forEach(tag => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn';
+  btn.dataset.filter = tag;
+  btn.textContent = tag;
+  btn.onclick = () => setFilter(tag, btn);
+  tagFiltersWrap.appendChild(btn);
+});
+
+document.querySelector('.filter-btn[data-filter="all"]').onclick = function() {
+  setFilter('all', this);
+};
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+searchInput.addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase();
+  render();
+});
+
+function render() {
+  grid.innerHTML = '';
+  const filtered = POSTS.filter(p => {
+    const matchTag = activeFilter === 'all' || p.tag === activeFilter;
+    const matchSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery) || p.tag.toLowerCase().includes(searchQuery);
+    return matchTag && matchSearch;
+  });
+
+  postCount.textContent = filtered.length + ' note' + (filtered.length !== 1 ? 's' : '');
+
+  if (filtered.length === 0) {
+    emptyState.classList.remove('hidden');
+    return;
+  }
+  emptyState.classList.add('hidden');
+
+  filtered.forEach(p => {
+    const a = document.createElement('a');
+    a.className = `card theme-${p.theme || 'teal'}`;
+    a.href = p.file;
+    a.target = '_blank';
+    a.innerHTML = `
+      <div class="card-accent"></div>
+      <span class="card-tag">${p.tag}</span>
+      <div class="card-title">${p.title}</div>
+      <div class="card-desc">${p.desc}</div>
+      <div class="card-footer">
+        <span class="card-date">${p.date}</span>
+        <span class="card-arrow">→</span>
+      </div>
+    `;
+    grid.appendChild(a);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
