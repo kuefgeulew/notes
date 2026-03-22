@@ -3,428 +3,347 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bangladesh Clothing Brands — Personal Analysis</title>
+<title>Bangladesh Clothing Brands — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Cutive+Mono&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, sans-serif; background: #f5f4f0; color: #1a1a18; padding: 24px 16px; min-height: 100vh; }
-.page { max-width: 680px; margin: 0 auto; }
-
-.sl { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #888780; margin-bottom: 9px; }
-hr { border: none; border-top: 1px solid #D3D1C7; margin: 20px 0; }
-.sh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
-.sn { font-size: 20px; font-weight: 700; color: #1a1a18; }
-.stag { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 4px; text-transform: uppercase; letter-spacing: .04em; }
-
-/* Tiles */
-.tiles { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
-.tile { min-width: 58px; padding: 0 10px; height: 62px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
-.tile .tl { font-size: 13px; font-weight: 700; line-height: 1.25; text-align: center; }
-.tile .tp { font-size: 10px; font-weight: 500; text-align: center; opacity: .85; }
-
-.t-yellow { background: #EF9F27; } .t-yellow .tl { color: #FAEEDA; } .t-yellow .tp { color: #FAC775; }
-.t-teal   { background: #1D9E75; } .t-teal   .tl { color: #E1F5EE; } .t-teal   .tp { color: #9FE1CB; }
-.t-red    { background: #E24B4A; } .t-red    .tl { color: #FCEBEB; } .t-red    .tp { color: #F7C1C1; }
-.t-purple { background: #534AB7; } .t-purple .tl { color: #EEEDFE; } .t-purple .tp { color: #AFA9EC; }
-.t-dark   { background: #2C2C2A; } .t-dark   .tl { color: #F1EFE8; } .t-dark   .tp { color: #B4B2A9; }
-.t-gray   { background: #888780; } .t-gray   .tl { color: #F1EFE8; } .t-gray   .tp { color: #D3D1C7; }
-.t-green  { background: #3B6D11; } .t-green  .tl { color: #EAF3DE; } .t-green  .tp { color: #C0DD97; }
-.t-coral  { background: #D85A30; } .t-coral  .tl { color: #FAECE7; } .t-coral  .tp { color: #F5C4B3; }
-.t-pink   { background: #D4537E; } .t-pink   .tl { color: #FBEAF0; } .t-pink   .tp { color: #F4C0D1; }
-.t-blue   { background: #185FA5; } .t-blue   .tl { color: #E6F1FB; } .t-blue   .tp { color: #B5D4F4; }
-
-/* Boxes */
-.box { border-radius: 8px; padding: 12px 15px; margin: 8px 0; font-size: 12px; line-height: 1.65; }
-.box b { font-weight: 700; }
-.box-yellow { background: #FAEEDA; border: 1px solid #EF9F27; color: #412402; }
-.box-teal   { background: #E1F5EE; border: 1px solid #5DCAA5; color: #085041; }
-.box-red    { background: #FCEBEB; border: 1px solid #F09595; color: #791F1F; }
-.box-blue   { background: #EEEDFE; border: 1px solid #AFA9EC; color: #3C3489; }
-.box-dark   { background: #2C2C2A; border: 1px solid #444441; color: #D3D1C7; }
-.box-gray   { background: #F1EFE8; border: 1px solid #B4B2A9; color: #2C2C2A; }
-.box-green  { background: #EAF3DE; border: 1px solid #97C459; color: #173404; }
-
-/* Grids */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
-.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0; }
-.gc { border-radius: 8px; padding: 11px 13px; }
-.gc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
-.gc-body  { font-size: 12px; line-height: 1.6; }
-
-/* Pipeline */
-.pipeline { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 10px 0; row-gap: 6px; }
-.pipe-step { border-radius: 7px; padding: 8px 13px; font-size: 12px; font-weight: 700; white-space: nowrap; }
-.pipe-arrow { font-size: 16px; color: #B4B2A9; padding: 0 4px; }
-
-/* Brand tier rows */
-.tier-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
-.tier-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; width: 90px; flex-shrink: 0; }
-.brand-chip { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 5px; }
-
-/* Value bar */
-.vbar-wrap { margin: 10px 0; }
-.vbar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
-.vbar-label { font-size: 12px; font-weight: 700; width: 160px; flex-shrink: 0; }
-.vbar-track { flex: 1; background: #D3D1C7; border-radius: 4px; height: 26px; position: relative; }
-.vbar-fill { height: 26px; border-radius: 4px; display: flex; align-items: center; padding-left: 10px; }
-.vbar-fill span { font-size: 11px; font-weight: 700; }
-.vbar-note { font-size: 11px; color: #888780; width: 80px; flex-shrink: 0; text-align: right; }
-
-/* Mother brand tree */
-.tree { margin: 10px 0; }
-.tree-row { display: flex; align-items: center; gap: 0; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
-.tree-parent { border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 700; }
-.tree-connector { font-size: 18px; color: #B4B2A9; padding: 0 4px; }
-.tree-children { display: flex; gap: 5px; flex-wrap: wrap; }
-.tree-child { border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; }
-
-/* Discount badge */
-.disc-badge { display: inline-block; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
-
-/* Table */
-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
-thead tr { border-bottom: 1px solid #D3D1C7; }
-th { padding: 7px 8px; font-weight: 600; color: #888780; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; text-align: left; }
-td { padding: 8px 8px; border-bottom: 1px solid #E8E6E0; vertical-align: top; }
-tr.hl-y td { background: #FAEEDA; }
-tr.hl-g td { background: #E1F5EE; }
-tr.hl-p td { background: #EEEDFE; }
-
-.badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
-.badge-yellow { background: #EF9F27; color: #FAEEDA; }
-.badge-green  { background: #1D9E75; color: #E1F5EE; }
-.badge-gray   { background: #F1EFE8; color: #5F5E5A; border: 1px solid #B4B2A9; }
-.badge-red    { background: #FCEBEB; color: #A32D2D; border: 1px solid #F09595; }
-.badge-purple { background: #EEEDFE; color: #3C3489; border: 1px solid #AFA9EC; }
-.badge-dark   { background: #2C2C2A; color: #D3D1C7; }
-
-/* Total card */
-.total { border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-top: 14px; flex-wrap: wrap; gap: 10px; }
-.tot-lbl { font-size: 13px; font-weight: 600; }
-.tot-sub { font-size: 11px; margin-top: 3px; opacity: .75; }
-.tot-n { font-size: 28px; font-weight: 700; }
-
-.note { font-size: 11px; color: #888780; font-style: italic; margin-top: 5px; }
-
-/* Seasonal window */
-.season-row { display: flex; gap: 6px; margin: 10px 0; }
-.season-block { flex: 1; border-radius: 8px; padding: 12px; text-align: center; }
-.season-block .s-month { font-size: 16px; font-weight: 700; }
-.season-block .s-disc  { font-size: 22px; font-weight: 700; margin: 4px 0; }
-.season-block .s-note  { font-size: 10px; opacity: .8; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF6EF;--cream2:#F2EBE0;--cream3:#E6DACE;
+  --terra:#C4531A;--terra2:#A3421A;--terra3:#E8855A;--terra4:#F5C4A8;--terra5:#FBE8DC;
+  --forest:#1E3D2F;--forest2:#2D5A42;--forest3:#4A8C68;--forest4:#B8D4C4;--forest5:#E8F2EC;
+  --gold:#B8860B;--gold2:#E8C040;--gold3:#FDF0B0;
+  --ink:#1A1410;--ink2:#2E2820;--ink3:#6B5E50;--ink4:#A09080;--rule:#D8CFBE;
+  --serif:'Fraunces',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--mono:'Cutive Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100vh}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 48px;border-bottom:1px solid var(--rule)}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink3)}
+.nav-back:hover{color:var(--terra)}
+.nav-r{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+.cover{display:grid;grid-template-columns:1fr 1fr;min-height:78vh;border-bottom:2px solid var(--ink)}
+.cover-left{background:var(--forest);padding:64px 52px;display:flex;flex-direction:column;justify-content:space-between;border-right:2px solid var(--ink)}
+.cl-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--forest4);margin-bottom:40px}
+.cl-title{font-family:var(--serif);font-size:clamp(44px,7vw,88px);font-weight:900;line-height:.88;letter-spacing:-.03em;color:var(--cream);margin-bottom:20px}
+.cl-title em{font-style:italic;color:var(--terra3);display:block}
+.cl-sub{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.7;color:var(--forest4);max-width:340px;margin-bottom:40px}
+.cl-stats{display:flex;gap:28px;flex-wrap:wrap}
+.cls-n{font-family:var(--serif);font-size:36px;font-weight:900;font-style:italic;color:var(--terra3);line-height:1}
+.cls-l{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--forest4);margin-top:4px}
+.cover-right{padding:64px 52px;display:flex;flex-direction:column;justify-content:space-between}
+.cr-label{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px}
+.brand-stack{display:flex;flex-direction:column;gap:0}
+.bs-item{display:flex;align-items:baseline;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;transition:background .1s;gap:12px}
+.bs-item:first-child{border-top:1px solid var(--rule)}
+.bs-item:hover{background:var(--cream2);margin:0 -16px;padding-left:16px;padding-right:16px}
+.bsi-name{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.bsi-note{font-family:var(--sans);font-size:11px;color:var(--ink4);margin-top:2px;font-style:italic}
+.bsi-status{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:1px;flex-shrink:0}
+.s-fav{background:var(--terra);color:#fff}
+.s-rel{background:var(--forest);color:#fff}
+.s-try{background:var(--gold3);color:var(--gold)}
+.s-asp{background:var(--cream3);color:var(--ink3)}
+.cr-note{font-family:var(--serif);font-size:15px;font-style:italic;font-weight:300;color:var(--ink3);line-height:1.6;border-left:3px solid var(--terra);padding-left:16px;margin-top:28px}
+.terra-band{background:var(--terra);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-bottom:2px solid var(--ink)}
+.tb-text{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.85)}
+.tb-chips{display:flex;gap:6px;flex-wrap:wrap}
+.tb-chip{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.7)}
+.body-wrap{max-width:1100px;margin:0 auto;padding:0 48px}
+.sh{padding:48px 0 0}
+.sh-label{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.sh-label::after{content:'';flex:1;height:1px;background:var(--rule)}
+.sh-title{font-family:var(--serif);font-size:clamp(24px,4vw,44px);font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:32px}
+.sh-title em{font-style:italic;color:var(--terra)}
+.yellow-feature{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--ink);margin-bottom:40px}
+.yf-left{background:var(--gold2);padding:40px 36px;border-right:2px solid var(--ink)}
+.yfl-badge{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(0,0,0,.4);margin-bottom:20px}
+.yfl-name{font-family:var(--serif);font-size:52px;font-weight:900;line-height:.9;letter-spacing:-.03em;color:var(--ink);margin-bottom:16px}
+.yfl-verdict{font-family:var(--sans);font-size:14px;line-height:1.75;color:var(--ink2)}
+.yfl-myth{margin-top:20px;background:rgba(0,0,0,.08);padding:14px 16px;border-left:3px solid var(--ink)}
+.yfl-myth-t{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.4);margin-bottom:6px}
+.yfl-myth-v{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--ink)}
+.yf-right{padding:40px 36px;display:flex;flex-direction:column;gap:24px}
+.yf-window{border:1px solid var(--rule);padding:20px}
+.yfw-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.yfw-months{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.month-pill{font-family:var(--mono);font-size:10px;padding:5px 10px;border:1px solid var(--rule);color:var(--ink3)}
+.month-pill.hi{background:var(--terra);border-color:var(--terra);color:#fff;font-weight:700}
+.yfw-disc{font-family:var(--serif);font-size:32px;font-weight:900;font-style:italic;color:var(--terra);line-height:1}
+.yfw-note{font-family:var(--sans);font-size:12px;color:var(--ink4);margin-top:4px}
+.value-compare{border:1px solid var(--rule);padding:20px}
+.vc-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.vc-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.vc-row:last-child{margin-bottom:0}
+.vc-brand{font-family:var(--sans);font-size:12px;font-weight:500;width:110px;flex-shrink:0;color:var(--ink)}
+.vc-bar-wrap{flex:1;height:20px;background:var(--cream3);border-radius:1px;overflow:hidden}
+.vc-bar{height:100%;display:flex;align-items:center;padding-left:8px}
+.vc-bar span{font-family:var(--mono);font-size:9px;font-weight:700;color:#fff;white-space:nowrap}
+.vc-note{font-family:var(--mono);font-size:10px;color:var(--ink4);width:64px;text-align:right;flex-shrink:0}
+.discount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:40px}
+.dg-card{background:var(--cream);padding:28px 24px}
+.dg-rank{font-family:var(--serif);font-size:56px;font-weight:900;font-style:italic;line-height:1;color:var(--cream3);margin-bottom:8px}
+.dg-name{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.1;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em}
+.dg-disc{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;margin-bottom:8px}
+.dg-timing{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:12px}
+.dg-desc{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.65;color:var(--ink3)}
+.dg-tag{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid currentColor}
+.fav-section{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--ink);margin-bottom:40px}
+.fav-card{padding:36px 32px;background:var(--cream)}
+.fav-card.dark{background:var(--forest)}
+.fav-n{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.fav-card.dark .fav-n{color:var(--forest4)}
+.fav-name{font-family:var(--serif);font-size:32px;font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
+.fav-card.dark .fav-name{color:var(--cream)}
+.fav-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;margin-bottom:16px}
+.fav-desc{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.75;color:var(--ink3)}
+.fav-card.dark .fav-desc{color:var(--forest4)}
+.fav-pull{font-family:var(--serif);font-size:17px;font-style:italic;font-weight:300;margin-top:16px;padding-top:16px;border-top:1px solid var(--rule);color:var(--ink2);line-height:1.45}
+.fav-card.dark .fav-pull{color:var(--terra3);border-color:rgba(255,255,255,.1)}
+.tree-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--ink);margin-bottom:40px}
+.tree-card{background:var(--cream2);padding:28px 24px}
+.tc-pl{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px}
+.tc-pn{font-family:var(--serif);font-size:24px;font-weight:900;letter-spacing:-.01em;color:var(--ink);margin-bottom:16px}
+.tc-arr{font-family:var(--mono);font-size:11px;color:var(--terra);margin-bottom:12px;letter-spacing:.06em}
+.tc-child{font-family:var(--sans);font-size:13px;font-weight:500;padding:8px 12px;border:1px solid var(--rule);color:var(--ink2);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.tc-child::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.tc-note{font-family:var(--sans);font-size:11px;font-weight:300;color:var(--ink4);margin-top:12px;font-style:italic;line-height:1.5}
+.aspire{background:var(--cream3);border:2px solid var(--ink);padding:36px 40px;margin-bottom:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.asp-label{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink4);margin-bottom:12px}
+.asp-title{font-family:var(--serif);font-size:32px;font-weight:900;font-style:italic;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
+.asp-body{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.75;color:var(--ink3)}
+.asp-brand{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--cream);border:1px solid var(--rule);margin-bottom:8px}
+.ab-name{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:-.01em}
+.ab-tag{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4)}
+.ab-intent{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--forest3);color:var(--forest3)}
+.full-table{width:100%;border-collapse:collapse;margin-bottom:48px;border:1px solid var(--rule)}
+.full-table th{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:10px 14px;text-align:left;background:var(--forest);color:rgba(255,255,255,.6);border-right:1px solid rgba(255,255,255,.08)}
+.full-table th:last-child{border-right:none}
+.full-table td{font-family:var(--sans);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--rule);border-right:1px solid var(--cream3);vertical-align:top;color:var(--ink2)}
+.full-table td:last-child{border-right:none}
+.full-table tr:nth-child(even) td{background:var(--cream2)}
+.td-brand{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.01em;white-space:nowrap}
+.badge{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:1px}
+.b-terra{background:var(--terra5);color:var(--terra2)}
+.b-green{background:var(--forest5);color:var(--forest2)}
+.b-gold{background:var(--gold3);color:var(--gold)}
+.b-gray{background:var(--cream3);color:var(--ink3)}
+.site-footer{background:var(--forest);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:2px solid var(--ink)}
+.sf-l{font-family:var(--serif);font-size:16px;font-weight:700;font-style:italic;color:rgba(255,255,255,.7)}
+.sf-r{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+@media(max-width:860px){
+  .cover,.yellow-feature,.fav-section,.aspire{grid-template-columns:1fr}
+  .cover-left{border-right:none;border-bottom:2px solid var(--ink);min-height:auto}
+  .yf-left{border-right:none;border-bottom:2px solid var(--ink)}
+  .discount-grid,.tree-grid{grid-template-columns:1fr}
+  .body-wrap,.nav,.terra-band,.site-footer{padding-left:24px;padding-right:24px}
+  .cover-left,.cover-right{padding:36px 24px}
+}
 </style>
 </head>
 <body>
-<div class="page">
 
-<!-- ══════════════════════════════════ SECTION 1 -->
-<div class="sl">1 of 5 — Brand ecosystem overview</div>
-<div class="sh">
-  <span class="sn">8 brands, 3 tiers, 3 family trees</span>
-  <span class="stag" style="background:#FAEEDA;color:#633806">Bangladesh local fashion</span>
+<div class="nav">
+  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
+  <div class="nav-r">Personal notes · Lifestyle</div>
 </div>
 
-<div class="tiles">
-  <div class="tile t-teal"  style="min-width:72px"><span class="tl">Artisan</span><span class="tp">Current #1</span></div>
-  <div class="tile t-purple" style="min-width:72px"><span class="tl">Infinity</span><span class="tp">Reliable fallback</span></div>
-  <div class="tile t-yellow" style="min-width:64px"><span class="tl">Yellow</span><span class="tp">Most used</span></div>
-  <div class="tile t-green"  style="min-width:80px"><span class="tl">Gentle Park</span><span class="tp">Best discounts</span></div>
-  <div class="tile t-coral"  style="min-width:64px"><span class="tl">Twelve</span><span class="tp">Try this</span></div>
-  <div class="tile t-red"    style="min-width:56px"><span class="tl">Red</span><span class="tp">Try this</span></div>
-  <div class="tile t-dark"   style="min-width:56px"><span class="tl">STC</span><span class="tp">Future buy</span></div>
-  <div class="tile t-dark"   style="min-width:72px"><span class="tl">Tanzim's</span><span class="tp">Future buy</span></div>
-</div>
-
-<div class="box box-gray">
-  <b>3 brand family trees identified:</b> Infinity → Lubnan + Richman &nbsp;·&nbsp; STC → Tanzim's &nbsp;·&nbsp; Cats Eye → Monsoon Rain
-</div>
-
-<hr>
-
-<!-- ══════════════════════════════════ SECTION 2 -->
-<div class="sl">2 of 5 — Yellow: most used brand</div>
-<div class="sh">
-  <span class="sn">Yellow Bangladesh</span>
-  <span class="stag" style="background:#EF9F27;color:#FAEEDA">Most used · High quality</span>
-</div>
-
-<div class="grid2">
-  <div class="gc box-yellow">
-    <div class="gc-title" style="color:#633806">Perception among acquaintances</div>
-    <div class="gc-body">Most commonly used brand. Some call it <b>"overhyped"</b> — but actual product quality is considered strong.</div>
-  </div>
-  <div class="gc box-teal">
-    <div class="gc-title" style="color:#085041">Verdict</div>
-    <div class="gc-body">Not just hype. Quality holds up. The criticism is louder than the reality.</div>
-  </div>
-</div>
-
-<div class="sl" style="margin-top:14px">Buying window — discount-driven</div>
-<div class="season-row">
-  <div class="season-block" style="background:#FAEEDA;border:1px solid #EF9F27">
-    <div class="s-month" style="color:#633806">August</div>
-    <div class="s-disc" style="color:#BA7517">~70%</div>
-    <div class="s-note" style="color:#854F0B">Primary buying window</div>
-  </div>
-  <div class="season-block" style="background:#FAEEDA;border:1px solid #EF9F27">
-    <div class="s-month" style="color:#633806">December</div>
-    <div class="s-disc" style="color:#BA7517">~70%</div>
-    <div class="s-note" style="color:#854F0B">Primary buying window</div>
-  </div>
-  <div class="season-block" style="background:#F1EFE8;border:1px solid #B4B2A9">
-    <div class="s-month" style="color:#444441">Other months</div>
-    <div class="s-disc" style="color:#888780">—</div>
-    <div class="s-note" style="color:#5F5E5A">Skip unless needed</div>
-  </div>
-</div>
-
-<div class="sl" style="margin-top:14px">Value comparison — Yellow vs New Market</div>
-<div class="vbar-wrap">
-  <div class="vbar-row">
-    <div class="vbar-label" style="color:#085041">Yellow (discounted)</div>
-    <div class="vbar-track">
-      <div class="vbar-fill" style="width:85%;background:#1D9E75"><span style="color:#E1F5EE">Better quality &nbsp;·&nbsp; ~৳1,000</span></div>
+<div class="cover">
+  <div class="cover-left">
+    <div>
+      <div class="cl-tag">Bangladesh local fashion · Personal buying guide</div>
+      <div class="cl-title">What I<br>actually<br><em>wear</em></div>
+      <div class="cl-sub">Eight brands, three family trees, two buying windows, and one brand that turns every window-shopping trip into a purchase.</div>
     </div>
-    <div class="vbar-note" style="color:#085041">Winner</div>
-  </div>
-  <div class="vbar-row">
-    <div class="vbar-label" style="color:#A32D2D">New Market pant</div>
-    <div class="vbar-track">
-      <div class="vbar-fill" style="width:55%;background:#E24B4A"><span style="color:#FCEBEB">Lower quality &nbsp;·&nbsp; ~৳1,600</span></div>
+    <div class="cl-stats">
+      <div><div class="cls-n">8</div><div class="cls-l">Brands tracked</div></div>
+      <div><div class="cls-n">3</div><div class="cls-l">Family trees</div></div>
+      <div><div class="cls-n">70%</div><div class="cls-l">Peak discount</div></div>
     </div>
-    <div class="vbar-note" style="color:#A32D2D">Costs more</div>
+  </div>
+  <div class="cover-right">
+    <div class="cr-label">All 8 brands — at a glance</div>
+    <div class="brand-stack">
+      <div class="bs-item"><div><div class="bsi-name">Artisan</div><div class="bsi-note">Can't leave without buying</div></div><span class="bsi-status s-fav">Current #1</span></div>
+      <div class="bs-item"><div><div class="bsi-name">Infinity</div><div class="bsi-note">Always find something</div></div><span class="bsi-status s-rel">Reliable</span></div>
+      <div class="bs-item"><div><div class="bsi-name">Yellow</div><div class="bsi-note">Most used, best discount windows</div></div><span class="bsi-status s-rel">Most used</span></div>
+      <div class="bs-item"><div><div class="bsi-name">Gentle Park</div><div class="bsi-note">~60% off, year-round</div></div><span class="bsi-status s-try">Try now</span></div>
+      <div class="bs-item"><div><div class="bsi-name">Twelve</div><div class="bsi-note">Year-round discounts</div></div><span class="bsi-status s-try">Try now</span></div>
+      <div class="bs-item"><div><div class="bsi-name">Red</div><div class="bsi-note">Year-round discounts</div></div><span class="bsi-status s-try">Try now</span></div>
+      <div class="bs-item"><div><div class="bsi-name">STC</div><div class="bsi-note">Too posh — not yet</div></div><span class="bsi-status s-asp">Future</span></div>
+      <div class="bs-item"><div><div class="bsi-name">Tanzim's</div><div class="bsi-note">Sub-brand of STC</div></div><span class="bsi-status s-asp">Future</span></div>
+    </div>
+    <div class="cr-note">"A ৳1,000 Yellow pant after discount beats a ৳1,600 New Market pant on quality — the discount erases the price gap and then some."</div>
   </div>
 </div>
-<div class="note">A ৳1,000 Yellow pant (post-70% discount) beats a ৳1,600 New Market pant on quality — the discount erases the price gap and then some.</div>
 
-<hr>
+<div class="terra-band">
+  <div class="tb-text">Buying principle: wait for the window, skip New Market, try the year-round discount brands first</div>
+  <div class="tb-chips"><span class="tb-chip">Quality over price tag</span><span class="tb-chip">Discount-driven</span><span class="tb-chip">Local first</span></div>
+</div>
 
-<!-- ══════════════════════════════════ SECTION 3 -->
-<div class="sl">3 of 5 — Discount map & brands to try</div>
+<div class="body-wrap">
+
 <div class="sh">
-  <span class="sn">Discount strategy by brand</span>
-  <span class="stag" style="background:#E1F5EE;color:#085041">Savings guide</span>
+  <div class="sh-label">01 — Yellow Bangladesh</div>
+  <div class="sh-title">The one everyone uses,<br>and the one they <em>underestimate</em></div>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Brand</th>
-      <th>Discount level</th>
-      <th>Timing</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="hl-y">
-      <td><b>Yellow</b></td>
-      <td><span class="disc-badge" style="background:#EF9F27;color:#FAEEDA">~70%</span></td>
-      <td>August · December</td>
-      <td><span class="badge badge-yellow">Most used</span></td>
-    </tr>
-    <tr class="hl-g">
-      <td><b>Gentle Park</b></td>
-      <td><span class="disc-badge" style="background:#1D9E75;color:#E1F5EE">~60%</span></td>
-      <td>Year-round</td>
-      <td><span class="badge badge-green">Highest freq.</span></td>
-    </tr>
-    <tr>
-      <td><b>Twelve</b></td>
-      <td><span class="disc-badge" style="background:#D85A30;color:#FAECE7">Year-round</span></td>
-      <td>Year-round</td>
-      <td><span class="badge badge-red">Try this</span></td>
-    </tr>
-    <tr>
-      <td><b>Red</b></td>
-      <td><span class="disc-badge" style="background:#E24B4A;color:#FCEBEB">Year-round</span></td>
-      <td>Year-round</td>
-      <td><span class="badge badge-red">Try this</span></td>
-    </tr>
-    <tr>
-      <td><b>Artisan</b></td>
-      <td>—</td>
-      <td>—</td>
-      <td><span class="badge badge-green">Current #1</span></td>
-    </tr>
-    <tr>
-      <td><b>Infinity</b></td>
-      <td>—</td>
-      <td>—</td>
-      <td><span class="badge badge-purple">Reliable fallback</span></td>
-    </tr>
-    <tr>
-      <td><b>STC / Tanzim's</b></td>
-      <td>—</td>
-      <td>—</td>
-      <td><span class="badge badge-dark">Future buy</span></td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box box-green">
-  <b>Recommended new brands to try:</b> Gentle Park, Twelve, and Red all offer year-round discounts — lower risk for first-time purchases. Gentle Park at ~60% off is especially strong value without needing to wait for a seasonal window.
+<div class="yellow-feature">
+  <div class="yf-left">
+    <div class="yfl-badge">Most used brand among acquaintances</div>
+    <div class="yfl-name">Yellow</div>
+    <div class="yfl-verdict">The most commonly used brand in the circle — which also makes it the most argued-about. The "overhyped" criticism is real but incomplete. The quality holds up. The mistake most people make is buying Yellow at full price instead of waiting for the windows.</div>
+    <div class="yfl-myth"><div class="yfl-myth-t">The overhyped debate</div><div class="yfl-myth-v">"Not just hype. Actual product quality is strong. The criticism is louder than the reality."</div></div>
+  </div>
+  <div class="yf-right">
+    <div class="yf-window">
+      <div class="yfw-label">Buying windows — the only times to buy</div>
+      <div class="yfw-months">
+        <div class="month-pill">Jan</div><div class="month-pill">Feb</div><div class="month-pill">Mar</div><div class="month-pill">Apr</div><div class="month-pill">May</div><div class="month-pill">Jun</div><div class="month-pill">Jul</div><div class="month-pill hi">Aug</div><div class="month-pill">Sep</div><div class="month-pill">Oct</div><div class="month-pill">Nov</div><div class="month-pill hi">Dec</div>
+      </div>
+      <div class="yfw-disc">~70% off</div>
+      <div class="yfw-note">August and December only. Skip full price entirely.</div>
+    </div>
+    <div class="value-compare">
+      <div class="vc-label">Value comparison — discounted Yellow vs New Market</div>
+      <div class="vc-row"><div class="vc-brand">Yellow (sale)</div><div class="vc-bar-wrap"><div class="vc-bar" style="width:90%;background:var(--forest2)"><span>Better quality</span></div></div><div class="vc-note">~৳1,000</div></div>
+      <div class="vc-row"><div class="vc-brand">New Market</div><div class="vc-bar-wrap"><div class="vc-bar" style="width:52%;background:var(--terra)"><span>Lower quality</span></div></div><div class="vc-note">~৳1,600</div></div>
+    </div>
+  </div>
 </div>
 
-<hr>
-
-<!-- ══════════════════════════════════ SECTION 4 -->
-<div class="sl">4 of 5 — Current favorites & future intent</div>
 <div class="sh">
-  <span class="sn">Artisan · Infinity · STC · Tanzim's</span>
-  <span class="stag" style="background:#EEEDFE;color:#3C3489">Preference hierarchy</span>
+  <div class="sh-label">02 — Discount Strategy</div>
+  <div class="sh-title">Where the <em>best deals</em> live</div>
 </div>
 
-<div class="grid2">
-  <div class="gc box-teal">
-    <div class="gc-title" style="color:#085041">Artisan — Current top pick</div>
-    <div class="gc-body">Window shopping almost always converts to a purchase. Hard to leave empty-handed. <b>Strongest pull of any brand right now.</b></div>
+<div class="discount-grid">
+  <div class="dg-card" style="background:var(--forest);color:var(--cream)">
+    <div class="dg-rank" style="color:rgba(255,255,255,.1)">01</div>
+    <div class="dg-name" style="color:#fff">Gentle Park</div>
+    <div class="dg-disc" style="color:var(--terra3)">~60% off</div>
+    <div class="dg-timing" style="color:rgba(255,255,255,.4)">Year-round · Most consistent</div>
+    <div class="dg-desc" style="color:rgba(255,255,255,.6)">The highest discount frequency of any brand. No need to wait for a seasonal window — deals are available regularly throughout the year.</div>
+    <div><span class="dg-tag" style="color:var(--terra3);border-color:var(--terra3)">Highest discount provider</span></div>
   </div>
-  <div class="gc box-blue">
-    <div class="gc-title" style="color:#3C3489">Infinity — Reliable fallback</div>
-    <div class="gc-body">When nothing else works, Infinity delivers. <b>Always find something likable.</b> Never a wasted trip.</div>
+  <div class="dg-card">
+    <div class="dg-rank">02</div>
+    <div class="dg-name">Yellow</div>
+    <div class="dg-disc" style="color:var(--terra)">~70% off</div>
+    <div class="dg-timing">Aug & Dec only · Seasonal windows</div>
+    <div class="dg-desc">The deepest discount of any brand, but only twice a year. Requires timing. The reward for patience is significant.</div>
+    <div><span class="dg-tag" style="color:var(--terra);border-color:var(--terra)">Deepest seasonal discount</span></div>
+  </div>
+  <div class="dg-card" style="background:var(--cream2)">
+    <div class="dg-rank">03+</div>
+    <div class="dg-name">Twelve · Red</div>
+    <div class="dg-disc" style="color:var(--forest2)">Year-round</div>
+    <div class="dg-timing">Always available · Low entry risk</div>
+    <div class="dg-desc">Both offer year-round discounts, making them lower-risk for a first visit. Good for experimenting without waiting for a seasonal event.</div>
+    <div><span class="dg-tag" style="color:var(--forest2);border-color:var(--forest2)">Recommended for first try</span></div>
   </div>
 </div>
 
-<div class="grid2" style="margin-top:8px">
-  <div class="gc" style="background:#2C2C2A;border:1px solid #444441">
-    <div class="gc-title" style="color:#D3D1C7">STC — Future interest</div>
-    <div class="gc-body" style="color:#B4B2A9">Perceived as very <b style="color:#F1EFE8">posh / elegant</b>. Not purchased yet — feels premium. Intent to buy exists.</div>
-  </div>
-  <div class="gc" style="background:#2C2C2A;border:1px solid #444441">
-    <div class="gc-title" style="color:#D3D1C7">Tanzim's — Future interest</div>
-    <div class="gc-body" style="color:#B4B2A9">Sub-brand of STC. Same <b style="color:#F1EFE8">posh</b> perception — aspirational tier, not yet purchased.</div>
-  </div>
-</div>
-
-<div class="box box-yellow" style="margin-top:8px">
-  <b>Pattern:</b> Current preference flows toward brands with strong in-store pull (Artisan) or guaranteed satisfaction (Infinity). Premium/posh brands (STC, Tanzim's) are admired but the price-quality hesitation creates a future-buy rather than now-buy dynamic.
-</div>
-
-<hr>
-
-<!-- ══════════════════════════════════ SECTION 5 -->
-<div class="sl">5 of 5 — Brand family trees</div>
 <div class="sh">
-  <span class="sn">3 parent-child relationships</span>
-  <span class="stag" style="background:#F1EFE8;color:#2C2C2A">Brand hierarchy</span>
+  <div class="sh-label">03 — Current Favorites</div>
+  <div class="sh-title">The two brands that <em>never disappoint</em></div>
 </div>
 
-<div class="tree">
-  <div class="tree-row">
-    <div class="tree-parent" style="background:#534AB7;color:#EEEDFE">Infinity</div>
-    <div class="tree-connector">→</div>
-    <div class="tree-children">
-      <div class="tree-child" style="background:#EEEDFE;border:1px solid #AFA9EC;color:#26215C">Lubnan</div>
-      <div class="tree-child" style="background:#EEEDFE;border:1px solid #AFA9EC;color:#26215C">Richman</div>
-    </div>
-    <div class="badge badge-purple" style="margin-left:8px;align-self:center">Mother brand</div>
+<div class="fav-section">
+  <div class="fav-card dark">
+    <div class="fav-n">Current top pick</div>
+    <div class="fav-name" style="color:var(--cream)">Artisan</div>
+    <span class="fav-badge" style="background:var(--terra);color:#fff">Cannot leave empty-handed</span>
+    <div class="fav-desc">The current number one. What's unusual about Artisan isn't a specific product — it's that window shopping rarely stays as window shopping. The pull into an actual purchase is consistent and unexplained.</div>
+    <div class="fav-pull">"Even window shopping often turns into a purchase. Hard to leave without buying something."</div>
   </div>
-  <div class="tree-row">
-    <div class="tree-parent" style="background:#2C2C2A;color:#F1EFE8">STC</div>
-    <div class="tree-connector">→</div>
-    <div class="tree-children">
-      <div class="tree-child" style="background:#F1EFE8;border:1px solid #B4B2A9;color:#2C2C2A">Tanzim's</div>
-    </div>
-    <div class="badge badge-dark" style="margin-left:8px;align-self:center">Posh tier</div>
-  </div>
-  <div class="tree-row">
-    <div class="tree-parent" style="background:#185FA5;color:#E6F1FB">Cats Eye</div>
-    <div class="tree-connector">→</div>
-    <div class="tree-children">
-      <div class="tree-child" style="background:#E6F1FB;border:1px solid #85B7EB;color:#042C53">Monsoon Rain</div>
-    </div>
-    <div class="badge" style="background:#E6F1FB;color:#042C53;border:1px solid #85B7EB;margin-left:8px;align-self:center">Local structure</div>
+  <div class="fav-card">
+    <div class="fav-n">Reliable fallback</div>
+    <div class="fav-name">Infinity</div>
+    <span class="fav-badge" style="background:var(--forest5);color:var(--forest2);border:1px solid var(--forest4)">Always find something</span>
+    <div class="fav-desc">The reliable fallback. When nothing else seems right, Infinity delivers. It doesn't dazzle — it just reliably has something worth buying. That consistency is its own form of value.</div>
+    <div class="fav-pull">"When nothing else works, Infinity always has something likable. Never a wasted trip."</div>
   </div>
 </div>
 
-<div class="box box-gray">
-  Knowing parent brands is useful for quality inference — if you trust Infinity, Lubnan and Richman carry the same DNA. Similarly, STC's reputation transfers to Tanzim's. These family relationships help when trying a new brand for the first time.
+<div class="sh">
+  <div class="sh-label">04 — Brand Hierarchies</div>
+  <div class="sh-title">Who owns <em>who</em></div>
 </div>
 
-<hr>
+<div class="tree-grid">
+  <div class="tree-card">
+    <div class="tc-pl">Mother brand</div>
+    <div class="tc-pn">Infinity</div>
+    <div class="tc-arr">↳ owns</div>
+    <div class="tc-child" style="border-color:var(--forest4)"><span style="background:var(--forest3)"></span>Lubnan</div>
+    <div class="tc-child" style="border-color:var(--forest4)"><span style="background:var(--forest3)"></span>Richman</div>
+    <div class="tc-note">If you trust Infinity's quality, Lubnan and Richman share the same DNA. Useful for first-time experiments.</div>
+  </div>
+  <div class="tree-card" style="background:var(--cream3)">
+    <div class="tc-pl">Mother brand</div>
+    <div class="tc-pn">STC</div>
+    <div class="tc-arr">↳ owns</div>
+    <div class="tc-child" style="border-color:var(--rule)"><span style="background:var(--ink3)"></span>Tanzim's</div>
+    <div class="tc-note">STC's reputation for polish transfers to Tanzim's. Both sit in the aspirational tier — admired but not yet purchased.</div>
+  </div>
+  <div class="tree-card">
+    <div class="tc-pl">Mother brand</div>
+    <div class="tc-pn">Cats Eye</div>
+    <div class="tc-arr">↳ owns</div>
+    <div class="tc-child" style="border-color:var(--rule)"><span style="background:var(--ink4)"></span>Monsoon Rain</div>
+    <div class="tc-note">Local brand structure. Understanding parent brands helps set expectations for sub-brands before a first visit.</div>
+  </div>
+</div>
 
-<!-- Full summary table -->
-<div class="sl">Complete reference table</div>
-<table>
-  <thead>
-    <tr>
-      <th>Aspect</th><th>Brand</th><th>Discount / Timing</th><th>Key insight</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="hl-y">
-      <td>Most used</td>
-      <td><b>Yellow</b></td>
-      <td>Aug · Dec (~70%)</td>
-      <td>High quality, not just hype</td>
-    </tr>
-    <tr class="hl-g">
-      <td>Highest discount freq.</td>
-      <td><b>Gentle Park</b></td>
-      <td>~60% year-round</td>
-      <td>Strong brand + frequent deals</td>
-    </tr>
-    <tr>
-      <td>New brands to try</td>
-      <td><b>Twelve · Red · Gentle Park</b></td>
-      <td>Year-round discounts</td>
-      <td>Lower risk entry point</td>
-    </tr>
-    <tr class="hl-g">
-      <td>Current favorite</td>
-      <td><b>Artisan</b></td>
-      <td>—</td>
-      <td>Window shopping → always buys</td>
-    </tr>
-    <tr class="hl-p">
-      <td>Reliable fallback</td>
-      <td><b>Infinity</b></td>
-      <td>—</td>
-      <td>Always find something likable</td>
-    </tr>
-    <tr>
-      <td>Mother brand</td>
-      <td><b>Infinity</b> → Lubnan · Richman</td>
-      <td>—</td>
-      <td>Brand grouping</td>
-    </tr>
-    <tr>
-      <td>Mother brand</td>
-      <td><b>STC</b> → Tanzim's</td>
-      <td>—</td>
-      <td>Premium / posh perception</td>
-    </tr>
-    <tr>
-      <td>Mother brand</td>
-      <td><b>Cats Eye</b> → Monsoon Rain</td>
-      <td>—</td>
-      <td>Local brand structure</td>
-    </tr>
-    <tr>
-      <td>Purchase hesitation</td>
-      <td><b>STC · Tanzim's</b></td>
-      <td>—</td>
-      <td>Too posh now — future intent</td>
-    </tr>
-    <tr class="hl-y">
-      <td>Value proof</td>
-      <td><b>Yellow vs New Market</b></td>
-      <td>৳1,000 vs ৳1,600</td>
-      <td>Yellow discounted wins on quality</td>
-    </tr>
-  </tbody>
-</table>
+<div class="sh">
+  <div class="sh-label">05 — Aspirational Tier</div>
+  <div class="sh-title">The ones that are <em>too posh</em> — for now</div>
+</div>
 
-<!-- Final card -->
-<div class="total" style="background:#1D9E75">
+<div class="aspire">
   <div>
-    <div class="tot-lbl" style="color:#9FE1CB">Strategic buying principle</div>
-    <div class="tot-sub" style="color:#5DCAA5">Derived from all patterns above</div>
+    <div class="asp-label">Purchase status — not yet</div>
+    <div class="asp-title">STC and Tanzim's feel out of range — but the intent is there.</div>
+    <div class="asp-body">The perception is clear: posh, elegant, premium. Both have been visited but never converted into a purchase. It isn't that the quality is doubted — it's that the moment hasn't arrived yet. Future interest is genuine. These are brands to grow into, not avoid.</div>
   </div>
-  <div style="font-size:13px;font-weight:700;color:#E1F5EE;text-align:right;max-width:300px;line-height:1.6">
-    Buy premium brands (Yellow) only at peak discount windows · Explore new brands with year-round deals · Trust Artisan + Infinity as anchors
+  <div>
+    <div class="asp-brand"><div><div class="ab-name">STC</div><div class="ab-tag">Mother brand → Tanzim's</div></div><span class="ab-intent">Future buy</span></div>
+    <div class="asp-brand"><div><div class="ab-name">Tanzim's</div><div class="ab-tag">Sub-brand of STC</div></div><span class="ab-intent">Future buy</span></div>
+    <div style="background:var(--cream);border:1px solid var(--rule);padding:14px 16px;margin-top:2px">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px">Perception</div>
+      <div style="font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ink2);line-height:1.5">"Very posh and elegant — not purchased yet, but the intent is there."</div>
+    </div>
   </div>
 </div>
 
+<div class="sh">
+  <div class="sh-label">Complete reference</div>
+  <div class="sh-title" style="margin-bottom:20px">All key points</div>
 </div>
+
+<table class="full-table">
+  <thead><tr><th>Aspect</th><th>Brand</th><th>Discount / Timing</th><th>Key Insight</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Most used</td><td class="td-brand">Yellow</td><td><span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--terra)">~70%</span><br><span style="font-family:var(--sans);font-size:11px;font-style:italic;color:var(--ink4)">Aug & Dec only</span></td><td>High quality. Not just hype. The criticism is louder than the reality.</td><td><span class="badge b-terra">Most used</span></td></tr>
+    <tr><td>Highest discount</td><td class="td-brand">Gentle Park</td><td><span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--terra)">~60%</span><br><span style="font-family:var(--sans);font-size:11px;font-style:italic;color:var(--ink4)">Year-round</span></td><td>Strong brand with the most consistent deal frequency of any listed.</td><td><span class="badge b-green">Try now</span></td></tr>
+    <tr><td>New brands to try</td><td class="td-brand">Twelve · Red · Gentle Park</td><td><span style="font-family:var(--sans);font-size:11px;font-style:italic;color:var(--ink4)">Year-round discounts</span></td><td>Low entry risk for a first visit. No need to wait for seasonal events.</td><td><span class="badge b-green">Try now</span></td></tr>
+    <tr><td>Current favorite</td><td class="td-brand">Artisan</td><td>—</td><td>Window shopping almost always converts. Strongest pull of any brand right now.</td><td><span class="badge b-terra">Top pick</span></td></tr>
+    <tr><td>Reliable fallback</td><td class="td-brand">Infinity</td><td>—</td><td>When nothing else works, Infinity delivers. Never a wasted trip.</td><td><span class="badge b-terra">Reliable</span></td></tr>
+    <tr><td>Mother brand</td><td class="td-brand">Infinity</td><td>—</td><td>Parent of Lubnan Bangladesh and Richman Bangladesh.</td><td><span class="badge b-gray">Brand group</span></td></tr>
+    <tr><td>Mother brand</td><td class="td-brand">STC</td><td>—</td><td>Parent of Tanzim's Bangladesh. Premium / posh perception.</td><td><span class="badge b-gray">Brand group</span></td></tr>
+    <tr><td>Mother brand</td><td class="td-brand">Cats Eye</td><td>—</td><td>Parent of Monsoon Rain Bangladesh.</td><td><span class="badge b-gray">Brand group</span></td></tr>
+    <tr><td>Purchase hesitation</td><td class="td-brand">STC · Tanzim's</td><td>—</td><td>Too posh for now — but the intent to buy in future is genuine.</td><td><span class="badge b-gold">Future buy</span></td></tr>
+    <tr><td>Value proof</td><td class="td-brand">Yellow vs New Market</td><td>৳1,000 vs ৳1,600</td><td>A discounted Yellow pant beats a New Market pant on quality at 37% less cost.</td><td><span class="badge b-green">Verified</span></td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">Bangladesh Clothing Brands · Personal Guide</div>
+  <div class="sf-r">Notes by Al Amin</div>
+</div>
+
 </body>
 </html>
