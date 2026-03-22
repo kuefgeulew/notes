@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utshob — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Nunito:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:    #120D1E;
+  --ink2:   #2A2042;
+  --ink3:   #5A4E7A;
+  --ink4:   #9A90B8;
+  --paper:  #FBF7F2;
+  --paper2: #F4EEE4;
+  --paper3: #EBE2D4;
+  --gold:   #D4930A;
+  --gold2:  #E8B040;
+  --gold3:  #F6D990;
+  --gold4:  #FDF3D0;
+  --rose:   #8B2252;
+  --rose2:  #B03070;
+  --rose3:  #D490AE;
+  --rose4:  #F5DDE8;
+  --teal:   #0D5A5A;
+  --teal2:  #18807A;
+  --rule:   rgba(18,13,30,.1);
+  --serif:  'Lora',Georgia,serif;
+  --disp:   'Abril Fatface',serif;
+  --sans:   'Nunito',system-ui,sans-serif;
+  --mono:   'Space Mono',monospace;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink)}
+
+/* ══ NAV ══ */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 48px;border-bottom:1px solid var(--rule)}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink3)}
+.nav-back:hover{color:var(--rose)}
+.nav-r{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+
+/* ══ POSTER HERO ══ */
+.hero{
+  background:var(--ink);
+  padding:0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:90vh;
+  border-bottom:4px solid var(--gold);
+}
+
+/* Left — poster panel */
+.hero-poster{
+  background:var(--ink2);
+  padding:56px 52px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  border-right:1px solid rgba(255,255,255,.06);
+  position:relative;
+  overflow:hidden;
+}
+
+/* Decorative border */
+.hero-poster::before{
+  content:'';
+  position:absolute;inset:12px;
+  border:1px solid rgba(212,147,10,.18);
+  pointer-events:none;
+}
+.hero-poster::after{
+  content:'';
+  position:absolute;inset:20px;
+  border:1px solid rgba(212,147,10,.08);
+  pointer-events:none;
+}
+
+.hp-top{}
+.hp-tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold2);margin-bottom:28px;
+  display:flex;align-items:center;gap:10px;
+}
+.hp-tag::before{content:'✦';font-size:8px}
+.hp-tag::after{content:'✦';font-size:8px}
+
+.hp-title{
+  font-family:var(--disp);
+  font-size:clamp(68px,11vw,144px);
+  line-height:.85;
+  letter-spacing:-.02em;
+  color:var(--paper);
+  margin-bottom:8px;
+}
+.hp-title-bn{
+  font-family:var(--serif);
+  font-size:clamp(18px,3vw,32px);
+  font-style:italic;
+  color:var(--gold3);
+  letter-spacing:.04em;
+  margin-bottom:32px;
+}
+.hp-year{
+  font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+  color:rgba(255,255,255,.3);
+}
+
+.hp-bottom{}
+.hp-divider{width:48px;height:2px;background:var(--gold);margin-bottom:20px}
+.hp-cast{
+  font-family:var(--sans);font-size:13px;font-weight:300;
+  color:rgba(255,255,255,.5);line-height:2;
+  letter-spacing:.04em;
+}
+.hp-cast strong{color:var(--gold3);font-weight:600}
+
+/* Right — opening statement */
+.hero-right{
+  padding:56px 52px;
+  display:flex;flex-direction:column;justify-content:center;
+  background:var(--rose);
+  position:relative;
+}
+.hr-opener{
+  font-family:var(--disp);
+  font-size:clamp(32px,4.5vw,58px);
+  line-height:1.05;
+  letter-spacing:-.01em;
+  color:#fff;
+  margin-bottom:32px;
+}
+.hr-opener em{font-style:italic;color:var(--gold3)}
+.hr-sub{
+  font-family:var(--serif);font-size:16px;font-weight:400;
+  font-style:italic;color:rgba(255,255,255,.7);
+  line-height:1.75;max-width:380px;
+  margin-bottom:40px;
+}
+.hr-meta{display:flex;flex-direction:column;gap:0}
+.hrm-row{
+  display:flex;align-items:baseline;gap:12px;
+  padding:10px 0;border-top:1px solid rgba(255,255,255,.12);
+}
+.hrm-row:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+.hrm-k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);min-width:80px}
+.hrm-v{font-family:var(--sans);font-size:13px;font-weight:500;color:rgba(255,255,255,.8)}
+
+/* ══ GOLD TICKER ══ */
+.ticker{
+  background:var(--gold);
+  padding:12px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+  border-bottom:2px solid var(--gold2);
+}
+.ticker-text{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink);font-weight:700}
+.ticker-chips{display:flex;gap:6px;flex-wrap:wrap}
+.tc{
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border:1.5px solid rgba(18,13,30,.25);
+  color:var(--ink);
+}
+
+/* ══ PAGE BODY ══ */
+.body{max-width:860px;margin:0 auto;padding:0 48px}
+
+/* ══ PHASES ══ */
+.phases{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
+  border:1px solid var(--rule);
+  margin-top:56px;margin-bottom:0;
+}
+.phase{padding:24px 20px;border-right:1px solid var(--rule);text-align:center}
+.phase:last-child{border-right:none}
+.ph-n{font-family:var(--disp);font-size:40px;color:var(--paper3);line-height:1;margin-bottom:8px}
+.ph-word{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:-.01em}
+.ph-desc{font-family:var(--sans);font-size:11px;font-weight:300;color:var(--ink4);line-height:1.5}
+.phase.active{background:var(--gold4)}
+.phase.active .ph-n{color:var(--gold)}
+.phase.active .ph-word{color:var(--ink2)}
+
+/* ══ SECTION ══ */
+.sec{padding:56px 0 0}
+.sec-label{
+  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--rose2);margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--rose4)}
+.sec-title{
+  font-family:var(--disp);
+  font-size:clamp(28px,5vw,52px);
+  line-height:.95;letter-spacing:-.02em;
+  color:var(--ink);margin-bottom:28px;
+}
+.sec-title em{font-style:italic;color:var(--rose)}
+
+/* ══ BODY TEXT ══ */
+.prose{
+  font-family:var(--serif);font-size:17px;font-weight:400;
+  line-height:1.9;color:var(--ink2);
+  margin-bottom:24px;
+}
+.prose strong{font-weight:700;color:var(--ink)}
+
+/* ══ PULL QUOTE ══ */
+.pq{
+  margin:36px -20px;
+  padding:28px 40px;
+  background:var(--ink);
+  position:relative;
+}
+.pq::before{
+  content:'"';
+  position:absolute;top:-20px;left:32px;
+  font-family:var(--disp);font-size:96px;color:var(--gold);line-height:1;
+  opacity:.4;
+}
+.pq-text{
+  font-family:var(--disp);
+  font-size:clamp(20px,3vw,32px);
+  line-height:1.25;
+  color:var(--paper);
+  letter-spacing:-.01em;
+  margin-bottom:14px;
+}
+.pq-text em{color:var(--gold3);font-style:italic}
+.pq-attr{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+/* ══ TWO COL ══ */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+
+/* ══ ANNOTATION CARD ══ */
+.ann{
+  padding:24px 24px;
+  border:1px solid var(--rule);
+  position:relative;
+}
+.ann.gold{border-color:var(--gold3);background:var(--gold4)}
+.ann.rose{border-color:var(--rose3);background:var(--rose4)}
+.ann.dark{background:var(--ink2);border-color:var(--ink)}
+.ann-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+.ann.gold  .ann-lbl{color:var(--gold)}
+.ann.rose  .ann-lbl{color:var(--rose)}
+.ann.dark  .ann-lbl{color:var(--ink4)}
+.ann-title{font-family:var(--serif);font-size:18px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
+.ann.dark .ann-title{color:var(--paper)}
+.ann-body{font-family:var(--sans);font-size:13px;font-weight:300;line-height:1.75;color:var(--ink3)}
+.ann.dark .ann-body{color:var(--ink4)}
+.ann.gold .ann-body{color:var(--ink2)}
+
+/* ══ ARCS ══ */
+.arc-grid{display:grid;grid-template-columns:1fr;gap:0;margin-bottom:40px;border:1px solid var(--rule)}
+.arc-row{
+  display:grid;grid-template-columns:180px 1fr;gap:0;
+  border-bottom:1px solid var(--rule);
+}
+.arc-row:last-child{border-bottom:none}
+.arc-left{
+  padding:20px 24px;
+  background:var(--paper2);
+  border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.arc-n{font-family:var(--disp);font-size:36px;color:var(--paper3);line-height:1}
+.arc-word{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);margin-top:4px;letter-spacing:-.01em}
+.arc-right{padding:20px 24px;font-family:var(--sans);font-size:13px;font-weight:300;line-height:1.75;color:var(--ink3);display:flex;align-items:center}
+.arc-row.active .arc-left{background:var(--gold4)}
+.arc-row.active .arc-n{color:var(--gold2)}
+.arc-row.active .arc-word{color:var(--rose)}
+.arc-row.active .arc-right{background:var(--paper);font-weight:500;color:var(--ink2)}
+
+/* ══ MUSIC STRIP ══ */
+.music-strip{
+  background:var(--teal);
+  padding:24px 32px;
+  margin:40px 0;
+  display:flex;align-items:center;gap:24px;
+}
+.ms-icon{
+  font-family:var(--disp);font-size:40px;color:rgba(255,255,255,.15);
+  flex-shrink:0;line-height:1;
+}
+.ms-body{}
+.ms-label{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+.ms-text{font-family:var(--serif);font-size:16px;font-style:italic;color:rgba(255,255,255,.85);line-height:1.6}
+
+/* ══ VERDICT ══ */
+.verdict{
+  margin:56px -48px 0;
+  padding:64px 96px;
+  background:var(--ink);
+  display:grid;grid-template-columns:1fr auto;
+  gap:48px;align-items:center;
+  border-top:4px solid var(--gold);
+}
+.verd-left{}
+.verd-label{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);margin-bottom:20px}
+.verd-text{
+  font-family:var(--disp);
+  font-size:clamp(24px,4vw,44px);
+  line-height:1.1;letter-spacing:-.015em;
+  color:var(--paper);margin-bottom:20px;
+}
+.verd-text em{color:var(--gold3);font-style:italic}
+.verd-sub{
+  font-family:var(--serif);font-size:15px;font-style:italic;
+  color:rgba(255,255,255,.5);line-height:1.7;max-width:480px;
+}
+.verd-right{text-align:center;flex-shrink:0}
+.verd-score{
+  font-family:var(--disp);
+  font-size:96px;color:var(--gold);
+  line-height:1;margin-bottom:4px;
+}
+.verd-score-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+/* ══ FOOTER ══ */
+.site-footer{
+  background:var(--ink2);
+  padding:20px 48px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.sf-l{font-family:var(--serif);font-size:14px;font-style:italic;color:rgba(255,255,255,.5)}
+.sf-r{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:800px){
+  .hero,.two{grid-template-columns:1fr}
+  .hero-poster{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+  .phases{grid-template-columns:1fr 1fr}
+  .body,.nav,.ticker{padding-left:24px;padding-right:24px}
+  .verdict{margin-left:-24px;margin-right:-24px;padding:40px 32px;grid-template-columns:1fr}
+  .verd-right{text-align:left}
+  .pq{margin:28px -8px}
+  .arc-row{grid-template-columns:1fr}
+  .arc-left{border-right:none;border-bottom:1px solid var(--rule)}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
+  <div class="nav-r">Film review · 2025 · Bangla cinema</div>
+</div>
+
+<!-- POSTER HERO -->
+<div class="hero">
+  <div class="hero-poster">
+    <div class="hp-top">
+      <div class="hp-tag">Bangla film &nbsp; 2025</div>
+      <div class="hp-title">Utshob</div>
+      <div class="hp-title-bn">উৎসব</div>
+      <div class="hp-year">// 2025 · Bangladesh</div>
+    </div>
+    <div class="hp-bottom">
+      <div class="hp-divider"></div>
+      <div class="hp-cast">
+        Starring &nbsp;<strong>Zahid Hasan</strong><br>
+        Genre: &nbsp;Comedy-Drama<br>
+        Language: &nbsp;Bengali<br>
+        Year: &nbsp;2025
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hr-opener">This film <em>surprises</em> you.</div>
+    <div class="hr-sub">It begins like a light comedy, something easy and fun. But slowly, it changes. By the end, it doesn't just entertain — it stays with you.</div>
+    <div class="hr-meta">
+      <div class="hrm-row"><div class="hrm-k">Tone</div><div class="hrm-v">Comedy → quiet emotional depth</div></div>
+      <div class="hrm-row"><div class="hrm-k">Structure</div><div class="hrm-v">4 emotional phases</div></div>
+      <div class="hrm-row"><div class="hrm-k">Verdict</div><div class="hrm-v">A warm, slightly heavy embrace</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-text">A film about understanding the value of people — before it's too late.</div>
+  <div class="ticker-chips">
+    <span class="tc">Family</span>
+    <span class="tc">Redemption</span>
+    <span class="tc">Nostalgia</span>
+    <span class="tc">Zahid Hasan</span>
+  </div>
+</div>
+
+<div class="body">
+
+<!-- THE FOUR PHASES -->
+<div class="sec">
+  <div class="sec-label">Structure</div>
+  <div class="sec-title">Four movements, <em>one transformation</em></div>
+</div>
+
+<div class="phases">
+  <div class="phase">
+    <div class="ph-n">I</div>
+    <div class="ph-word">Connection</div>
+    <div class="ph-desc">Light, warm, easy — the film draws you in gently</div>
+  </div>
+  <div class="phase">
+    <div class="ph-n">II</div>
+    <div class="ph-word">Distance</div>
+    <div class="ph-desc">Small fractures surface. Something shifts beneath the comedy</div>
+  </div>
+  <div class="phase active">
+    <div class="ph-n">III</div>
+    <div class="ph-word">Realization</div>
+    <div class="ph-desc">Jahangir looks back. Regret, choices, the people he hurt</div>
+  </div>
+  <div class="phase">
+    <div class="ph-n">IV</div>
+    <div class="ph-word">Reconnection</div>
+    <div class="ph-desc">The biggest celebration: finding your way back — to others, and yourself</div>
+  </div>
+</div>
+
+<!-- THE ARC -->
+<div class="sec">
+  <div class="sec-label">The story</div>
+  <div class="sec-title">What happens — and <em>how it lands</em></div>
+</div>
+
+<div class="arc-grid">
+  <div class="arc-row">
+    <div class="arc-left"><div class="arc-n">01</div><div class="arc-word">The setup</div></div>
+    <div class="arc-right">The film opens as something light — almost deceptively so. A miser named Jahangir. Comedy that feels familiar. Known faces in a lived-in world. You settle in expecting a pleasant two hours, nothing more.</div>
+  </div>
+  <div class="arc-row active">
+    <div class="arc-left"><div class="arc-n">02</div><div class="arc-word">The shift</div></div>
+    <div class="arc-right">Then something changes. Slowly, without announcement. A series of unusual encounters pushes Jahangir to look backward — at his choices, his regrets, the people he quietly damaged over a lifetime of small decisions. The comedy is still there, but it now carries weight.</div>
+  </div>
+  <div class="arc-row">
+    <div class="arc-left"><div class="arc-n">03</div><div class="arc-word">The pull</div></div>
+    <div class="arc-right">The film never preaches. It doesn't tell you what to feel. It simply shows — small actions, often unnoticed, shaping relationships or quietly breaking them. Nothing feels forced. The emotions grow naturally, the way real things grow.</div>
+  </div>
+  <div class="arc-row active">
+    <div class="arc-left"><div class="arc-n">04</div><div class="arc-word">The ending</div></div>
+    <div class="arc-right">By the end, the film has become something else entirely. Not just entertainment — something that lingers. A warm but slightly heavy embrace: comforting, yet honest enough to hurt just a little.</div>
+  </div>
+</div>
+
+<!-- PULL QUOTE 1 -->
+<div class="pq">
+  <div class="pq-text">You laugh, sometimes loudly — and then suddenly it hits you with something <em>quiet and heavy.</em></div>
+  <div class="pq-attr">On tone · Utshob, 2025</div>
+</div>
+
+<!-- PERFORMANCE -->
+<div class="sec">
+  <div class="sec-label">Performance</div>
+  <div class="sec-title">Zahid Hasan's <em>earned</em> transformation</div>
+</div>
+
+<div class="prose">
+  At the center of it all is a performance that doesn't announce itself. Jahangir's transformation never feels like a movie transformation — no single dramatic scene where everything changes. Instead it accumulates: scene by scene, look by look, small shift by small shift. Human, not perfect. Not sudden, but earned.
+</div>
+
+<div class="two">
+  <div class="ann gold">
+    <div class="ann-lbl">Zahid Hasan</div>
+    <div class="ann-title">Jahangir — the miser who forgot how to live</div>
+    <div class="ann-body">One of his best performances. He carries the film's weight without ever overplaying it. When he finally breaks, it's because everything before it was real enough that you were already there with him.</div>
+  </div>
+  <div class="ann rose">
+    <div class="ann-lbl">The ensemble</div>
+    <div class="ann-title">Known faces, genuine warmth</div>
+    <div class="ann-body">The supporting cast adds warmth and familiarity, making the world feel lived-in. Seeing so many recognized faces together adds a specific emotional pull — a nostalgia for something you can almost name.</div>
+  </div>
+</div>
+
+<!-- PULL QUOTE 2 -->
+<div class="pq">
+  <div class="pq-text">Some scenes linger, like <em>memories you don't want to leave.</em></div>
+  <div class="pq-attr">On certain family moments</div>
+</div>
+
+<!-- MUSIC -->
+<div class="music-strip">
+  <div class="ms-icon">♩</div>
+  <div class="ms-body">
+    <div class="ms-label">On the score</div>
+    <div class="ms-text">Music plays a big role. The background score and songs elevate key moments, making them more intimate and powerful. Certain tracks arrive at exactly the right time — not to tell you how to feel, but to deepen what you already do.</div>
+  </div>
+</div>
+
+<!-- WHAT WORKS / WHAT DOESN'T -->
+<div class="sec">
+  <div class="sec-label">Honest assessment</div>
+  <div class="sec-title">What works — and <em>what doesn't quite</em></div>
+</div>
+
+<div class="two">
+  <div class="ann dark">
+    <div class="ann-lbl">What holds it back</div>
+    <div class="ann-title">The first half</div>
+    <div class="ann-body">The first half may feel fast or uneven at times. It establishes the world quickly — perhaps too quickly. Some of the early comedy feels like it's clearing the ground rather than building anything yet.</div>
+  </div>
+  <div class="ann gold">
+    <div class="ann-lbl">What lifts it up</div>
+    <div class="ann-title">Once it finds its core</div>
+    <div class="ann-body">Once the film settles into its emotional core, it becomes something else entirely. The unevenness of the first half doesn't matter anymore. What matters is where it takes you — and it takes you somewhere real.</div>
+  </div>
+</div>
+
+<!-- FAMILY -->
+<div class="sec">
+  <div class="sec-label">Deepest theme</div>
+  <div class="sec-title">The film that <em>families watch together</em></div>
+</div>
+
+<div class="prose">
+  What stands out most is how it brings people together. It's the kind of film families can watch side by side — laughing, crying, sharing something real. Many moments feel personal, especially those about family — siblings, parents, lost time. It feels nostalgic without being old, simple without being shallow.
+</div>
+
+<div class="prose">
+  Utshob is not just about change. It's about understanding the value of people before it's too late. And sometimes, the biggest celebration is finding your way back — to others, and to yourself.
+</div>
+
+<!-- VERDICT -->
+<div class="verdict">
+  <div class="verd-left">
+    <div class="verd-label">Final word</div>
+    <div class="verd-text">A celebration that <em>earns its tears.</em></div>
+    <div class="verd-sub">Utshob surprises you not with spectacle but with sincerity. It begins as comedy, becomes something much quieter, and ends as the kind of film you recommend to your parents without having to explain why.</div>
+  </div>
+  <div class="verd-right">
+    <div class="verd-score">A</div>
+    <div class="verd-score-label">Rating</div>
+  </div>
+</div>
+
+</div><!-- end body -->
+
+<div class="site-footer">
+  <div class="sf-l">Utshob — 2025 · Film Review</div>
+  <div class="sf-r">Notes by Al Amin</div>
+</div>
+
+</body>
+</html>
