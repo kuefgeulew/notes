@@ -22,6 +22,14 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "utshob_review.html",
+  title: "Utshob — a celebration that earns its tears",
+  desc:  "Begins as a light Bangla comedy, becomes something much quieter. Zahid Hasan's best in years, and the kind of film you recommend to your parents without having to explain why.",
+  tag:   "Movie",
+  date:  "Sep 2025",
+  theme: "purple"
+},
+  {
   file:  "valverde_little_bird.html",
   title: "The Little Bird takes flight — Valverde's 22-minute hat-trick",
   desc:  "Right-back, then the 7, 8, 9 and 10, then right-back again. One of the great individual performances the Bernabéu has ever staged.",
