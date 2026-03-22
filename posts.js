@@ -15,12 +15,12 @@
 const POSTS = [
 
   {
-    file:  "bd_clothing_brands.html",
-    title: "Bangladesh clothing brands — personal analysis",
-    desc:  "Brand hierarchy, discount windows, value comparisons, and family tree of 8 local brands including Yellow, Artisan, Infinity, STC and more.",
-    tag:   "Lifestyle",
+    file:  "100_narrated_films_lb_imdb_avg.html",
+    title: "First person narrated films",
+    desc:  "The table is sorted by the Avg column by default, and you can click any column header to re-sort.",
+    tag:   "Movie",
     date:  "Jun 2025",
-    theme: "amber"
+    theme: "coral"
   },
 
 {
