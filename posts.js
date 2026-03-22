@@ -22,6 +22,14 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "utsab_review.html",
+  title: "Utsab — what a family is actually held together by",
+  desc:  "Rituparno Ghosh's 2000 film is not about a family falling apart. It's about thirty years of ordinary moments — the necklace, the cigarette, the tea and French toast — that are only understood as love in retrospect.",
+  tag:   "Movie",
+  date:  "Jun 2025",
+  theme: "coral"
+},
+  {
   file:  "death_in_the_gunj_review.html",
   title: "A Death in the Gunj — on being the last to be picked",
   desc:  "Konkona Sen Sharma's 2016 debut is about invisibility — the slow kind, the kind that happens in full view of people who love you in their way, just not enough to actually look.",
