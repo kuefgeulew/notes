@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentimental Value — Review</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f5f4f0; color: #1a1a18; }
+
+/* ── Hero ── */
+.hero { background: #1a1a18; padding: 48px 32px 40px; }
+.hero-inner { max-width: 860px; margin: 0 auto; }
+.hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #5F5E5A; margin-bottom: 16px; }
+.hero-title { font-size: 42px; font-weight: 700; color: #F1EFE8; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 8px; }
+.hero-director { font-size: 15px; color: #888780; margin-bottom: 24px; }
+.hero-meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.meta-chip { font-size: 12px; font-weight: 600; padding: 5px 13px; border-radius: 5px; }
+.grade { background: #F1EFE8; color: #1a1a18; font-size: 15px; font-weight: 700; padding: 5px 16px; border-radius: 5px; letter-spacing: .04em; }
+.cast-chip { background: #2C2C2A; color: #888780; border: 1px solid #444441; }
+
+/* ── Page body ── */
+.page { max-width: 860px; margin: 0 auto; padding: 36px 32px 64px; }
+
+/* ── Full-width prose block ── */
+.prose { font-size: 15px; line-height: 1.8; color: #2C2C2A; margin-bottom: 32px; }
+.prose b { font-weight: 700; color: #1a1a18; }
+
+/* ── Section label ── */
+.sl { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #888780; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #D3D1C7; }
+
+hr { border: none; border-top: 1px solid #D3D1C7; margin: 36px 0; }
+
+/* ── 2-col even grid ── */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+/* ── 3-col even grid ── */
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+/* ── 4-col even grid ── */
+.grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+
+/* ── Card ── */
+.gc { border-radius: 10px; padding: 16px 18px; }
+.gc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; }
+.gc-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+.gc-body { font-size: 12px; line-height: 1.7; }
+
+/* card themes */
+.card-dark   { background: #2C2C2A; }
+.card-dark   .gc-label { color: #5F5E5A; }
+.card-dark   .gc-title { color: #F1EFE8; }
+.card-dark   .gc-body  { color: #B4B2A9; }
+.card-gray   { background: #F1EFE8; border: 1px solid #D3D1C7; }
+.card-gray   .gc-label { color: #888780; }
+.card-gray   .gc-title { color: #1a1a18; }
+.card-gray   .gc-body  { color: #5F5E5A; }
+.card-teal   { background: #E1F5EE; border: 1px solid #9FE1CB; }
+.card-teal   .gc-label { color: #0F6E56; }
+.card-teal   .gc-title { color: #085041; }
+.card-teal   .gc-body  { color: #0F6E56; }
+.card-amber  { background: #FAEEDA; border: 1px solid #FAC775; }
+.card-amber  .gc-label { color: #854F0B; }
+.card-amber  .gc-title { color: #412402; }
+.card-amber  .gc-body  { color: #633806; }
+.card-purple { background: #EEEDFE; border: 1px solid #AFA9EC; }
+.card-purple .gc-label { color: #3C3489; }
+.card-purple .gc-title { color: #26215C; }
+.card-purple .gc-body  { color: #3C3489; }
+.card-red    { background: #FCEBEB; border: 1px solid #F09595; }
+.card-red    .gc-label { color: #791F1F; }
+.card-red    .gc-title { color: #501313; }
+.card-red    .gc-body  { color: #791F1F; }
+.card-blue   { background: #E6F1FB; border: 1px solid #85B7EB; }
+.card-blue   .gc-label { color: #185FA5; }
+.card-blue   .gc-title { color: #042C53; }
+.card-blue   .gc-body  { color: #185FA5; }
+
+/* ── Conflict row — full width split ── */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 10px; overflow: hidden; border: 1px solid #D3D1C7; margin-bottom: 10px; }
+.split-side { padding: 18px 20px; }
+.split-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+.split-body { font-size: 13px; line-height: 1.7; }
+
+/* ── Pull quote ── */
+.quote { border-left: 3px solid #1a1a18; padding: 4px 0 4px 20px; margin: 24px 0; }
+.quote-text { font-size: 18px; font-weight: 600; color: #1a1a18; line-height: 1.5; font-style: italic; letter-spacing: -.01em; }
+.quote-sub { font-size: 11px; color: #888780; margin-top: 6px; }
+
+/* ── Final verdict ── */
+.verdict { background: #1a1a18; border-radius: 12px; padding: 28px 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-top: 36px; }
+.verdict-text { font-size: 14px; line-height: 1.8; color: #B4B2A9; }
+.verdict-text b { color: #F1EFE8; font-weight: 700; }
+.verdict-grade { font-size: 52px; font-weight: 700; color: #F1EFE8; line-height: 1; }
+.verdict-grade-sub { font-size: 10px; color: #5F5E5A; text-align: center; margin-top: 4px; letter-spacing: .06em; text-transform: uppercase; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .hero { padding: 32px 20px; }
+  .hero-title { font-size: 28px; }
+  .page { padding: 24px 20px 48px; }
+  .grid2, .grid3, .grid4, .split { grid-template-columns: 1fr; }
+  .verdict { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Film review · 2025</div>
+    <div class="hero-title">Sentimental Value</div>
+    <div class="hero-director">Directed by Joachim Trier</div>
+    <div class="hero-meta">
+      <span class="meta-chip grade">A</span>
+      <span class="meta-chip cast-chip">Stellan Skarsgård</span>
+      <span class="meta-chip cast-chip">Renate Reinsve</span>
+      <span class="meta-chip cast-chip">Elle Fanning</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ══════════════════════════════ PREMISE -->
+  <div class="prose">
+    An aging filmmaker, Gustav Borg, tries to re-enter his daughter Nora's life after her mother's death — not with an apology, but with a film. He casts her not as herself, but as his own mother, whose suicide is the wound he has never addressed. It's a gesture that blurs the line between intimacy and exploitation, and the film never fully lets him off the hook for it.
+  </div>
+
+  <!-- ══════════════════════════════ CONFLICT -->
+  <div class="sl">The central tension</div>
+  <div class="split">
+    <div class="split-side" style="background:#2C2C2A">
+      <div class="split-label" style="color:#5F5E5A">Gustav</div>
+      <div class="split-body" style="color:#B4B2A9">Seeks understanding, not forgiveness. Uses the film as a vehicle to communicate what he cannot say in person. Not overtly cruel — <b style="color:#F1EFE8">passively harmful</b>, existing one step removed from the damage he causes.</div>
+    </div>
+    <div class="split-side" style="background:#F1EFE8;border-left:1px solid #D3D1C7">
+      <div class="split-label" style="color:#888780">Nora</div>
+      <div class="split-body" style="color:#5F5E5A">Rejects both the film and the emotional logic behind it. Torn between resentment and unresolved attachment. Her stage fright isn't professional — it's an identity crisis. She became an actress partly to avoid being herself.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════ THEMES -->
+  <div class="sl">Key themes</div>
+  <div class="grid2">
+    <div class="gc card-amber">
+      <div class="gc-label">Mercy vs forgiveness</div>
+      <div class="gc-body">The film draws a careful line: mercy is allowance, a performance of goodwill. Forgiveness is absolution, a final act. Trier argues reconciliation can only begin with the former — and may never reach the latter.</div>
+    </div>
+    <div class="gc card-purple">
+      <div class="gc-label">Art as communication</div>
+      <div class="gc-body">Gustav uses cinema to articulate what direct speech fails to carry. The film-within-the-film becomes a bridge — and a trap — between an unresolved past and a present that keeps reopening it.</div>
+    </div>
+    <div class="gc card-red">
+      <div class="gc-label">Generational trauma</div>
+      <div class="gc-body">Gustav's mother's suicide isn't backstory — it's architecture. He doesn't originate the pain; he conducts it. Trauma here is inherited and passed forward, not resolved.</div>
+    </div>
+    <div class="gc card-teal">
+      <div class="gc-label">Identity and performance</div>
+      <div class="gc-body">Nora is made to watch another actress — Rachel — perform a version of her own life. The dissonance between lived experience and performed identity is where the film finds its sharpest emotional edges.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════ CHARACTERS -->
+  <div class="sl">Character breakdown</div>
+  <div class="grid3">
+    <div class="gc card-dark">
+      <div class="gc-title">Gustav Borg</div>
+      <div class="gc-label" style="color:#5F5E5A;margin-top:4px">Stellan Skarsgård</div>
+      <div class="gc-body" style="margin-top:8px">Seeks meaning in past trauma rather than accountability. His intelligence and talent make his emotional absence harder to forgive, not easier.</div>
+    </div>
+    <div class="gc card-gray">
+      <div class="gc-title">Nora</div>
+      <div class="gc-label" style="margin-top:4px">Renate Reinsve</div>
+      <div class="gc-body" style="margin-top:8px">The emotional centre. Her arc isn't about healing — it's about surviving proximity to someone who uses love as raw material. Reinsve holds the whole film together.</div>
+    </div>
+    <div class="gc card-blue">
+      <div class="gc-title">Rachel Kemp</div>
+      <div class="gc-label" style="margin-top:4px">Elle Fanning</div>
+      <div class="gc-body" style="margin-top:8px">A Hollywood actress seeking artistic credibility, cast in Nora's role. She represents outside intrusion into a private wound — an unwitting instrument of someone else's story.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════ THE HOUSE -->
+  <div class="sl">The house as character</div>
+  <div class="grid2">
+    <div class="prose" style="margin-bottom:0;font-size:14px">
+      The ancestral Oslo home absorbs everything — grief, memory, the weight of unspoken things. It isn't a neutral setting. Its rooms hold emotional residue the way old wood holds damp. The physical structure of the house mirrors the Borg family's psychological one: load-bearing walls where there should be open doors.
+    </div>
+    <div class="gc card-dark" style="align-self:start">
+      <div class="gc-label">What the house represents</div>
+      <div class="gc-body" style="margin-top:6px">
+        Memory storage that no one agreed to keep<br><br>
+        Generational continuity as burden<br><br>
+        A space where the past is always present-tense
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════ CRAFT -->
+  <div class="sl">Form and style</div>
+  <div class="grid3">
+    <div class="gc card-gray">
+      <div class="gc-title">Structure</div>
+      <div class="gc-body">Non-linear, layered. Moves between present tensions, family history research, and film-within-film sequences without losing coherence. Blackouts and deliberate pacing give it a stage-like rhythm.</div>
+    </div>
+    <div class="gc card-gray">
+      <div class="gc-title">Tone</div>
+      <div class="gc-body">Emotionally rich but never overwrought. Blends quiet humor with deep psychological tension — the laughs land precisely because everything around them is heavy.</div>
+    </div>
+    <div class="gc card-gray">
+      <div class="gc-title">Visual texture</div>
+      <div class="gc-body">Tactile, lived-in spaces. The cinematography favors surfaces with history — worn wood, aged paper, the grain of a room that has been inhabited for decades.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════ PULL QUOTE -->
+  <div class="quote">
+    <div class="quote-text">"The ending is predictable in structure — and overwhelming in execution."</div>
+    <div class="quote-sub">Emotional payoff derives from accumulated detail, not surprise. The convergence of past, present, and memory lands because the film has earned every second of it.</div>
+  </div>
+
+  <!-- ══════════════════════════════ META LAYER -->
+  <div class="sl">Meta-cinema</div>
+  <div class="gc card-purple" style="margin-bottom:10px">
+    <div class="gc-body" style="font-size:13px">
+      Sentimental Value is genuinely rare among films-about-filmmaking: it earns the reflexivity. Gustav's past work is used to establish both his brilliance and his decline — not as decoration, but as evidence. The film critiques the artistic impulse without dismissing it. Art can reveal truth, Trier suggests, but it can also distort it, especially when the artist is both subject and author.
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ══════════════════════════════ COMPARISONS -->
+  <div class="sl">Context</div>
+  <div class="grid2">
+    <div class="gc card-teal">
+      <div class="gc-title">Comparable to Aftersun</div>
+      <div class="gc-body">Similar in emotional register — what's withheld does more work than what's shown. Both films weaponize the gap between a parent's inner life and what a child can access.</div>
+    </div>
+    <div class="gc card-amber">
+      <div class="gc-title">Peak Trier</div>
+      <div class="gc-body">Functions as a culmination of his career's recurring themes — grief, identity, Oslo — but expanded from individual interiority to full family portrait. His most structurally ambitious film.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════ VERDICT -->
+  <div class="verdict">
+    <div class="verdict-text">
+      A deeply layered family drama that uses filmmaking as both subject and method. It dissects memory, identity, and inherited pain with rare precision — and arrives at something honest: <b>love is limited by one's ability to express it. Healing is not resolution. It is recognition.</b> Understanding requires performance before it can become authenticity.
+    </div>
+    <div>
+      <div class="verdict-grade">A</div>
+      <div class="verdict-grade-sub">Grade</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
