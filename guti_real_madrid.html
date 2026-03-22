@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guti — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700&family=Archivo+Narrow:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --print:  #F0EDE8;
+  --print2: #E4E0D8;
+  --print3: #CCC8C0;
+  --print4: #9C9890;
+  --print5: #6C6860;
+  --black:  #101010;
+  --black2: #282420;
+  --black3: #484440;
+  --red:    #CC1010;
+  --red2:   #E82020;
+  --red3:   #F85050;
+  --rule:   rgba(16,16,16,.12);
+  --bb:     'Bebas Neue',sans-serif;
+  --arch:   'Archivo',sans-serif;
+  --narrow: 'Archivo Narrow',sans-serif;
+  --type:   'Courier Prime',monospace;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--arch);
+  background:var(--print);
+  color:var(--black);
+  min-height:100vh;
+}
+
+/* Newsprint dot texture */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(0,0,0,.08) 1px,transparent 1px);
+  background-size:4px 4px;
+}
+*{position:relative;z-index:1}
+
+/* NAV */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 32px;
+  background:var(--black);
+  border-bottom:3px solid var(--red);
+}
+.nav-back{font-family:var(--type);font-size:10px;letter-spacing:.06em;text-decoration:none;color:rgba(255,255,255,.4)}
+.nav-back:hover{color:var(--red3)}
+
+/* MASTHEAD STRIP */
+.masthead-strip{
+  background:var(--red);
+  padding:8px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+}
+.ms-date{font-family:var(--type);font-size:10px;letter-spacing:.04em;color:rgba(255,255,255,.7)}
+.ms-tag{font-family:var(--bb);font-size:14px;letter-spacing:.1em;color:#fff}
+
+/* COVER BLOCK */
+.cover{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:4px solid var(--black);
+  background:var(--black);
+}
+
+.cover-left{
+  padding:40px 40px 36px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  border-right:3px solid var(--red);
+}
+.cl-pre{
+  font-family:var(--bb);font-size:13px;letter-spacing:.2em;
+  color:var(--red3);margin-bottom:8px;
+}
+.cl-name{
+  font-family:var(--bb);
+  font-size:clamp(100px,16vw,200px);
+  line-height:.82;letter-spacing:-.01em;
+  color:#fff;
+  text-shadow:4px 4px 0 var(--red);
+  margin-bottom:16px;
+}
+.cl-sub{
+  font-family:var(--narrow);
+  font-size:clamp(14px,2vw,20px);
+  font-style:italic;font-weight:700;
+  color:rgba(255,255,255,.55);
+  line-height:1.2;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  margin-bottom:28px;
+}
+.cl-lede{
+  font-family:var(--arch);font-size:15px;font-weight:300;
+  line-height:1.7;color:rgba(255,255,255,.6);
+  max-width:400px;
+  border-left:3px solid var(--red);
+  padding-left:16px;
+}
+
+.cover-right{
+  background:var(--print2);
+  padding:40px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.cr-heading{
+  font-family:var(--bb);font-size:clamp(14px,2vw,18px);
+  letter-spacing:.12em;color:var(--black3);
+  border-bottom:2px solid var(--black);
+  padding-bottom:8px;margin-bottom:0;
+}
+.cr-stats{display:flex;flex-direction:column;gap:0;flex:1;justify-content:center;padding:20px 0}
+.cr-stat{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding:12px 0;border-bottom:1px solid var(--print3);
+}
+.cr-stat:last-child{border-bottom:none}
+.crs-label{font-family:var(--narrow);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--print5)}
+.crs-val{font-family:var(--bb);font-size:28px;letter-spacing:.02em;color:var(--black)}
+
+.cr-bottom{}
+.cr-verdict{
+  background:var(--red);
+  padding:14px 16px;
+  font-family:var(--bb);font-size:18px;letter-spacing:.1em;
+  color:#fff;text-align:center;
+}
+
+/* RED STRIP */
+.red-strip{
+  background:var(--red);
+  padding:10px 32px;
+  display:flex;align-items:center;gap:16px;
+  flex-wrap:wrap;
+}
+.rs-text{font-family:var(--bb);font-size:13px;letter-spacing:.12em;color:#fff}
+.rs-sep{width:1px;height:14px;background:rgba(255,255,255,.3);flex-shrink:0}
+
+/* BODY */
+.body{
+  display:grid;
+  grid-template-columns:640px 1fr;
+  max-width:1100px;margin:0 auto;
+  padding:0 32px;
+  gap:40px;
+  align-items:start;
+}
+
+/* MAIN COLUMN */
+.main-col{}
+
+/* SECTION */
+.sec{padding:40px 0 0}
+.sec-num{
+  font-family:var(--bb);font-size:11px;letter-spacing:.22em;
+  color:var(--red);margin-bottom:4px;
+}
+.sec-head{
+  font-family:var(--bb);
+  font-size:clamp(28px,4vw,48px);
+  letter-spacing:.02em;line-height:.9;
+  color:var(--black);
+  margin-bottom:20px;
+  padding-bottom:12px;
+  border-bottom:3px solid var(--black);
+}
+
+/* PROSE */
+.p{
+  font-family:var(--arch);
+  font-size:16px;font-weight:300;
+  line-height:1.85;color:var(--black2);
+  margin-bottom:18px;
+}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--black);font-weight:500}
+.p strong{font-weight:700;color:var(--black)}
+
+.dropcap::first-letter{
+  font-family:var(--bb);
+  font-size:88px;
+  float:left;line-height:.8;
+  margin:2px 6px 0 0;
+  color:var(--red);
+}
+
+/* PULL QUOTE */
+.pq{
+  margin:32px 0;
+  background:var(--black);
+  padding:24px 24px;
+}
+.pq-text{
+  font-family:var(--bb);
+  font-size:clamp(22px,3vw,34px);
+  line-height:.95;letter-spacing:.02em;
+  color:#fff;
+  margin-bottom:10px;
+}
+.pq-text em{color:var(--red3)}
+.pq-attr{font-family:var(--type);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+/* DIRECT QUOTE */
+.dq{
+  margin:28px 0;
+  border-left:5px solid var(--red);
+  padding:16px 20px;
+  background:var(--print2);
+}
+.dq-text{
+  font-family:var(--type);
+  font-size:15px;font-style:italic;
+  line-height:1.75;color:var(--black2);
+}
+.dq-who{font-family:var(--narrow);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-top:10px;display:block}
+
+/* DIVIDER */
+.rag{
+  display:flex;align-items:center;gap:12px;padding:24px 0;
+}
+.rag-line{flex:1;height:2px;background:var(--black)}
+.rag-mark{font-family:var(--bb);font-size:18px;color:var(--print3)}
+
+/* SIDEBAR */
+.side-col{padding-top:40px}
+
+.side-card{
+  background:var(--print2);
+  border-top:4px solid var(--black);
+  padding:20px 20px;
+  margin-bottom:20px;
+}
+.side-card.red-top{border-top-color:var(--red)}
+.sc-label{
+  font-family:var(--bb);font-size:11px;letter-spacing:.16em;
+  color:var(--red);margin-bottom:12px;
+}
+.sc-title{
+  font-family:var(--bb);font-size:clamp(18px,2.5vw,24px);
+  line-height:.95;letter-spacing:.02em;
+  color:var(--black);margin-bottom:10px;
+}
+.sc-body{
+  font-family:var(--arch);font-size:13px;font-weight:300;
+  line-height:1.7;color:var(--black3);
+}
+.sc-body p{margin-bottom:10px}
+.sc-body p:last-child{margin-bottom:0}
+.sc-stat-big{
+  font-family:var(--bb);font-size:64px;letter-spacing:-.01em;
+  color:var(--black);line-height:1;margin-bottom:4px;
+}
+.sc-stat-label{font-family:var(--narrow);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--print4)}
+.sc-list{list-style:none;display:flex;flex-direction:column;gap:0}
+.sc-list li{
+  font-family:var(--narrow);font-size:13px;font-weight:400;
+  padding:8px 0;border-bottom:1px solid var(--print3);
+  color:var(--black2);
+  display:flex;align-items:baseline;gap:8px;
+}
+.sc-list li:last-child{border-bottom:none}
+.sc-list li::before{content:'→';color:var(--red);font-size:11px;flex-shrink:0}
+
+/* CLOSING STRIP */
+.closing-strip{
+  background:var(--black);
+  border-top:4px solid var(--red);
+  padding:40px 32px;
+  max-width:1100px;margin:0 auto;
+  margin-top:40px;
+}
+.cs-inner{max-width:640px}
+.cs-label{font-family:var(--bb);font-size:11px;letter-spacing:.2em;color:var(--red3);margin-bottom:16px}
+.cs-text{
+  font-family:var(--bb);
+  font-size:clamp(22px,4vw,44px);
+  line-height:.92;letter-spacing:.01em;
+  color:#fff;margin-bottom:20px;
+}
+.cs-final{
+  font-family:var(--type);font-size:14px;font-style:italic;
+  color:rgba(255,255,255,.45);line-height:1.65;
+}
+
+/* FOOTER */
+.site-footer{
+  background:var(--black);
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:14px 32px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.sf-l{font-family:var(--type);font-size:10px;letter-spacing:.04em;color:rgba(255,255,255,.25)}
+.sf-r{font-family:var(--bb);font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.2)}
+
+@media(max-width:960px){
+  .body{grid-template-columns:1fr;gap:0}
+  .side-col{padding-top:0;padding-bottom:40px}
+  .cover{grid-template-columns:1fr}
+  .cover-left{border-right:none;border-bottom:3px solid var(--red)}
+  .cl-name{font-size:clamp(80px,20vw,160px)}
+  .body,.closing-strip,.site-footer,.red-strip,.masthead-strip{padding-left:24px;padding-right:24px}
+  .cover-left,.cover-right{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
+</div>
+
+<div class="masthead-strip">
+  <span class="ms-date">Real Madrid · 1995–2010 · Personal essay</span>
+  <span class="ms-tag">Football</span>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-left">
+    <div>
+      <div class="cl-pre">José María Gutiérrez Hernández</div>
+      <div class="cl-name">GUTI</div>
+      <div class="cl-sub">The player who was always almost everything</div>
+    </div>
+    <div class="cl-lede">There is a moment from January 2010 that I keep coming back to. Real Madrid are away at Deportivo. The match is already won. Guti finds himself one on one with the goalkeeper. Everything in the logic of football says: shoot. Instead, he back-heels it.</div>
+  </div>
+  <div class="cover-right">
+    <div class="cr-heading">Career numbers</div>
+    <div class="cr-stats">
+      <div class="cr-stat"><span class="crs-label">Appearances</span><span class="crs-val">542</span></div>
+      <div class="cr-stat"><span class="crs-label">Trophies</span><span class="crs-val">15</span></div>
+      <div class="cr-stat"><span class="crs-label">Champions Leagues</span><span class="crs-val">3</span></div>
+      <div class="cr-stat"><span class="crs-label">Spain caps</span><span class="crs-val">13</span></div>
+      <div class="cr-stat"><span class="crs-label">Managers survived</span><span class="crs-val">19</span></div>
+      <div class="cr-stat"><span class="crs-label">Years at Madrid</span><span class="crs-val">25</span></div>
+    </div>
+    <div class="cr-bottom">
+      <div class="cr-verdict">The eternal promise</div>
+    </div>
+  </div>
+</div>
+
+<div class="red-strip">
+  <span class="rs-text">Zidane arrived</span>
+  <span class="rs-sep"></span>
+  <span class="rs-text">Ronaldo arrived</span>
+  <span class="rs-sep"></span>
+  <span class="rs-text">Beckham arrives</span>
+  <span class="rs-sep"></span>
+  <span class="rs-text">Guti stayed</span>
+</div>
+
+<!-- BODY -->
+<div class="body">
+
+<div class="main-col">
+
+  <div class="sec">
+    <div class="p dropcap">Not to a teammate standing next to him. He back-heels it sideways, across the edge of the six-yard box, completely fooling the goalkeeper who had committed to diving the wrong way, into the path of Karim Benzema who taps into an empty net. The goalkeeper ends up on the ground, looking at the ceiling, trying to work out what just happened.</div>
+    <div class="p">Marca called it the "back-heel of God."</div>
+    <div class="p">That single moment contains everything you need to know about Guti. The absurd talent. The refusal to do what he was supposed to do. And the fact that it came in a nothing league match against a mid-table side rather than a Champions League final. He gave you those moments often. He just never gave them to you when the whole world was watching. And somehow that is both the tragedy and the entire point.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-num">01</div>
+    <div class="sec-head">The boy who stayed</div>
+    <div class="p">José María Gutiérrez Hernández joined Real Madrid's academy when he was eight years old. Eight. He would spend the next 25 years there, growing up inside the walls of the biggest football club on the planet.</div>
+    <div class="p">He was a striker in the youth teams, then a playmaker, then a midfielder, then whatever the team needed him to be at any given moment. When Clarence Seedorf arrived from Sampdoria in 1996, Guti found himself on the bench. He was 19. He had just started to break through.</div>
+    <div class="p">He had already scored in a European Championship final at youth level. The opposition that day featured Buffon, Pirlo, Totti and Ambrosini. He was good enough to do that. He was clearly, visibly, obviously good enough.</div>
+    <div class="p">But good enough and Real Madrid are not always the same thing.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-num">02</div>
+    <div class="sec-head">The eternal promise</div>
+    <div class="p">Former president Ramón Calderón gave him a label that would follow him for the rest of his career. He called Guti the "eternal promise." He meant it as a compliment. He had no idea it would become a kind of verdict.</div>
+
+    <div class="pq">
+      <div class="pq-text">He is 31 years old and people are still talking about his <em>potential.</em></div>
+      <div class="pq-attr">Ramón Calderón, Real Madrid president</div>
+    </div>
+
+    <div class="p">There is something quietly devastating about that sentence. By the time Calderón said it, Guti had already won three Champions Leagues, made over 300 appearances for Real Madrid, and played in some of the most talented squads in football history. And he was still being described as potential. As something that had not quite arrived yet. The cruelest part is that it was true. Even the people who loved him most could not say with certainty that the player they occasionally glimpsed on the pitch had ever actually shown up and stayed.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-num">03</div>
+    <div class="sec-head">Guti and the Galácticos</div>
+    <div class="p">There is a quote from Guti in 2003 that once you read it you cannot unhear it.</div>
+
+    <div class="dq">
+      <div class="dq-text">All the doors are closing on me. I was improving as a midfielder and Zidane arrived. I was improving as a forward and Ronaldo arrived. I'm now in the national team as a midfielder and Beckham comes.</div>
+      <div class="dq-who">Guti · June 2003</div>
+    </div>
+
+    <div class="p">Zidane. Ronaldo. Beckham. Three of the most famous footballers in human history, arriving one after another to occupy precisely the space Guti was trying to claim. It would have broken most players. It would have sent most of them to a different club, a different country, a different life.</div>
+    <div class="p">Guti stayed. Every single time.</div>
+    <div class="p">One manager remarked on arriving at the club: "Look at all the photographs on the walls here of all the great successes. Guti is not in any of the pictures." He was there for all of it. He won trophies as a core contributor. He lasted through 19 different managers. And somehow, he was still the armchair you moved around to make room for the new leather sofas.</div>
+    <div class="p">That kind of loyalty is either the most admirable thing in football or the saddest. In Guti's case it was genuinely both at the same time.</div>
+  </div>
+
+  <div class="rag">
+    <div class="rag-line"></div>
+    <div class="rag-mark">✦</div>
+    <div class="rag-line"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-num">04</div>
+    <div class="sec-head">What he actually was</div>
+    <div class="p">When you strip away the Galáctico noise, what you are left with is a player of extraordinary, almost embarrassing natural ability. Ronaldo, the Brazilian one, the man who won the World Cup twice and was probably the best striker who ever lived, called Guti the finest talent in the squad during his time in Madrid.</div>
+    <div class="p">Think about what that means. Ronaldo, standing in a dressing room that contained Zidane, Figo, Beckham, Roberto Carlos and Raúl, looked around and pointed at the quiet Spaniard with the long hair and said: him. That one.</div>
+    <div class="p">Wesley Sneijder said Guti was the best player he ever shared a pitch with. He also said that when he first arrived at Madrid and took Guti's place in the starting eleven, Guti did not speak to him for three months. They eventually made up and played brilliantly together. Complicated, yes. But not petty forever.</div>
+    <div class="p">His passing was what people ran out of adjectives trying to describe. The range of it, the disguise of it, the way he could thread a ball through spaces that other players had not yet noticed existed. He played football at a slightly different angle to everyone else, as if he was seeing the pitch from slightly higher up, slightly further forward in time.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-num">05</div>
+    <div class="sec-head">Forty-five minutes</div>
+    <div class="p">When Zidane retired in 2006, Fabio Capello said he wanted to build the team around Guti. This was it. This was the moment the Galácticos were leaving one by one, and Guti, the boy who had waited patiently through all of them, was finally going to be the main character.</div>
+    <div class="p">Capello quickly discovered that the player he saw in those flashes from the bench was not quite the same player who showed up when handed a starting role and the full weight of expectation. In small doses, coming off the bench when the game needed something different, Guti was extraordinary. As the permanent solution, the man you built your team around, he was something else. Something less.</div>
+    <div class="p">The Sevilla match in 2006/07 is the clearest example. Madrid losing 1-0 at home at half time. Capello sends Guti on in place of Raúl, hands him the captain's armband. Less than 20 minutes later Guti has two brilliant assists, total authority, the absolute best version of himself. Madrid win 3-1.</div>
+
+    <div class="pq">
+      <div class="pq-text">He needed to be losing. He needed to be <em>coming on.</em> Start him, and you got a different person.</div>
+    </div>
+
+    <div class="p">The emergency version of Guti was one of the most exciting players in the world. The everyday version was the one that drove every manager he ever had to distraction.</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-num">06</div>
+    <div class="sec-head">After the beach</div>
+    <div class="p">When he left for Beşiktaş in 2010, he said he was going to spend the rest of his life on a beach in Thailand. Everyone believed him, because it fit. The playboy, the maverick, the man who had never quite committed to anything the way his talent demanded.</div>
+    <div class="p">Then he took his coaching badges. Went back to Real Madrid. Started working with the youth teams. Won a youth treble. The kids he worked with, Federico Valverde among them, speak about him with a specific kind of reverence. He understood something about young talent and what it feels like to be the eternal promise.</div>
+    <div class="p">Maybe because he had been that player. Maybe because he understood from the inside exactly what it cost.</div>
+    <div class="p">He is José María Gutiérrez Hernández now in his professional life. The full name. The adult name. The name of someone who has decided to be taken seriously.</div>
+    <div class="p">But Guti is the one we remember. The long hair. The back-heel. The 45 minutes against Sevilla that briefly made everyone believe this was finally it. It was never finally it. It was always just glimpses. And the glimpses, it turns out, were enough to last a lifetime.</div>
+  </div>
+
+</div>
+
+<!-- SIDEBAR -->
+<div class="side-col">
+
+  <div class="side-card red-top">
+    <div class="sc-label">Career high</div>
+    <div class="sc-stat-big">18</div>
+    <div class="sc-stat-label">Goals in 2000/01 as emergency striker</div>
+    <div class="sc-body" style="margin-top:12px">
+      <p>Del Bosque asked him to fill in for the injured Fernando Morientes. Guti had not played striker regularly since his youth. He scored 18 goals in all competitions. His highest tally ever. He was 25.</p>
+    </div>
+  </div>
+
+  <div class="side-card">
+    <div class="sc-label">What his peers said</div>
+    <div class="sc-title">The finest talent in the squad.</div>
+    <div class="sc-body" style="margin-top:10px">
+      <p>Ronaldo's verdict. Standing in a dressing room with Zidane, Figo, Beckham and Roberto Carlos, he looked at Guti.</p>
+      <p>Wesley Sneijder went further. He called Guti the best player he ever played with. Then admitted Guti did not speak to him for three months after taking his place in the XI.</p>
+    </div>
+  </div>
+
+  <div class="side-card red-top">
+    <div class="sc-label">The back-heel of God</div>
+    <div class="sc-title">Deportivo, January 2010</div>
+    <div class="sc-body" style="margin-top:10px">
+      <p>One on one with the keeper. Ball on his weaker foot. Every instinct says shoot. Instead, a backheel sideways across the box. Benzema taps in. Goalkeeper ends up on the floor staring at the ceiling.</p>
+      <p>Marca gave it its name. A nothing match. Which is exactly the problem.</p>
+    </div>
+  </div>
+
+  <div class="side-card">
+    <div class="sc-label">The Galácticos he outlasted</div>
+    <ul class="sc-list">
+      <li>Clarence Seedorf</li>
+      <li>Luis Figo</li>
+      <li>Zinedine Zidane</li>
+      <li>Ronaldo Nazário</li>
+      <li>David Beckham</li>
+      <li>Michael Owen</li>
+    </ul>
+  </div>
+
+  <div class="side-card red-top">
+    <div class="sc-label">The temperature of the man</div>
+    <div class="sc-title">He needed friction to be brilliant.</div>
+    <div class="sc-body" style="margin-top:10px">
+      <p>He kicked players who were down. He spat at opponents. He turned up two hours late to training with an explanation about his phone and the clocks that did not add up.</p>
+      <p>He publicly resented the coverage given to Beckham. He was asked to leave by Mourinho, and nobody was surprised.</p>
+      <p>And yet. Every player who played alongside him speaks about him with something close to reverence. Both versions were true at the same time.</p>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- end body -->
+
+<!-- CLOSING -->
+<div class="closing-strip">
+  <div class="cs-inner">
+    <div class="cs-label">Final word</div>
+    <div class="cs-text">He scored Madrid's 5,000th league goal. Their 500th Champions League goal. The eternal promise never quite became the finished article. The glimpses were enough to last a lifetime.</div>
+    <div class="cs-final">It was never finally it. It was always just glimpses. And somehow, that was the whole point.</div>
+  </div>
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">Guti · Real Madrid 1995–2010 · Notes by Al Amin</div>
+  <div class="sf-r">Football</div>
+</div>
+
+</body>
+</html>
