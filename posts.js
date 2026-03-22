@@ -15,14 +15,22 @@
 const POSTS = [
 
   {
-    file:  "100_narrated_films_lb_imdb_avg.html",
-    title: "First person narrated films",
-    desc:  "The table is sorted by the Avg column by default, and you can click any column header to re-sort.",
-    tag:   "Movie",
-    date:  "Jun 2025",
-    theme: "coral"
-  },
+  file:  "why_fpl.html",
+  title: "FPL is not a game — it's a cognitive system",
+  desc:  "Why I treat every blank gameweek as data, every bad captain pick as variance, and every international break as a noticeable absence.",
+  tag:   "FPL",
+  date:  "Aug 2023",
+  theme: "blue"
+},
 
+{
+  file:  "100_narrated_films_lb_imdb_avg.html",
+  title: "100 first-person narrated films — rated & ranked",
+  desc:  "Letterboxd vs IMDb, averaged and sorted. Every film where someone decided their story was worth telling in their own voice.",
+  tag:   "Movie",
+  date:  "Jun 2025",
+  theme: "coral"
+},
 {
     file:  "sentimental_value_review.html",
     title: "Joachim Trier's Best Film Is About Someone Making His Worst",
