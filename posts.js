@@ -22,6 +22,14 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "fpl_asad_story.html",
+  title: "The captain you cannot unsee",
+  desc:  "A short story about Asad, FPL, and a hamstring injury in the twenty-ninth minute. The framework was correct. The outcome was not. These are not the same thing.",
+  tag:   "FPL",
+  date:  "Aug 2021",
+  theme: "dark"
+},
+  {
   file:  "madrid_city_nights.html",
   title: "The two nights that cannot be explained",
   desc:  "Real Madrid vs Manchester City in 2022 and 2024. Same clubs, same competition, same impossible situation. At some point you stop calling it luck.",
