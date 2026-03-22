@@ -1,274 +1,587 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>100 First-Person Narrated Films — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,700;0,900;1,700;1,900&family=Barlow+Condensed:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; }
-.wrap { padding: 1rem 0; }
-.controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
-.filter-btn { font-size: 12px; padding: 4px 10px; border: 0.5px solid var(--color-border-secondary); background: transparent; border-radius: 4px; cursor: pointer; color: var(--color-text-secondary); transition: all .15s; }
-.filter-btn.active, .filter-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); }
-.search-box { font-size: 13px; padding: 5px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: 4px; background: var(--color-background-secondary); color: var(--color-text-primary); min-width: 160px; }
-.search-box:focus { outline: none; border-color: var(--color-border-primary); }
-.tbl-wrap { overflow-x: auto; overflow-y: auto; max-height: 540px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); }
-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 580px; }
-thead th { position: sticky; top: 0; background: var(--color-background-secondary); padding: 8px 8px; text-align: left; font-weight: 500; font-size: 11.5px; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); white-space: nowrap; cursor: pointer; user-select: none; z-index: 1; }
-thead th:hover { color: var(--color-text-primary); }
-thead th.sorted { color: var(--color-text-primary); }
-tbody tr { border-bottom: 0.5px solid var(--color-border-tertiary); transition: background .1s; }
-tbody tr:hover { background: var(--color-background-secondary); }
-tbody tr:last-child { border-bottom: none; }
-td { padding: 6px 8px; vertical-align: middle; }
-.td-rank { color: var(--color-text-tertiary); font-size: 11px; text-align: right; padding-right: 10px; min-width: 26px; }
-.td-title { font-weight: 500; color: var(--color-text-primary); white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
-.td-year { color: var(--color-text-tertiary); font-size: 11px; padding-left: 3px; }
-.td-narrator { color: var(--color-text-secondary); font-size: 11.5px; white-space: nowrap; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
-.td-genre { font-size: 10.5px; padding: 2px 6px; border-radius: 3px; white-space: nowrap; display: inline-block; }
-.td-num { text-align: right; font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; padding-right: 10px; }
-.td-avg { text-align: right; font-size: 13px; font-weight: 500; padding-right: 10px; }
-.avg-bar { display: inline-flex; align-items: center; gap: 6px; }
-.bar-bg { width: 42px; height: 5px; background: var(--color-border-tertiary); border-radius: 3px; overflow: hidden; flex-shrink: 0; }
-.bar-fill { height: 100%; border-radius: 3px; }
-.top500-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #9B7FE6; margin-left: 3px; vertical-align: middle; }
-.cnt-label { font-size: 11.5px; color: var(--color-text-tertiary); margin-left: auto; }
-.legend { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary); align-items: center; }
-.leg { display: flex; align-items: center; gap: 3px; }
-.legdot { width: 7px; height: 7px; border-radius: 50%; }
-.sort-arrow { font-size: 9px; margin-left: 2px; opacity: 0.5; }
-.sorted .sort-arrow { opacity: 1; }
-</style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<div class="wrap">
-<div class="legend">
-  <span class="leg"><span class="legdot" style="background:#639922"></span> Avg ≥ 9.0 Masterpiece</span>
-  <span class="leg"><span class="legdot" style="background:#185FA5"></span> 8.5–8.9 Outstanding</span>
-  <span class="leg"><span class="legdot" style="background:#BA7517"></span> 8.0–8.4 Excellent</span>
-  <span class="leg"><span class="legdot" style="background:#888780"></span> &lt; 8.0 Good</span>
-  <span class="leg"><span class="legdot" style="background:#9B7FE6"></span> LB Top 500</span>
+:root {
+  --paper:  #FAFAF7;
+  --paper2: #F0EFE8;
+  --paper3: #E4E2D8;
+  --ink:    #0A0A0A;
+  --ink2:   #2A2A28;
+  --ink3:   #5A5A56;
+  --ink4:   #9A9A94;
+  --rule:   #D8D6CC;
+  --red:    #D4180E;
+  --red2:   #FF2D1F;
+  --green:  #1A6B2A;
+  --blue:   #0A3FA8;
+  --amber:  #C47A00;
+  --gray:   #6B6B68;
+  --purple: #5A2D9A;
+  --sans:   'Barlow', system-ui, sans-serif;
+  --cond:   'Barlow Condensed', sans-serif;
+  --mono:   'IBM Plex Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--paper); color: var(--ink); }
+
+/* ══ TOPBAR ══ */
+.topbar {
+  background: var(--ink);
+  padding: 12px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.tb-back { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); text-decoration: none; transition: color .15s; }
+.tb-back:hover { color: rgba(255,255,255,.8); }
+.tb-right { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.3); }
+
+/* ══ HERO ══ */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 72vh;
+  border-bottom: 3px solid var(--ink);
+}
+.hero-left {
+  background: var(--red);
+  padding: 56px 48px 48px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 3px solid var(--ink);
+}
+.hl-label { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 32px; }
+.hl-title { font-family: var(--cond); font-size: clamp(64px, 9vw, 120px); font-weight: 900; line-height: .88; letter-spacing: -.02em; color: #fff; text-transform: uppercase; margin-bottom: 0; }
+.hl-bottom { }
+.hl-desc { font-family: var(--sans); font-size: 16px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,.75); max-width: 400px; margin-bottom: 32px; }
+.hl-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+.hl-meta-item { }
+.hl-meta-num { font-family: var(--cond); font-size: 36px; font-weight: 900; color: #fff; line-height: 1; }
+.hl-meta-label { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-top: 3px; }
+
+.hero-right {
+  padding: 56px 48px 48px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.hr-label { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink4); margin-bottom: 32px; }
+.hr-top5 { flex: 1; display: flex; flex-direction: column; gap: 0; }
+.hr-top5-title { font-family: var(--cond); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); border-bottom: 2px solid var(--ink); padding-bottom: 8px; margin-bottom: 0; }
+.top5-row {
+  display: grid; grid-template-columns: 32px 1fr auto;
+  gap: 0; align-items: center;
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 0;
+  text-decoration: none; color: inherit;
+  transition: background .1s;
+}
+.top5-row:hover { background: var(--paper2); margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
+.t5-rank { font-family: var(--cond); font-size: 20px; font-weight: 900; color: var(--paper3); line-height: 1; }
+.t5-info { }
+.t5-title { font-family: var(--cond); font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.1; }
+.t5-narrator { font-family: var(--sans); font-size: 11px; font-weight: 300; color: var(--ink3); font-style: italic; }
+.t5-score { font-family: var(--cond); font-size: 24px; font-weight: 900; color: var(--red); text-align: right; }
+
+.hr-bottom { }
+.hr-methodology {
+  background: var(--paper2);
+  border: 1.5px solid var(--rule);
+  padding: 16px 20px;
+}
+.hm-title { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink4); margin-bottom: 8px; }
+.hm-formula { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--ink); }
+.hm-note { font-family: var(--sans); font-size: 11px; color: var(--ink3); margin-top: 6px; }
+
+/* ══ DISTRIBUTION BAR ══ */
+.dist-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 3px solid var(--ink);
+  background: var(--ink);
+  gap: 1px;
+}
+.db-item { background: var(--paper); padding: 20px 24px; display: flex; align-items: center; gap: 16px; }
+.db-swatch { width: 6px; align-self: stretch; border-radius: 1px; flex-shrink: 0; }
+.db-count { font-family: var(--cond); font-size: 48px; font-weight: 900; line-height: 1; }
+.db-right { }
+.db-label { font-family: var(--cond); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); }
+.db-range { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; color: var(--ink4); margin-top: 2px; }
+
+/* ══ GENRE BREAKDOWN ══ */
+.genre-section {
+  border-bottom: 3px solid var(--ink);
+  padding: 40px 48px;
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 48px; align-items: start;
+}
+.gs-title { font-family: var(--cond); font-size: 36px; font-weight: 900; text-transform: uppercase; line-height: 1; }
+.gs-subtitle { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink4); margin-top: 8px; }
+.genre-chart { display: flex; flex-wrap: wrap; gap: 6px; }
+.genre-pill {
+  font-family: var(--cond);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 6px 12px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  cursor: default;
+  display: flex; align-items: center; gap: 6px;
+}
+.gp-count { font-family: var(--mono); font-size: 10px; font-weight: 400; opacity: .6; }
+
+/* ══ TABLE SECTION ══ */
+.table-section { padding: 0 48px 64px; }
+
+.tbl-controls {
+  display: flex; align-items: center; gap: 0;
+  border-bottom: 3px solid var(--ink);
+  padding: 20px 0 0;
+  flex-wrap: wrap; gap: 12px;
+}
+.tbl-section-title { font-family: var(--cond); font-size: 28px; font-weight: 900; text-transform: uppercase; flex: 1; }
+
+.filter-strip { display: flex; gap: 0; border: 1.5px solid var(--ink); overflow: hidden; border-radius: 2px; }
+.f-btn {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 8px 14px;
+  border: none; background: var(--paper); color: var(--ink3);
+  cursor: pointer; transition: all .12s;
+  border-right: 1px solid var(--rule);
+}
+.f-btn:last-child { border-right: none; }
+.f-btn:hover { background: var(--paper2); color: var(--ink); }
+.f-btn.active { background: var(--ink); color: #fff; }
+
+.search-wrap {
+  display: flex; align-items: center; gap: 10px;
+  border: 1.5px solid var(--ink);
+  padding: 6px 14px;
+  border-radius: 2px;
+}
+.srch-icon { font-size: 14px; color: var(--ink4); }
+.srch-input {
+  font-family: var(--mono); font-size: 11px;
+  border: none; background: transparent; color: var(--ink);
+  outline: none; width: 180px;
+}
+.srch-input::placeholder { color: var(--ink4); }
+
+.count-pill { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink4); margin-left: auto; }
+
+/* Table */
+.tbl-outer { overflow-x: auto; margin-top: 0; border: 1.5px solid var(--ink); border-top: none; }
+table { width: 100%; border-collapse: collapse; min-width: 760px; }
+
+thead th {
+  background: var(--ink);
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 8px; font-weight: 500;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  text-align: left;
+  cursor: pointer; user-select: none;
+  white-space: nowrap;
+  border-right: 1px solid rgba(255,255,255,.06);
+  transition: color .12s;
+}
+thead th:hover { color: rgba(255,255,255,.85); }
+thead th.sorted { color: #fff; }
+thead th.num { text-align: right; }
+.sort-arr { font-size: 7px; margin-left: 3px; opacity: .35; }
+.sorted .sort-arr { opacity: 1; color: var(--red2); }
+
+tbody tr { border-bottom: 1px solid var(--rule); transition: background .08s; }
+tbody tr:nth-child(even) { background: var(--paper2); }
+tbody tr:hover { background: #fff; }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 9px 12px; vertical-align: middle; border-right: 1px solid var(--paper3); }
+td:last-child { border-right: none; }
+
+.td-rank { font-family: var(--cond); font-size: 13px; font-weight: 700; color: var(--paper3); text-align: right; padding-right: 8px; min-width: 36px; }
+.td-title { font-family: var(--cond); font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap; letter-spacing: -.01em; }
+.td-year { font-family: var(--mono); font-size: 9px; color: var(--ink4); margin-left: 6px; }
+.td-narrator { font-family: var(--sans); font-size: 12px; font-weight: 300; font-style: italic; color: var(--ink3); max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.td-genre { font-family: var(--cond); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 2px 7px; border-radius: 1px; border: 1px solid currentColor; white-space: nowrap; }
+.td-num { font-family: var(--mono); font-size: 13px; font-weight: 500; text-align: right; padding-right: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.td-avg-cell { text-align: right; padding-right: 12px; }
+.avg-inner { display: inline-flex; align-items: center; gap: 8px; }
+.avg-bar-bg { width: 40px; height: 4px; background: var(--paper3); border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+.avg-bar-fill { height: 100%; border-radius: 2px; }
+.avg-val { font-family: var(--mono); font-size: 13px; font-weight: 500; min-width: 34px; text-align: right; }
+.lb-pip { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--purple); margin-left: 4px; vertical-align: middle; }
+
+/* ══ FOOTER ══ */
+.site-footer {
+  background: var(--ink);
+  padding: 20px 48px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.sf-l { font-family: var(--cond); font-size: 14px; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,.6); letter-spacing: .04em; }
+.sf-r { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.25); }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { border-right: none; border-bottom: 3px solid var(--ink); }
+  .dist-bar { grid-template-columns: 1fr 1fr; }
+  .genre-section { grid-template-columns: 1fr; gap: 24px; }
+  .topbar, .genre-section, .table-section { padding-left: 24px; padding-right: 24px; }
+  .hero-left, .hero-right { padding: 36px 24px; }
+  .site-footer { padding: 20px 24px; }
+}
+@media (max-width: 600px) {
+  .dist-bar { grid-template-columns: 1fr 1fr; }
+  .tbl-controls { flex-direction: column; align-items: flex-start; }
+  .hl-title { font-size: 52px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="tb-back" href="index.html">← Notes by Al Amin</a>
+  <div class="tb-right">Letterboxd × IMDb · Personal list</div>
 </div>
-<div class="controls">
-  <input class="search-box" id="srch" placeholder="Search title, narrator, genre…" oninput="render()">
-  <button class="filter-btn active" data-t="all" onclick="setTier(this)">All</button>
-  <button class="filter-btn" data-t="9" onclick="setTier(this)">9.0+</button>
-  <button class="filter-btn" data-t="85" onclick="setTier(this)">8.5–8.9</button>
-  <button class="filter-btn" data-t="8" onclick="setTier(this)">8.0–8.4</button>
-  <button class="filter-btn" data-t="low" onclick="setTier(this)">&lt;8.0</button>
-  <span class="cnt-label" id="cnt"></span>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hl-label">Film ranking · First-person narration</div>
+      <div class="hl-title">100<br>Films<br>One<br>Voice</div>
+    </div>
+    <div class="hl-bottom">
+      <div class="hl-desc">Every film here chose to put a single voice between you and the story — unreliable, intimate, confessional, or dead. Ranked by cross-averaging Letterboxd and IMDb.</div>
+      <div class="hl-meta">
+        <div class="hl-meta-item">
+          <div class="hl-meta-num" id="m-total">100</div>
+          <div class="hl-meta-label">Films</div>
+        </div>
+        <div class="hl-meta-item">
+          <div class="hl-meta-num" id="m-top500">—</div>
+          <div class="hl-meta-label">LB Top 500</div>
+        </div>
+        <div class="hl-meta-item">
+          <div class="hl-meta-num" id="m-genres">—</div>
+          <div class="hl-meta-label">Genres</div>
+        </div>
+        <div class="hl-meta-item">
+          <div class="hl-meta-num" id="m-top">—</div>
+          <div class="hl-meta-label">Peak avg</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hr-label">Ranking · Top 5 by average score</div>
+    <div class="hr-top5">
+      <div class="hr-top5-title">The five highest rated</div>
+      <div id="top5-rows"></div>
+    </div>
+    <div class="hr-bottom">
+      <div class="hr-methodology">
+        <div class="hm-title">Methodology</div>
+        <div class="hm-formula">Avg = (LB×2 + IMDb) ÷ 2</div>
+        <div class="hm-note">Letterboxd scores doubled to weight community taste. Both platforms normalised to /10.</div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="tbl-wrap">
-  <table id="tbl">
-    <thead><tr>
-      <th class="td-rank" onclick="sortBy('displayRank')"># <span class="sort-arrow">↕</span></th>
-      <th onclick="sortBy('title')">Title <span class="sort-arrow">↕</span></th>
-      <th onclick="sortBy('narrator')">Narrator <span class="sort-arrow">↕</span></th>
-      <th onclick="sortBy('genre')">Genre <span class="sort-arrow">↕</span></th>
-      <th onclick="sortBy('lb10')" style="text-align:right">LB /10 <span class="sort-arrow">↕</span></th>
-      <th onclick="sortBy('imdb')" style="text-align:right">IMDb <span class="sort-arrow">↕</span></th>
-      <th onclick="sortBy('avg')" style="text-align:right">Avg ↓ <span class="sort-arrow">↑</span></th>
-    </tr></thead>
-    <tbody id="tbody"></tbody>
-  </table>
+
+<!-- DISTRIBUTION -->
+<div class="dist-bar">
+  <div class="db-item">
+    <div class="db-swatch" style="background:#1A6B2A"></div>
+    <div>
+      <div class="db-count" style="color:#1A6B2A" id="d9">—</div>
+      <div class="db-label">Masterpiece</div>
+      <div class="db-range">Avg 9.0+</div>
+    </div>
+  </div>
+  <div class="db-item">
+    <div class="db-swatch" style="background:#0A3FA8"></div>
+    <div>
+      <div class="db-count" style="color:#0A3FA8" id="d85">—</div>
+      <div class="db-label">Outstanding</div>
+      <div class="db-range">Avg 8.5 – 8.9</div>
+    </div>
+  </div>
+  <div class="db-item">
+    <div class="db-swatch" style="background:#C47A00"></div>
+    <div>
+      <div class="db-count" style="color:#C47A00" id="d8">—</div>
+      <div class="db-label">Excellent</div>
+      <div class="db-range">Avg 8.0 – 8.4</div>
+    </div>
+  </div>
+  <div class="db-item">
+    <div class="db-swatch" style="background:#6B6B68"></div>
+    <div>
+      <div class="db-count" style="color:#6B6B68" id="dlow">—</div>
+      <div class="db-label">Good</div>
+      <div class="db-range">Avg below 8.0</div>
+    </div>
+  </div>
 </div>
+
+<!-- GENRE BREAKDOWN -->
+<div class="genre-section">
+  <div>
+    <div class="gs-title">Genres<br>represented</div>
+    <div class="gs-subtitle">Click to filter below</div>
+  </div>
+  <div class="genre-chart" id="genre-chart"></div>
+</div>
+
+<!-- TABLE -->
+<div class="table-section">
+  <div class="tbl-controls">
+    <div class="tbl-section-title">Full ranking</div>
+    <div class="filter-strip">
+      <button class="f-btn active" data-t="all" onclick="setTier(this)">All</button>
+      <button class="f-btn" data-t="9" onclick="setTier(this)">9.0+</button>
+      <button class="f-btn" data-t="85" onclick="setTier(this)">8.5–8.9</button>
+      <button class="f-btn" data-t="8" onclick="setTier(this)">8.0–8.4</button>
+      <button class="f-btn" data-t="low" onclick="setTier(this)">&lt;8.0</button>
+    </div>
+    <div class="search-wrap">
+      <span class="srch-icon">⌕</span>
+      <input class="srch-input" id="srch" placeholder="Title, narrator, genre…" oninput="render()">
+    </div>
+    <span class="count-pill" id="cnt"></span>
+  </div>
+  <div class="tbl-outer">
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:right;width:40px" onclick="sortBy('displayRank')"># <span class="sort-arr">↕</span></th>
+          <th onclick="sortBy('title')">Title <span class="sort-arr">↕</span></th>
+          <th onclick="sortBy('narrator')">Narrator <span class="sort-arr">↕</span></th>
+          <th onclick="sortBy('genre')">Genre <span class="sort-arr">↕</span></th>
+          <th onclick="sortBy('year')" class="num">Year <span class="sort-arr">↕</span></th>
+          <th onclick="sortBy('lb10')" class="num">LB /10 <span class="sort-arr">↕</span></th>
+          <th onclick="sortBy('imdb')" class="num">IMDb <span class="sort-arr">↕</span></th>
+          <th onclick="sortBy('avg')" class="num sorted">Avg ↓ <span class="sort-arr">↑</span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="site-footer">
+  <div class="sf-l">100 First-Person Narrated Films · LB × IMDb</div>
+  <div class="sf-r">Notes by Al Amin</div>
 </div>
 
 <script>
 const raw = [
-  {title:"The Shawshank Redemption", year:1994, narrator:"Red",               genre:"Drama",      lb:4.6, imdb:9.3, top500:true},
-  {title:"Cinema Paradiso",          year:1988, narrator:"Adult Salvatore",   genre:"Drama",      lb:4.7, imdb:8.5, top500:true},
-  {title:"GoodFellas",               year:1990, narrator:"Henry Hill",        genre:"Crime",      lb:4.5, imdb:8.7, top500:true},
-  {title:"City of God",              year:2002, narrator:"Rocket",            genre:"Crime",      lb:4.5, imdb:8.6, top500:true},
-  {title:"Fight Club",               year:1999, narrator:"The Narrator",      genre:"Thriller",   lb:4.3, imdb:8.8, top500:true},
-  {title:"Sunset Boulevard",         year:1950, narrator:"Joe Gillis",        genre:"Noir",       lb:4.4, imdb:8.4, top500:true},
-  {title:"All About Eve",            year:1950, narrator:"Addison DeWitt",    genre:"Drama",      lb:4.4, imdb:8.2, top500:true},
-  {title:"Apocalypse Now",           year:1979, narrator:"Capt. Willard",     genre:"War",        lb:4.3, imdb:8.5, top500:true},
-  {title:"Taxi Driver",              year:1976, narrator:"Travis Bickle",     genre:"Thriller",   lb:4.3, imdb:8.5, top500:true},
-  {title:"Double Indemnity",         year:1944, narrator:"Walter Neff",       genre:"Noir",       lb:4.3, imdb:8.3, top500:true},
-  {title:"Trainspotting",            year:1996, narrator:"Mark Renton",       genre:"Drama",      lb:4.3, imdb:8.1, top500:true},
-  {title:"Barry Lyndon",             year:1975, narrator:"Omniscient",        genre:"Epic",       lb:4.3, imdb:8.0, top500:true},
-  {title:"Oldboy",                   year:2003, narrator:"Oh Dae-su",         genre:"Thriller",   lb:4.2, imdb:8.4, top500:true},
-  {title:"The Usual Suspects",       year:1995, narrator:"Verbal Kint",       genre:"Thriller",   lb:4.1, imdb:8.5, top500:true},
-  {title:"A Clockwork Orange",       year:1971, narrator:"Alex DeLarge",      genre:"Sci-fi",     lb:4.2, imdb:8.3, top500:true},
-  {title:"Forrest Gump",             year:1994, narrator:"Forrest Gump",      genre:"Drama",      lb:4.0, imdb:8.8, top500:false},
-  {title:"Amadeus",                  year:1984, narrator:"Salieri",           genre:"Drama",      lb:4.1, imdb:8.4, top500:true},
-  {title:"Memento",                  year:2000, narrator:"Leonard Shelby",    genre:"Thriller",   lb:4.0, imdb:8.5, top500:false},
-  {title:"To Kill a Mockingbird",    year:1962, narrator:"Scout Finch",       genre:"Drama",      lb:4.2, imdb:8.3, top500:true},
-  {title:"Annie Hall",               year:1977, narrator:"Alvy Singer",       genre:"Comedy",     lb:4.2, imdb:8.0, top500:true},
-  {title:"Persepolis",               year:2007, narrator:"Marjane",           genre:"Animation",  lb:4.2, imdb:7.9, top500:true},
-  {title:"Stand By Me",              year:1986, narrator:"Gordie Lachance",   genre:"Drama",      lb:4.2, imdb:8.1, top500:false},
-  {title:"The Handmaiden",           year:2016, narrator:"Multiple chars",    genre:"Thriller",   lb:4.1, imdb:8.1, top500:true},
-  {title:"Kind Hearts and Coronets", year:1949, narrator:"Louis Mazzini",     genre:"Comedy",     lb:4.1, imdb:8.1, top500:true},
-  {title:"Waltz with Bashir",        year:2008, narrator:"Ari Folman",        genre:"Animation",  lb:4.0, imdb:7.9, top500:true},
-  {title:"Casino",                   year:1995, narrator:"Sam Rothstein",     genre:"Crime",      lb:4.0, imdb:8.2, top500:false},
-  {title:"The Big Lebowski",         year:1998, narrator:"The Stranger",      genre:"Comedy",     lb:4.0, imdb:8.1, top500:true},
-  {title:"American Beauty",          year:1999, narrator:"Lester Burnham",    genre:"Drama",      lb:4.0, imdb:8.3, top500:false},
-  {title:"Badlands",                 year:1973, narrator:"Holly Sargis",      genre:"Crime",      lb:4.1, imdb:7.8, top500:false},
-  {title:"Y Tu Mamá También",        year:2001, narrator:"Omniscient voice",  genre:"Drama",      lb:4.0, imdb:7.7, top500:true},
-  {title:"The Grand Budapest Hotel", year:2014, narrator:"Zero Moustafa",     genre:"Comedy",     lb:4.0, imdb:8.1, top500:false},
-  {title:"The Princess Bride",       year:1987, narrator:"The Grandfather",   genre:"Adventure",  lb:4.0, imdb:8.1, top500:false},
-  {title:"Days of Heaven",           year:1978, narrator:"Linda",             genre:"Drama",      lb:4.1, imdb:7.9, top500:true},
-  {title:"Platoon",                  year:1986, narrator:"Chris Taylor",      genre:"War",        lb:4.0, imdb:8.1, top500:false},
-  {title:"Rebecca",                  year:1940, narrator:"Mrs. de Winter",    genre:"Romance",    lb:4.0, imdb:8.1, top500:false},
-  {title:"The Wolf of Wall Street",  year:2013, narrator:"Jordan Belfort",    genre:"Biography",  lb:4.0, imdb:8.2, top500:false},
-  {title:"Almost Famous",            year:2000, narrator:"William Miller",    genre:"Drama",      lb:4.0, imdb:7.9, top500:false},
-  {title:"Blade Runner 2049",        year:2017, narrator:"K / Joe",           genre:"Sci-fi",     lb:4.1, imdb:8.0, top500:false},
-  {title:"The Thin Red Line",        year:1998, narrator:"Pvt. Witt",         genre:"War",        lb:4.0, imdb:7.8, top500:false},
-  {title:"Million Dollar Baby",      year:2004, narrator:"Scrap",             genre:"Sports",     lb:4.0, imdb:8.1, top500:false},
-  {title:"How Green Was My Valley",  year:1941, narrator:"Huw Morgan",        genre:"Drama",      lb:4.0, imdb:8.1, top500:false},
-  {title:"Atonement",                year:2007, narrator:"Briony Tallis",     genre:"Drama",      lb:3.9, imdb:7.8, top500:false},
-  {title:"American Psycho",         year:2000, narrator:"Patrick Bateman",    genre:"Satire",     lb:3.9, imdb:7.6, top500:false},
-  {title:"The Royal Tenenbaums",     year:2001, narrator:"Alec Baldwin",      genre:"Comedy",     lb:3.9, imdb:7.6, top500:false},
-  {title:"Big Fish",                 year:2003, narrator:"Edward Bloom",      genre:"Fantasy",    lb:3.9, imdb:8.0, top500:false},
-  {title:"Into the Wild",            year:2007, narrator:"Carine McCandless", genre:"Adventure",  lb:3.9, imdb:8.1, top500:false},
-  {title:"The Big Short",            year:2015, narrator:"Multiple chars",    genre:"Drama",      lb:3.9, imdb:7.8, top500:false},
-  {title:"Room",                     year:2015, narrator:"Jack",              genre:"Drama",      lb:3.9, imdb:8.2, top500:false},
-  {title:"Adaptation",               year:2002, narrator:"Charlie Kaufman",   genre:"Comedy",     lb:3.9, imdb:7.7, top500:false},
-  {title:"True Grit",                year:2010, narrator:"Mattie Ross",       genre:"Western",    lb:3.9, imdb:7.6, top500:false},
-  {title:"Life of Pi",               year:2012, narrator:"Pi Patel",          genre:"Adventure",  lb:3.9, imdb:7.9, top500:false},
-  {title:"Kiss Kiss Bang Bang",      year:2005, narrator:"Harry Lockhart",    genre:"Comedy",     lb:3.9, imdb:7.5, top500:false},
-  {title:"The Virgin Suicides",      year:1999, narrator:"Neighborhood boys", genre:"Drama",      lb:3.9, imdb:7.2, top500:false},
-  {title:"Raising Arizona",          year:1987, narrator:"H.I. McDunnough",   genre:"Comedy",     lb:3.9, imdb:7.7, top500:false},
-  {title:"The Tin Drum",             year:1979, narrator:"Oskar Matzerath",   genre:"Drama",      lb:3.9, imdb:7.8, top500:false},
-  {title:"O Brother Where Art Thou", year:2000, narrator:"Ulysses E. McGill", genre:"Comedy",     lb:3.9, imdb:7.7, top500:false},
-  {title:"Moonrise Kingdom",         year:2012, narrator:"Camp Narrator",     genre:"Comedy",     lb:3.9, imdb:7.8, top500:false},
-  {title:"The Motorcycle Diaries",   year:2004, narrator:"Ernesto Guevara",   genre:"Biography",  lb:3.9, imdb:7.8, top500:false},
-  {title:"Great Expectations",       year:1946, narrator:"Pip Pirrip",        genre:"Drama",      lb:3.9, imdb:7.6, top500:false},
-  {title:"Radio Days",               year:1987, narrator:"Joe (young)",       genre:"Comedy",     lb:3.9, imdb:7.3, top500:false},
-  {title:"Dances with Wolves",       year:1990, narrator:"John Dunbar",       genre:"Western",    lb:3.8, imdb:8.0, top500:false},
-  {title:"A Christmas Story",        year:1983, narrator:"Ralphie Parker",    genre:"Comedy",     lb:3.8, imdb:7.9, top500:false},
-  {title:"The Perks of a Wallflower",year:2012, narrator:"Charlie",           genre:"Drama",      lb:3.8, imdb:7.9, top500:false},
-  {title:"Fear and Loathing in LV",  year:1998, narrator:"Raoul Duke",        genre:"Comedy",     lb:3.8, imdb:7.6, top500:false},
-  {title:"Benjamin Button",          year:2008, narrator:"Daisy",             genre:"Drama",      lb:3.8, imdb:7.8, top500:false},
-  {title:"Election",                 year:1999, narrator:"Multiple chars",    genre:"Comedy",     lb:3.8, imdb:7.3, top500:false},
-  {title:"Submarine",                year:2010, narrator:"Oliver Tate",       genre:"Comedy",     lb:3.8, imdb:7.3, top500:false},
-  {title:"Alfie",                    year:1966, narrator:"Alfie",             genre:"Comedy",     lb:3.8, imdb:7.2, top500:false},
-  {title:"Lolita",                   year:1962, narrator:"Humbert Humbert",   genre:"Drama",      lb:3.8, imdb:7.7, top500:false},
-  {title:"The Sandlot",              year:1993, narrator:"Scotty Smalls",     genre:"Comedy",     lb:3.8, imdb:7.8, top500:false},
-  {title:"Tom Jones",                year:1963, narrator:"Omniscient",        genre:"Comedy",     lb:3.8, imdb:7.2, top500:false},
-  {title:"The Age of Innocence",     year:1993, narrator:"Joanne Woodward",   genre:"Drama",      lb:3.8, imdb:7.2, top500:false},
-  {title:"Breakfast at Tiffany's",   year:1961, narrator:"Paul Varjak",       genre:"Romance",    lb:3.8, imdb:7.6, top500:false},
-  {title:"The Remains of the Day",   year:1993, narrator:"Stevens",           genre:"Drama",      lb:3.8, imdb:7.8, top500:false},
-  {title:"The Reader",               year:2008, narrator:"Michael Berg",      genre:"Drama",      lb:3.8, imdb:7.6, top500:false},
-  {title:"The Color Purple",         year:1985, narrator:"Celie",             genre:"Drama",      lb:3.8, imdb:7.8, top500:false},
-  {title:"Swimming to Cambodia",     year:1987, narrator:"Spalding Gray",     genre:"Comedy",     lb:3.8, imdb:7.1, top500:false},
-  {title:"Dangerous Liaisons",       year:1988, narrator:"Multiple chars",    genre:"Drama",      lb:3.8, imdb:7.6, top500:false},
-  {title:"Notes on a Scandal",       year:2006, narrator:"Barbara Covett",    genre:"Thriller",   lb:3.7, imdb:7.5, top500:false},
-  {title:"Inherent Vice",            year:2014, narrator:"Doc Sportello",     genre:"Mystery",    lb:3.7, imdb:6.9, top500:false},
-  {title:"Beasts of the Southern Wild",year:2012,narrator:"Hushpuppy",        genre:"Drama",      lb:3.7, imdb:7.2, top500:false},
-  {title:"A River Runs Through It",  year:1992, narrator:"Norman Maclean",    genre:"Drama",      lb:3.7, imdb:7.2, top500:false},
-  {title:"Clueless",                 year:1995, narrator:"Cher Horowitz",     genre:"Comedy",     lb:3.7, imdb:7.0, top500:false},
-  {title:"The Outsiders",            year:1983, narrator:"Ponyboy Curtis",    genre:"Drama",      lb:3.7, imdb:7.1, top500:false},
-  {title:"Legends of the Fall",      year:1994, narrator:"One Stab",          genre:"Drama",      lb:3.7, imdb:7.5, top500:false},
-  {title:"Jarhead",                  year:2005, narrator:"Anthony Swofford",  genre:"War",        lb:3.7, imdb:7.0, top500:false},
-  {title:"Blow",                     year:2001, narrator:"George Jung",       genre:"Biography",  lb:3.7, imdb:7.6, top500:false},
-  {title:"Molly's Game",             year:2017, narrator:"Molly Bloom",       genre:"Biography",  lb:3.7, imdb:7.4, top500:false},
-  {title:"Fried Green Tomatoes",     year:1991, narrator:"Evelyn/Ninny",      genre:"Drama",      lb:3.7, imdb:7.7, top500:false},
-  {title:"Angela's Ashes",           year:1999, narrator:"Frank McCourt",     genre:"Drama",      lb:3.6, imdb:7.3, top500:false},
-  {title:"The Book Thief",           year:2013, narrator:"Death",             genre:"Drama",      lb:3.6, imdb:7.6, top500:false},
-  {title:"Secretary",                year:2002, narrator:"Lee Holloway",      genre:"Romance",    lb:3.6, imdb:7.1, top500:false},
-  {title:"Wild",                     year:2014, narrator:"Cheryl Strayed",    genre:"Adventure",  lb:3.6, imdb:7.1, top500:false},
-  {title:"The Help",                 year:2011, narrator:"Skeeter Phelan",    genre:"Drama",      lb:3.6, imdb:8.0, top500:false},
-  {title:"Love Story",               year:1970, narrator:"Oliver Barrett IV", genre:"Romance",    lb:3.6, imdb:6.9, top500:false},
-  {title:"My Own Private Idaho",     year:1991, narrator:"Mike Waters",       genre:"Drama",      lb:3.6, imdb:7.1, top500:false},
-  {title:"Catch-22",                 year:1970, narrator:"Yossarian",         genre:"War",        lb:3.6, imdb:7.3, top500:false},
-  {title:"The Lovely Bones",         year:2009, narrator:"Susie Salmon",      genre:"Drama",      lb:3.5, imdb:6.7, top500:false},
-  {title:"The Spectacular Now",      year:2013, narrator:"Sutter Keely",      genre:"Drama",      lb:3.5, imdb:7.2, top500:false},
-  {title:"The Great Gatsby",         year:2013, narrator:"Nick Carraway",     genre:"Drama",      lb:3.5, imdb:7.2, top500:false},
+  {title:"The Shawshank Redemption",year:1994,narrator:"Red",genre:"Drama",lb:4.6,imdb:9.3,top500:true},
+  {title:"Cinema Paradiso",year:1988,narrator:"Adult Salvatore",genre:"Drama",lb:4.7,imdb:8.5,top500:true},
+  {title:"GoodFellas",year:1990,narrator:"Henry Hill",genre:"Crime",lb:4.5,imdb:8.7,top500:true},
+  {title:"City of God",year:2002,narrator:"Rocket",genre:"Crime",lb:4.5,imdb:8.6,top500:true},
+  {title:"Fight Club",year:1999,narrator:"The Narrator",genre:"Thriller",lb:4.3,imdb:8.8,top500:true},
+  {title:"Sunset Boulevard",year:1950,narrator:"Joe Gillis",genre:"Noir",lb:4.4,imdb:8.4,top500:true},
+  {title:"All About Eve",year:1950,narrator:"Addison DeWitt",genre:"Drama",lb:4.4,imdb:8.2,top500:true},
+  {title:"Apocalypse Now",year:1979,narrator:"Capt. Willard",genre:"War",lb:4.3,imdb:8.5,top500:true},
+  {title:"Taxi Driver",year:1976,narrator:"Travis Bickle",genre:"Thriller",lb:4.3,imdb:8.5,top500:true},
+  {title:"Double Indemnity",year:1944,narrator:"Walter Neff",genre:"Noir",lb:4.3,imdb:8.3,top500:true},
+  {title:"Trainspotting",year:1996,narrator:"Mark Renton",genre:"Drama",lb:4.3,imdb:8.1,top500:true},
+  {title:"Barry Lyndon",year:1975,narrator:"Omniscient",genre:"Epic",lb:4.3,imdb:8.0,top500:true},
+  {title:"Oldboy",year:2003,narrator:"Oh Dae-su",genre:"Thriller",lb:4.2,imdb:8.4,top500:true},
+  {title:"The Usual Suspects",year:1995,narrator:"Verbal Kint",genre:"Thriller",lb:4.1,imdb:8.5,top500:true},
+  {title:"A Clockwork Orange",year:1971,narrator:"Alex DeLarge",genre:"Sci-fi",lb:4.2,imdb:8.3,top500:true},
+  {title:"Forrest Gump",year:1994,narrator:"Forrest Gump",genre:"Drama",lb:4.0,imdb:8.8,top500:false},
+  {title:"Amadeus",year:1984,narrator:"Salieri",genre:"Drama",lb:4.1,imdb:8.4,top500:true},
+  {title:"Memento",year:2000,narrator:"Leonard Shelby",genre:"Thriller",lb:4.0,imdb:8.5,top500:false},
+  {title:"To Kill a Mockingbird",year:1962,narrator:"Scout Finch",genre:"Drama",lb:4.2,imdb:8.3,top500:true},
+  {title:"Annie Hall",year:1977,narrator:"Alvy Singer",genre:"Comedy",lb:4.2,imdb:8.0,top500:true},
+  {title:"Persepolis",year:2007,narrator:"Marjane",genre:"Animation",lb:4.2,imdb:7.9,top500:true},
+  {title:"Stand By Me",year:1986,narrator:"Gordie Lachance",genre:"Drama",lb:4.2,imdb:8.1,top500:false},
+  {title:"The Handmaiden",year:2016,narrator:"Multiple chars",genre:"Thriller",lb:4.1,imdb:8.1,top500:true},
+  {title:"Kind Hearts and Coronets",year:1949,narrator:"Louis Mazzini",genre:"Comedy",lb:4.1,imdb:8.1,top500:true},
+  {title:"Waltz with Bashir",year:2008,narrator:"Ari Folman",genre:"Animation",lb:4.0,imdb:7.9,top500:true},
+  {title:"Casino",year:1995,narrator:"Sam Rothstein",genre:"Crime",lb:4.0,imdb:8.2,top500:false},
+  {title:"The Big Lebowski",year:1998,narrator:"The Stranger",genre:"Comedy",lb:4.0,imdb:8.1,top500:true},
+  {title:"American Beauty",year:1999,narrator:"Lester Burnham",genre:"Drama",lb:4.0,imdb:8.3,top500:false},
+  {title:"Badlands",year:1973,narrator:"Holly Sargis",genre:"Crime",lb:4.1,imdb:7.8,top500:false},
+  {title:"Y Tu Mamá También",year:2001,narrator:"Omniscient voice",genre:"Drama",lb:4.0,imdb:7.7,top500:true},
+  {title:"The Grand Budapest Hotel",year:2014,narrator:"Zero Moustafa",genre:"Comedy",lb:4.0,imdb:8.1,top500:false},
+  {title:"The Princess Bride",year:1987,narrator:"The Grandfather",genre:"Adventure",lb:4.0,imdb:8.1,top500:false},
+  {title:"Days of Heaven",year:1978,narrator:"Linda",genre:"Drama",lb:4.1,imdb:7.9,top500:true},
+  {title:"Platoon",year:1986,narrator:"Chris Taylor",genre:"War",lb:4.0,imdb:8.1,top500:false},
+  {title:"Rebecca",year:1940,narrator:"Mrs. de Winter",genre:"Romance",lb:4.0,imdb:8.1,top500:false},
+  {title:"The Wolf of Wall Street",year:2013,narrator:"Jordan Belfort",genre:"Biography",lb:4.0,imdb:8.2,top500:false},
+  {title:"Almost Famous",year:2000,narrator:"William Miller",genre:"Drama",lb:4.0,imdb:7.9,top500:false},
+  {title:"Blade Runner 2049",year:2017,narrator:"K / Joe",genre:"Sci-fi",lb:4.1,imdb:8.0,top500:false},
+  {title:"The Thin Red Line",year:1998,narrator:"Pvt. Witt",genre:"War",lb:4.0,imdb:7.8,top500:false},
+  {title:"Million Dollar Baby",year:2004,narrator:"Scrap",genre:"Sports",lb:4.0,imdb:8.1,top500:false},
+  {title:"How Green Was My Valley",year:1941,narrator:"Huw Morgan",genre:"Drama",lb:4.0,imdb:8.1,top500:false},
+  {title:"Atonement",year:2007,narrator:"Briony Tallis",genre:"Drama",lb:3.9,imdb:7.8,top500:false},
+  {title:"American Psycho",year:2000,narrator:"Patrick Bateman",genre:"Satire",lb:3.9,imdb:7.6,top500:false},
+  {title:"Lolita",year:1962,narrator:"Humbert Humbert",genre:"Drama",lb:3.9,imdb:7.7,top500:false},
+  {title:"The Assassination of Jesse James",year:2007,narrator:"Omniscient",genre:"Western",lb:4.0,imdb:7.5,top500:false},
+  {title:"The Age of Innocence",year:1993,narrator:"Omniscient",genre:"Drama",lb:3.9,imdb:7.2,top500:false},
+  {title:"Withnail and I",year:1987,narrator:"Marwood",genre:"Comedy",lb:4.0,imdb:7.7,top500:false},
+  {title:"The Curious Case of Benjamin Button",year:2008,narrator:"Daisy/Benjamin",genre:"Drama",lb:3.8,imdb:7.8,top500:false},
+  {title:"Adaptation",year:2002,narrator:"Charlie Kaufman",genre:"Comedy",lb:3.9,imdb:7.7,top500:false},
+  {title:"Little Women",year:2019,narrator:"Jo March",genre:"Drama",lb:3.9,imdb:7.8,top500:false},
+  {title:"The Remains of the Day",year:1993,narrator:"Stevens",genre:"Drama",lb:3.9,imdb:7.8,top500:false},
+  {title:"A Beautiful Mind",year:2001,narrator:"John Nash",genre:"Drama",lb:3.7,imdb:8.2,top500:false},
+  {title:"Pan's Labyrinth",year:2006,narrator:"Ofelia",genre:"Fantasy",lb:4.2,imdb:8.2,top500:true},
+  {title:"The Diving Bell and the Butterfly",year:2007,narrator:"Jean-Do",genre:"Drama",lb:4.1,imdb:8.0,top500:false},
+  {title:"Moonrise Kingdom",year:2012,narrator:"Bob Balaban",genre:"Comedy",lb:3.9,imdb:7.8,top500:false},
+  {title:"Boyhood",year:2014,narrator:"Mason Jr.",genre:"Drama",lb:3.9,imdb:7.9,top500:false},
+  {title:"Beasts of the Southern Wild",year:2012,narrator:"Hushpuppy",genre:"Drama",lb:3.8,imdb:7.3,top500:false},
+  {title:"Submarine",year:2010,narrator:"Oliver Tate",genre:"Comedy",lb:3.8,imdb:7.3,top500:false},
+  {title:"The Perks of Being a Wallflower",year:2012,narrator:"Charlie",genre:"Drama",lb:3.7,imdb:7.9,top500:false},
+  {title:"Amélie",year:2001,narrator:"Omniscient",genre:"Comedy",lb:4.3,imdb:8.3,top500:true},
+  {title:"Big Fish",year:2003,narrator:"Edward Bloom",genre:"Fantasy",lb:3.9,imdb:8.0,top500:false},
+  {title:"The Royal Tenenbaums",year:2001,narrator:"Alec Baldwin",genre:"Comedy",lb:4.0,imdb:7.7,top500:false},
+  {title:"Schindler's List",year:1993,narrator:"None (implied)",genre:"War",lb:4.4,imdb:9.0,top500:true},
+  {title:"Catch Me If You Can",year:2002,narrator:"Frank Abagnale",genre:"Biography",lb:3.9,imdb:8.1,top500:false},
+  {title:"Ed Wood",year:1994,narrator:"Criswell",genre:"Biography",lb:4.0,imdb:7.9,top500:false},
+  {title:"The Notebook",year:2004,narrator:"Old Allie/Noah",genre:"Romance",lb:3.5,imdb:7.8,top500:false},
+  {title:"Midnight in Paris",year:2011,narrator:"Gil Pender",genre:"Comedy",lb:3.8,imdb:7.7,top500:false},
+  {title:"I, Daniel Blake",year:2016,narrator:"Daniel Blake",genre:"Drama",lb:3.9,imdb:7.9,top500:false},
+  {title:"Knives Out",year:2019,narrator:"Marta Cabrera",genre:"Mystery",lb:3.9,imdb:7.9,top500:false},
+  {title:"Monty Python and the Holy Grail",year:1975,narrator:"Omniscient",genre:"Comedy",lb:4.3,imdb:8.2,top500:true},
+  {title:"Blood Simple",year:1984,narrator:"Loren Visser",genre:"Noir",lb:3.9,imdb:7.7,top500:false},
+  {title:"Juno",year:2007,narrator:"Juno MacGuff",genre:"Comedy",lb:3.7,imdb:7.4,top500:false},
+  {title:"The Namesake",year:2006,narrator:"Gogol Ganguli",genre:"Drama",lb:3.7,imdb:7.5,top500:false},
+  {title:"Capote",year:2005,narrator:"Truman Capote",genre:"Biography",lb:3.8,imdb:7.3,top500:false},
+  {title:"Brick",year:2005,narrator:"Brendan Frye",genre:"Noir",lb:3.8,imdb:7.3,top500:false},
+  {title:"Election",year:1999,narrator:"Multiple",genre:"Satire",lb:3.8,imdb:7.3,top500:false},
+  {title:"The Color Purple",year:1985,narrator:"Celie",genre:"Drama",lb:3.9,imdb:7.7,top500:false},
+  {title:"Room",year:2015,narrator:"Jack",genre:"Drama",lb:3.8,imdb:8.1,top500:false},
+  {title:"My Brilliant Friend",year:2018,narrator:"Elena Greco",genre:"Drama",lb:3.9,imdb:8.4,top500:false},
+  {title:"Three Colors: Red",year:1994,narrator:"Valentine",genre:"Drama",lb:4.2,imdb:8.1,top500:true},
+  {title:"The Tree of Life",year:2011,narrator:"Jack O'Brien",genre:"Drama",lb:3.9,imdb:6.8,top500:false},
+  {title:"Paris, Texas",year:1984,narrator:"Travis",genre:"Drama",lb:4.1,imdb:8.1,top500:true},
+  {title:"The Lover",year:1992,narrator:"Adult woman",genre:"Drama",lb:3.6,imdb:6.9,top500:false},
+  {title:"Molly's Game",year:2017,narrator:"Molly Bloom",genre:"Biography",lb:3.7,imdb:7.4,top500:false},
+  {title:"Fried Green Tomatoes",year:1991,narrator:"Evelyn/Ninny",genre:"Drama",lb:3.7,imdb:7.7,top500:false},
+  {title:"Angela's Ashes",year:1999,narrator:"Frank McCourt",genre:"Drama",lb:3.6,imdb:7.3,top500:false},
+  {title:"The Book Thief",year:2013,narrator:"Death",genre:"Drama",lb:3.6,imdb:7.6,top500:false},
+  {title:"Secretary",year:2002,narrator:"Lee Holloway",genre:"Romance",lb:3.6,imdb:7.1,top500:false},
+  {title:"Wild",year:2014,narrator:"Cheryl Strayed",genre:"Adventure",lb:3.6,imdb:7.1,top500:false},
+  {title:"The Help",year:2011,narrator:"Skeeter Phelan",genre:"Drama",lb:3.6,imdb:8.0,top500:false},
+  {title:"Love Story",year:1970,narrator:"Oliver Barrett IV",genre:"Romance",lb:3.6,imdb:6.9,top500:false},
+  {title:"My Own Private Idaho",year:1991,narrator:"Mike Waters",genre:"Drama",lb:3.6,imdb:7.1,top500:false},
+  {title:"Catch-22",year:1970,narrator:"Yossarian",genre:"War",lb:3.6,imdb:7.3,top500:false},
+  {title:"The Lovely Bones",year:2009,narrator:"Susie Salmon",genre:"Drama",lb:3.5,imdb:6.7,top500:false},
+  {title:"The Spectacular Now",year:2013,narrator:"Sutter Keely",genre:"Drama",lb:3.5,imdb:7.2,top500:false},
+  {title:"The Great Gatsby",year:2013,narrator:"Nick Carraway",genre:"Drama",lb:3.5,imdb:7.2,top500:false},
 ];
 
-// compute derived fields
-const films = raw.map((f, i) => ({
-  ...f,
-  lb10: Math.round(f.lb * 2 * 10) / 10,
-  avg: Math.round((f.lb * 2 + f.imdb) / 2 * 100) / 100,
-  displayRank: i + 1
-}));
+const films = raw.map((f,i) => ({...f, lb10: Math.round(f.lb*2*10)/10, avg: Math.round((f.lb*2+f.imdb)/2*100)/100, displayRank:i+1}));
+films.sort((a,b)=>b.avg-a.avg);
+films.forEach((f,i)=>f.displayRank=i+1);
 
-// sort by avg desc initially
-films.sort((a, b) => b.avg - a.avg);
-films.forEach((f, i) => f.displayRank = i + 1);
+let currentTier='all', sortKey='avg', sortDir=-1, activeGenre=null;
 
-let currentTier = 'all';
-let sortKey = 'avg';
-let sortDir = -1;
-
-function tierOf(avg) {
-  if (avg >= 9.0) return '9';
-  if (avg >= 8.5) return '85';
-  if (avg >= 8.0) return '8';
-  return 'low';
+function tierColor(v) {
+  if(v>=9.0) return '#1A6B2A';
+  if(v>=8.5) return '#0A3FA8';
+  if(v>=8.0) return '#C47A00';
+  return '#6B6B68';
 }
+function tierOf(v){if(v>=9)return'9';if(v>=8.5)return'85';if(v>=8)return'8';return'low';}
 
-function barColor(avg) {
-  if (avg >= 9.0) return '#639922';
-  if (avg >= 8.5) return '#185FA5';
-  if (avg >= 8.0) return '#BA7517';
-  return '#888780';
+/* hero stats */
+document.getElementById('m-top500').textContent = films.filter(f=>f.top500).length;
+document.getElementById('m-genres').textContent = [...new Set(films.map(f=>f.genre))].length;
+document.getElementById('m-top').textContent    = films[0].avg.toFixed(2);
+
+/* top5 */
+films.slice(0,5).forEach((f,i)=>{
+  const c = tierColor(f.avg);
+  const row = document.createElement('a');
+  row.className='top5-row'; row.href='#tbody'; row.style.textDecoration='none';
+  row.innerHTML=`<div class="t5-rank" style="color:${c}40">0${i+1}</div><div class="t5-info"><div class="t5-title">${f.title}</div><div class="t5-narrator">${f.narrator} · ${f.year}</div></div><div class="t5-score" style="color:${c}">${f.avg.toFixed(2)}</div>`;
+  document.getElementById('top5-rows').appendChild(row);
+});
+
+/* dist */
+document.getElementById('d9').textContent   = films.filter(f=>f.avg>=9).length;
+document.getElementById('d85').textContent  = films.filter(f=>f.avg>=8.5&&f.avg<9).length;
+document.getElementById('d8').textContent   = films.filter(f=>f.avg>=8&&f.avg<8.5).length;
+document.getElementById('dlow').textContent = films.filter(f=>f.avg<8).length;
+
+/* genre pills */
+const genreCounts={};
+films.forEach(f=>{genreCounts[f.genre]=(genreCounts[f.genre]||0)+1;});
+const genreList=Object.entries(genreCounts).sort((a,b)=>b[1]-a[1]);
+const gColors={Drama:'#D4180E',Crime:'#8B1A1A',Thriller:'#4A1A8B',Noir:'#1A1A4A',War:'#4A3A00',Comedy:'#006B2A',Animation:'#8B6B00','Sci-fi':'#003A8B',Epic:'#6B003A',Biography:'#3A6B00',Romance:'#8B003A',Adventure:'#006B6B',Sports:'#2A6B00',Western:'#6B4A00',Fantasy:'#4A006B',Mystery:'#006B8B',Satire:'#8B8B00'};
+const gc=document.getElementById('genre-chart');
+genreList.forEach(([g,c])=>{
+  const col=gColors[g]||'#444';
+  const pill=document.createElement('div');
+  pill.className='genre-pill';
+  pill.style.color=col;
+  pill.style.borderColor=col+'60';
+  pill.style.cursor='pointer';
+  pill.innerHTML=`${g}<span class="gp-count">${c}</span>`;
+  pill.onclick=()=>{
+    if(activeGenre===g){activeGenre=null;pill.style.background='transparent';}
+    else{activeGenre=g;document.querySelectorAll('.genre-pill').forEach(p=>p.style.background='transparent');pill.style.background=col+'18';}
+    render();
+  };
+  gc.appendChild(pill);
+});
+
+function setTier(btn){
+  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); currentTier=btn.dataset.t; render();
 }
-
-function lbColor(v) {
-  if (v >= 9.0) return '#639922';
-  if (v >= 8.5) return '#185FA5';
-  if (v >= 8.0) return '#BA7517';
-  return '#888780';
-}
-
-function imdbColor(v) {
-  if (v >= 9.0) return '#639922';
-  if (v >= 8.5) return '#185FA5';
-  if (v >= 8.0) return '#BA7517';
-  return '#888780';
-}
-
-function setTier(btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentTier = btn.dataset.t;
+function sortBy(key){
+  if(sortKey===key)sortDir*=-1;
+  else{sortKey=key;sortDir=['title','narrator','genre'].includes(key)?1:-1;}
   render();
 }
 
-function sortBy(key) {
-  if (sortKey === key) sortDir *= -1;
-  else { sortKey = key; sortDir = key === 'title' || key === 'narrator' || key === 'genre' ? 1 : -1; }
-  render();
-}
-
-function render() {
-  const q = document.getElementById('srch').value.toLowerCase();
-  let data = films.filter(f => {
-    if (currentTier !== 'all' && tierOf(f.avg) !== currentTier) return false;
-    if (q && ![f.title, f.narrator, f.genre, String(f.year)].some(s => s.toLowerCase().includes(q))) return false;
+function render(){
+  const q=document.getElementById('srch').value.toLowerCase();
+  let data=films.filter(f=>{
+    if(currentTier!=='all'&&tierOf(f.avg)!==currentTier)return false;
+    if(activeGenre&&f.genre!==activeGenre)return false;
+    if(q&&![f.title,f.narrator,f.genre,String(f.year)].some(s=>s.toLowerCase().includes(q)))return false;
     return true;
   });
-
-  data = [...data].sort((a, b) => {
-    let av = a[sortKey], bv = b[sortKey];
-    if (typeof av === 'string') av = av.toLowerCase(), bv = bv.toLowerCase();
-    return sortDir * (av < bv ? -1 : av > bv ? 1 : 0);
+  data=[...data].sort((a,b)=>{
+    let av=a[sortKey],bv=b[sortKey];
+    if(typeof av==='string'){av=av.toLowerCase();bv=bv.toLowerCase();}
+    return sortDir*(av<bv?-1:av>bv?1:0);
   });
-
-  document.getElementById('cnt').textContent = data.length + ' films';
-
-  const minAvg = 6.5, maxAvg = 9.5;
-  const tb = document.getElementById('tbody');
-  tb.innerHTML = data.map((f, i) => {
-    const pct = Math.min(100, Math.max(0, (f.avg - minAvg) / (maxAvg - minAvg) * 100)).toFixed(1);
-    const bc = barColor(f.avg);
-    const dot = f.top500 ? '<span class="top500-dot" title="Letterboxd Top 500"></span>' : '';
-    return `<tr>
-      <td class="td-rank">${i + 1}</td>
-      <td><span class="td-title">${f.title}${dot}</span><span class="td-year">${f.year}</span></td>
+  document.getElementById('cnt').textContent=data.length+' films';
+  const minA=6.5,maxA=9.5,tb=document.getElementById('tbody');
+  tb.innerHTML=data.map((f,i)=>{
+    const pct=Math.min(100,Math.max(0,(f.avg-minA)/(maxA-minA)*100)).toFixed(1);
+    const c=tierColor(f.avg);
+    const pip=f.top500?'<span class="lb-pip" title="LB Top 500"></span>':'';
+    return`<tr>
+      <td class="td-rank">${i+1}</td>
+      <td><span class="td-title">${f.title}${pip}</span><span class="td-year">${f.year}</span></td>
       <td class="td-narrator">${f.narrator}</td>
-      <td><span class="td-genre" style="background:${bc}22;color:${bc}">${f.genre}</span></td>
-      <td class="td-num" style="color:${lbColor(f.lb10)}">${f.lb10.toFixed(1)}</td>
-      <td class="td-num" style="color:${imdbColor(f.imdb)}">${f.imdb.toFixed(1)}</td>
-      <td class="td-avg">
-        <span class="avg-bar">
-          <span class="bar-bg"><span class="bar-fill" style="width:${pct}%;background:${bc}"></span></span>
-          <span style="color:${bc};min-width:34px;text-align:right">${f.avg.toFixed(2)}</span>
-        </span>
-      </td>
+      <td><span class="td-genre" style="color:${c};border-color:${c}40;background:${c}08">${f.genre}</span></td>
+      <td class="td-num" style="color:var(--ink4)">${f.year}</td>
+      <td class="td-num" style="color:${tierColor(f.lb10)}">${f.lb10.toFixed(1)}</td>
+      <td class="td-num" style="color:${tierColor(f.imdb)}">${f.imdb.toFixed(1)}</td>
+      <td class="td-avg-cell"><div class="avg-inner"><div class="avg-bar-bg"><div class="avg-bar-fill" style="width:${pct}%;background:${c}"></div></div><span class="avg-val" style="color:${c}">${f.avg.toFixed(2)}</span></div></td>
     </tr>`;
   }).join('');
-
-  document.querySelectorAll('thead th').forEach(th => th.classList.remove('sorted'));
 }
-
 render();
 </script>
+</body>
+</html>
