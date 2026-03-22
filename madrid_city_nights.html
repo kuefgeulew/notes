@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real Madrid vs Manchester City — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Barlow:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --w:#FAFAF8;--w2:#F0EFEC;--w3:#E0DED8;--w4:#C0BEB8;
+  --k:#0A0A08;--k2:#1A1A18;--k3:#585850;--k4:#888880;
+  --r:#D40000;--r2:#FF1A00;--r3:#FF6650;--r4:#FFE8E4;
+  --bc:'Barlow Condensed',sans-serif;--b:'Barlow',sans-serif;--m:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--b);background:var(--w);color:var(--k);min-height:100vh}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 40px;border-bottom:2px solid var(--k)}
+.nav-back{font-family:var(--m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--k3)}
+.nav-back:hover{color:var(--r)}
+
+/* ══ COVER: SPLIT PAGE ══ */
+.cover{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:2px solid var(--k);
+  min-height:88vh;
+}
+.cv-left{
+  background:var(--r);
+  padding:48px 44px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  border-right:2px solid var(--k);
+  position:relative;overflow:hidden;
+}
+/* Huge year watermark */
+.cv-left::before{
+  content:'2022';
+  position:absolute;bottom:-20px;right:-10px;
+  font-family:var(--bc);font-size:220px;font-weight:900;
+  color:rgba(0,0,0,.1);line-height:1;pointer-events:none;
+  letter-spacing:-.05em;
+}
+.cv-top{}
+.cv-issue{font-family:var(--m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:20px}
+.cv-title{font-family:var(--bc);font-size:clamp(52px,9vw,128px);font-weight:900;line-height:.82;letter-spacing:-.03em;color:#fff;margin-bottom:16px;text-transform:uppercase}
+.cv-subtitle{font-family:var(--bc);font-size:clamp(16px,2.5vw,26px);font-weight:400;font-style:italic;color:rgba(255,255,255,.55);line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
+.cv-bottom{}
+.cv-lede{font-family:var(--b);font-size:15px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.7);border-top:1px solid rgba(255,255,255,.2);padding-top:20px;max-width:380px}
+
+.cv-right{
+  padding:0;
+  display:flex;flex-direction:column;
+}
+.cv-r-top{
+  flex:1;
+  padding:48px 44px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-bottom:2px solid var(--k);
+}
+.cvr-label{font-family:var(--m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--k4);margin-bottom:20px}
+.cv-stats{display:flex;flex-direction:column;gap:0}
+.cv-stat{
+  display:flex;align-items:baseline;gap:16px;
+  padding:14px 0;border-bottom:1px solid var(--w3);
+}
+.cv-stat:last-child{border-bottom:none}
+.cs-num{font-family:var(--bc);font-size:44px;font-weight:900;color:var(--k);line-height:1;letter-spacing:-.03em;min-width:80px}
+.cs-label{font-family:var(--m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--k3)}
+
+.cv-r-bot{
+  padding:28px 44px;
+  background:var(--k);
+}
+.crb-text{font-family:var(--bc);font-size:clamp(18px,2.5vw,28px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;line-height:1.1}
+.crb-sub{font-family:var(--m);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:8px}
+
+/* ══ RED TICKER ══ */
+.ticker{
+  background:var(--k);border-bottom:2px solid var(--r);
+  padding:10px 40px;
+  display:flex;align-items:center;gap:0;overflow:hidden;
+}
+.ticker-inner{
+  display:flex;align-items:center;gap:40px;flex-wrap:nowrap;
+}
+.t-item{
+  font-family:var(--bc);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);white-space:nowrap;flex-shrink:0;
+}
+.t-item.hi{color:var(--r3)}
+.t-sep{color:rgba(255,255,255,.15);flex-shrink:0;font-size:18px}
+
+/* ══ THREE-COL BODY ══ */
+.three-body{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  border-bottom:2px solid var(--k);
+}
+.col{border-right:1px solid var(--w3);padding:40px 36px}
+.col:last-child{border-right:none}
+.col.wide-2{grid-column:span 2;border-right:1px solid var(--w3)}
+
+/* ══ COL HEAD ══ */
+.col-head{
+  font-family:var(--bc);
+  font-size:clamp(24px,3vw,42px);
+  font-weight:900;text-transform:uppercase;
+  letter-spacing:-.01em;line-height:.9;
+  color:var(--k);
+  margin-bottom:16px;
+  padding-bottom:14px;
+  border-bottom:3px solid var(--k);
+}
+.col-head em{font-style:italic;color:var(--r)}
+.col-sub{font-family:var(--m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--k4);margin-bottom:20px}
+
+/* ══ PROSE ══ */
+.p{font-family:var(--b);font-size:15px;font-weight:300;line-height:1.85;color:var(--k2);margin-bottom:16px}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--k)}
+.p strong{font-weight:500;color:var(--k)}
+
+/* Drop cap */
+.dropcap::first-letter{font-family:var(--bc);font-size:72px;font-weight:900;float:left;line-height:.8;margin:2px 6px 0 0;color:var(--r)}
+
+/* ══ MINUTE MARKER ══ */
+.minute{
+  margin:20px 0;
+  display:flex;align-items:stretch;gap:0;
+  border:1px solid var(--w3);
+}
+.min-time{
+  font-family:var(--bc);font-size:36px;font-weight:900;
+  background:var(--k);color:var(--r2);
+  padding:10px 14px;letter-spacing:-.03em;line-height:1;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  min-width:72px;
+}
+.min-body{padding:10px 14px;font-family:var(--b);font-size:13px;font-weight:300;line-height:1.65;color:var(--k2)}
+.min-body strong{font-weight:600;color:var(--k);display:block;margin-bottom:3px}
+
+/* ══ INLINE QUOTE ══ */
+.dq{margin:18px 0;padding:14px 16px;background:var(--w2);border-left:3px solid var(--r)}
+.dq-text{font-family:var(--b);font-size:14px;font-style:italic;font-weight:300;line-height:1.7;color:var(--k2)}
+.dq-who{font-family:var(--m);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--r);margin-top:8px;display:block}
+
+/* ══ BIG QUOTE (full col) ══ */
+.bq{margin:20px 0;padding:0}
+.bq-text{font-family:var(--bc);font-size:clamp(20px,2.5vw,32px);font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:.95;color:var(--k);margin-bottom:10px}
+.bq-text em{color:var(--r)}
+.bq-attr{font-family:var(--m);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--k4)}
+
+/* ══ RULE ══ */
+.col-rule{height:1px;background:var(--w3);margin:20px 0}
+
+/* ══ FULL BLEED BLACK ══ */
+.full-bleed{
+  background:var(--k);
+  border-bottom:2px solid var(--r);
+  padding:48px 40px;
+}
+.fb-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;
+  max-width:1100px;margin:0 auto;
+}
+.fb-left{}
+.fb-label{font-family:var(--m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--r3);margin-bottom:16px}
+.fb-title{font-family:var(--bc);font-size:clamp(28px,4vw,56px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.88;color:#fff;margin-bottom:20px}
+.fb-title em{color:var(--r2);font-style:normal}
+.fb-body{font-family:var(--b);font-size:15px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.5)}
+.fb-right{display:flex;flex-direction:column;justify-content:center;gap:0}
+.fb-quote-large{font-family:var(--bc);font-size:clamp(22px,3vw,40px);font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:.9;color:#fff;margin-bottom:16px}
+.fb-quote-large em{color:var(--r2)}
+.fb-quote-attr{font-family:var(--m);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+
+/* ══ 2024 SECTION ══ */
+.section-head{
+  display:flex;align-items:center;
+  border-bottom:2px solid var(--k);
+  border-top:2px solid var(--k);
+  padding:16px 40px;
+  background:var(--w2);
+}
+.sh-num{font-family:var(--bc);font-size:80px;font-weight:900;color:var(--w3);line-height:1;margin-right:24px;letter-spacing:-.05em;flex-shrink:0}
+.sh-right{}
+.sh-title{font-family:var(--bc);font-size:clamp(24px,4vw,52px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.88;color:var(--k)}
+.sh-title em{color:var(--r)}
+.sh-sub{font-family:var(--m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--k4);margin-top:6px}
+
+/* ══ CLOSING ══ */
+.closing{
+  background:var(--r);
+  border-top:2px solid var(--k);
+  padding:56px 40px;
+}
+.cl-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.cl-left{}
+.cl-label{font-family:var(--m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px}
+.cl-title{font-family:var(--bc);font-size:clamp(28px,5vw,64px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.88;color:#fff;margin-bottom:16px}
+.cl-title em{font-style:italic;color:rgba(255,255,255,.4)}
+.cl-right{}
+.cl-body{font-family:var(--b);font-size:15px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.7)}
+
+/* FOOTER */
+.site-footer{background:var(--k);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:2px solid var(--k)}
+.sf-l{font-family:var(--m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.sf-r{font-family:var(--bc);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.15)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  .cover{grid-template-columns:1fr}
+  .cv-left{border-right:none;border-bottom:2px solid var(--k);min-height:60vh}
+  .three-body{grid-template-columns:1fr}
+  .col,. col.wide-2{border-right:none;border-bottom:1px solid var(--w3);grid-column:span 1}
+  .col:last-child{border-bottom:none}
+  .fb-inner,.cl-inner{grid-template-columns:1fr}
+  .nav,.ticker,.full-bleed,.section-head,.closing,.site-footer{padding-left:24px;padding-right:24px}
+  .col{padding:28px 24px}
+  .sh-num{font-size:56px}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
+</div>
+
+<!-- COVER SPLIT -->
+<div class="cover">
+  <div class="cv-left">
+    <div class="cv-top">
+      <div class="cv-issue">Real Madrid · Champions League · 2022 &amp; 2024</div>
+      <div class="cv-title">The Two Nights That Cannot Be Explained</div>
+      <div class="cv-subtitle">Same clubs. Same competition.<br>Same result. Twice.</div>
+    </div>
+    <div class="cv-bottom">
+      <div class="cv-lede">I want to tell you about two nights, two years apart, that are essentially the same story told twice. Same clubs. Same competition. Same impossible situation. Same result. At some point you stop calling it luck.</div>
+    </div>
+  </div>
+  <div class="cv-right">
+    <div class="cv-r-top">
+      <div class="cvr-label">Combined across both nights</div>
+      <div class="cv-stats">
+        <div class="cv-stat"><span class="cs-num">240</span><span class="cs-label">Minutes of football<br>before Madrid won</span></div>
+        <div class="cv-stat"><span class="cs-num">2</span><span class="cs-label">Goals scored in 2 consecutive<br>minutes in 2022</span></div>
+        <div class="cv-stat"><span class="cs-num">19</span><span class="cs-label">Managers survived by<br>Guti over his career</span></div>
+        <div class="cv-stat"><span class="cs-num">15</span><span class="cs-label">Champions Leagues<br>won in total</span></div>
+      </div>
+    </div>
+    <div class="cv-r-bot">
+      <div class="crb-text">At some point you stop calling it luck</div>
+      <div class="crb-sub">Al Amin · Personal essay · Football</div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="t-item hi">90' Rodrygo</span><span class="t-sep">·</span>
+    <span class="t-item hi">91' Rodrygo</span><span class="t-sep">·</span>
+    <span class="t-item hi">95' Benzema</span><span class="t-sep">·</span>
+    <span class="t-item">Bernabéu, May 4 2022</span><span class="t-sep">·</span>
+    <span class="t-item hi">Lunin reads the Panenka</span><span class="t-sep">·</span>
+    <span class="t-item hi">Rüdiger wins it</span><span class="t-sep">·</span>
+    <span class="t-item">Etihad, April 17 2024</span><span class="t-sep">·</span>
+    <span class="t-item">"We're Real Madrid. Look them in the face."</span>
+  </div>
+</div>
+
+<!-- THREE COL BODY: Night One -->
+<div class="three-body">
+  <div class="col wide-2">
+    <div class="col-head">The First Night: <em>May 2022</em></div>
+    <div class="col-sub">Bernabéu · Champions League Semi-Final · 90th minute</div>
+    <div class="p dropcap">Manchester City are heading to a Champions League final. This is a fact. With seventeen minutes left in the second leg, Riyad Mahrez fires a left-footed rocket into the top corner. City lead 1-0 on the night, 5-3 on aggregate. The Bernabéu crowd, which had been chanting si se puede for the entire second half, goes quiet. Not the explosive silence of a near-miss. The heavy silence of people preparing themselves for the end.</div>
+    <div class="p">City are defending with the composure of a team that has done the hard part. Jack Grealish comes on as a substitute and nearly makes it 2-0, forcing Ferland Mendy into a desperate backwards clearance off the line. Then Courtois gets a toe to another Grealish shot. Two moments, back to back, where the match is almost over for good.</div>
+    <div class="p">Seventeen minutes to play. No clear-cut chance for Madrid all evening. Rodrygo is warming up.</div>
+
+    <div class="minute">
+      <div class="min-time">90'</div>
+      <div class="min-body"><strong>Rodrygo scores.</strong> Benzema plays him through. He beats Ederson. The Bernabéu does not erupt like a crowd that just saw a consolation goal. It erupts like a crowd that has seen this before and knows exactly what it means.</div>
+    </div>
+    <div class="minute">
+      <div class="min-time">91'</div>
+      <div class="min-body"><strong>Rodrygo again.</strong> Before City can breathe. A Carvajal cross. A deflection. A header. Two goals in two consecutive minutes: the first time City had conceded this way under Guardiola.</div>
+    </div>
+    <div class="minute">
+      <div class="min-time">95'</div>
+      <div class="min-body"><strong>Benzema penalty.</strong> He chips it, Panenka-style, down the middle. Madrid lead for the first time in 210 minutes of football across two legs. They never look back.</div>
+    </div>
+
+    <div class="dq">
+      <div class="dq-text">We were close. We were close. But in the end we could not reach it.</div>
+      <div class="dq-who">Pep Guardiola, after the match</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="col-head">The Answer<br><em>Nobody Has</em></div>
+    <div class="col-sub">Ancelotti · The explanation that isn't one</div>
+    <div class="dq" style="margin-top:0">
+      <div class="dq-text">It is the history of this club that helps us to keep going when it seems that we are gone.</div>
+      <div class="dq-who">Carlo Ancelotti</div>
+    </div>
+    <div class="p">That is not a tactical answer. It does not explain the two goals in two minutes. It does not explain why Rodrygo, a 21-year-old substitute, had the composure to do what he did when the entire tie was dying around him.</div>
+    <div class="p">What Ancelotti is really saying is: we have done this enough times that it has become part of who we are. The comeback is not an accident. It is a personality trait.</div>
+    <div class="col-rule"></div>
+    <div class="bq">
+      <div class="bq-text">This was the same season: <em>PSG. Chelsea. City.</em> Three separate occasions where Madrid were dead. Three times they came back.</div>
+    </div>
+    <div class="col-rule"></div>
+    <div class="p">Courtois said it: we cannot say we are used to living this kind of life. And then, in the same breath: but what happened tonight also happened against Chelsea, also against Paris.</div>
+    <div class="p">Which is to say: we do not understand it either. But we recognize it when it happens.</div>
+  </div>
+</div>
+
+<!-- FULL BLEED: THE DRESSING ROOM -->
+<div class="full-bleed">
+  <div class="fb-inner">
+    <div class="fb-left">
+      <div class="fb-label">Before kickoff · 2024 · Etihad</div>
+      <div class="fb-title">Carvajal<br><em>speaks.</em></div>
+      <div class="fb-body">Not Ancelotti. Not the most senior player. Dani Carvajal, who will be battling cramps by the final whistle but will not show it until the match is over. He takes the dressing room and reminds his teammates of what they are. No tactical breakdown. No framework borrowed from a coaching manual. A statement of identity and a simple instruction.</div>
+    </div>
+    <div class="fb-right">
+      <div class="fb-quote-large">"They think it's going to be easy. We're Real Madrid. <em>Look them in the face."</em></div>
+      <div class="fb-quote-attr">Dani Carvajal · Dressing room · Etihad · April 2024</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION HEADER: 2024 -->
+<div class="section-head">
+  <div class="sh-num">II</div>
+  <div class="sh-right">
+    <div class="sh-title">The Second Night: <em>April 2024</em></div>
+    <div class="sh-sub">Etihad Stadium · Champions League Quarter-Final · Penalty Shootout · Andriy Lunin</div>
+  </div>
+</div>
+
+<!-- THREE COL: Night Two -->
+<div class="three-body">
+  <div class="col">
+    <div class="col-head">The Backup<br><em>Who Stood</em></div>
+    <div class="col-sub">Lunin · The Panenka · Reading the moment</div>
+    <div class="p">Courtois is injured. The man in goal for Real Madrid in a Champions League quarter-final penalty shootout at the Etihad is Andriy Lunin. A backup. A player who has spent most of his Madrid career waiting on the bench for exactly the kind of moment most players in his position never actually get.</div>
+    <div class="p">Lunin does not just save penalties. He reads Bernardo Silva's Panenka. The same move Benzema used two years earlier in the same fixture to win that tie in extra time. Silva tries to return it. Lunin does not dive.</div>
+    <div class="p">He stands still. He watches the ball. He catches it.</div>
+    <div class="col-rule"></div>
+    <div class="dq">
+      <div class="dq-text">I told you. You were going to win this.</div>
+      <div class="dq-who">Ancelotti to Lunin, after the shootout</div>
+    </div>
+    <div class="p">The manager tells the player he will win before the match is played. The player wins it. The manager says: I told you so. It is almost too neat to be real. Except it happened in front of 50,000 Manchester City fans.</div>
+  </div>
+
+  <div class="col">
+    <div class="col-head">The<br><em>Dressing</em><br>Room</div>
+    <div class="col-sub">After the shootout · Celebrations · What was said</div>
+    <div class="p">Camavinga and Vinicius are dancing. Music is playing. Rüdiger is somewhere in the middle of it. Jude Bellingham, who has been a Real Madrid player for less than a year, stands slightly apart and smiles.</div>
+    <div class="dq">
+      <div class="dq-text">I don't dance. I'm proud to be part of this team. There's still a long way to go, but this is incredible.</div>
+      <div class="dq-who">Jude Bellingham, dressing room</div>
+    </div>
+    <div class="p">Florentino Pérez comes down. The president moves through the players. At some point he says: they want us to win the 15th now.</div>
+    <div class="dq">
+      <div class="dq-text">We will.</div>
+      <div class="dq-who">Federico Valverde, to Pérez</div>
+    </div>
+    <div class="p">And they did.</div>
+  </div>
+
+  <div class="col">
+    <div class="col-head">Memory<br>As <em>Tactic</em></div>
+    <div class="col-sub">What these two nights actually are</div>
+    <div class="p">I have watched a lot of football. I have seen comebacks through luck, through a single moment, through a referee. What I cannot explain about Real Madrid is how they do it repeatedly. Not once a season. Multiple times, for multiple consecutive seasons.</div>
+    <div class="p">When the Bernabéu goes quiet at ninety minutes and then erupts at the first goal, it is not a crowd celebrating a goal. It is a crowd that remembers. Every person in that ground carries the memory of every other impossible night. And that memory travels from the stands to the pitch.</div>
+    <div class="col-rule"></div>
+    <div class="bq">
+      <div class="bq-text">Memory is a <em>tactical resource</em> at the Bernabéu.</div>
+    </div>
+    <div class="col-rule"></div>
+    <div class="p">Same story. Same ending. Different cast. Two years apart. And both were just the road. The destination was Wembley. La Decimoquinta.</div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="cl-inner">
+    <div class="cl-left">
+      <div class="cl-label">Final word</div>
+      <div class="cl-title">The job was not <em>finished.</em></div>
+    </div>
+    <div class="cl-right">
+      <div class="cl-body">Lunin read the Panenka. Rodrygo scored twice in two minutes. Benzema chipped the goalkeeper. Rüdiger stepped up last. At the Bernabéu, at the Etihad, across two years and two different rounds of the same competition, Real Madrid found a way. The how is unanswerable. The what is permanent. Both nights will be told and retold for as long as the club exists. Which is to say forever.</div>
+    </div>
+  </div>
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">Real Madrid vs Man City · 2022 &amp; 2024 · Notes by Al Amin</div>
+  <div class="sf-r">Football</div>
+</div>
+
+</body>
+</html>
