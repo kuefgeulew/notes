@@ -29,7 +29,14 @@ const POSTS = [
   date:  "Mar 2026",
   theme: "red"
 },
-  
+  {
+  file:  "thesis_football_ml.html",
+  title: "BSc thesis — predicting EPL matches with 96% accuracy",
+  desc:  "A machine learning study across 23 seasons of Premier League data. Six models, feature engineering, and the finding that Logistic Regression beats every ensemble when the inputs are right.",
+  tag:   "Research",
+  date:  "Apr 2024",
+  theme: "blue"
+},
   {
   file:  "why_fpl.html",
   title: "FPL is not a game — it's a cognitive system",
