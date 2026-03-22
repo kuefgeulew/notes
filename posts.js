@@ -15,6 +15,15 @@
 const POSTS = [
 
   {
+  file:  "valverde_little_bird.html",
+  title: "The Little Bird takes flight — Valverde's 22-minute hat-trick",
+  desc:  "Right-back, then the 7, 8, 9 and 10, then right-back again. One of the great individual performances the Bernabéu has ever staged.",
+  tag:   "Football",
+  date:  "Mar 2026",
+  theme: "red"
+},
+  
+  {
   file:  "why_fpl.html",
   title: "FPL is not a game — it's a cognitive system",
   desc:  "Why I treat every blank gameweek as data, every bad captain pick as variance, and every international break as a noticeable absence.",
