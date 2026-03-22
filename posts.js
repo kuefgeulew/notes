@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 //  POSTS REGISTRY
 //  To add a new note: copy one object below, paste at the top,
-//  fill in the 6 fields. That's it.
+//  fill in the 6 fields. That's it
 //
 //  Fields:
 //    file  → filename of your HTML (e.g. "my_note.html")
