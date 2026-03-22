@@ -22,6 +22,14 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "madrid_city_nights.html",
+  title: "The two nights that cannot be explained",
+  desc:  "Real Madrid vs Manchester City in 2022 and 2024. Same clubs, same competition, same impossible situation. At some point you stop calling it luck.",
+  tag:   "Football",
+  date:  "Mar 2026",
+  theme: "blue"
+},
+  {
   file:  "guti_real_madrid.html",
   title: "Guti — the player who was always almost everything",
   desc:  "542 appearances, 15 trophies, and the eternal promise. Real Madrid's most loyal servant was also its greatest what-if.",
