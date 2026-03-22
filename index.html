@@ -523,35 +523,9 @@ function render() {
   list.style.display = 'block';
   empty.style.display = 'none';
 
-  /* Group by tag when showing all */
-  const showGrouped = activeFilter === 'all' && !searchQuery;
-
-  if (showGrouped) {
-    const groups = {};
-    filtered.forEach(p => {
-      if (!groups[p.tag]) groups[p.tag] = [];
-      groups[p.tag].push(p);
-    });
-
-    let globalIdx = 0;
-    Object.entries(groups).forEach(([tag, posts]) => {
-      /* Category divider */
-      const div = document.createElement('div');
-      div.className = 'cat-divider';
-      div.innerHTML = `<span class="cat-label">${tag}</span>`;
-      list.appendChild(div);
-
-      posts.forEach(p => {
-        globalIdx++;
-        list.appendChild(buildRow(p, globalIdx));
-      });
-    });
-
-  } else {
-    filtered.forEach((p, i) => {
-      list.appendChild(buildRow(p, i + 1));
-    });
-  }
+  filtered.forEach((p, i) => {
+    list.appendChild(buildRow(p, i + 1));
+  });
 }
 
 function buildRow(p, idx) {
