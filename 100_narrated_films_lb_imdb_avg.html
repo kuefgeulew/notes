@@ -1,0 +1,274 @@
+
+<style>
+* { box-sizing: border-box; }
+.wrap { padding: 1rem 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
+.filter-btn { font-size: 12px; padding: 4px 10px; border: 0.5px solid var(--color-border-secondary); background: transparent; border-radius: 4px; cursor: pointer; color: var(--color-text-secondary); transition: all .15s; }
+.filter-btn.active, .filter-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); }
+.search-box { font-size: 13px; padding: 5px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: 4px; background: var(--color-background-secondary); color: var(--color-text-primary); min-width: 160px; }
+.search-box:focus { outline: none; border-color: var(--color-border-primary); }
+.tbl-wrap { overflow-x: auto; overflow-y: auto; max-height: 540px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 580px; }
+thead th { position: sticky; top: 0; background: var(--color-background-secondary); padding: 8px 8px; text-align: left; font-weight: 500; font-size: 11.5px; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); white-space: nowrap; cursor: pointer; user-select: none; z-index: 1; }
+thead th:hover { color: var(--color-text-primary); }
+thead th.sorted { color: var(--color-text-primary); }
+tbody tr { border-bottom: 0.5px solid var(--color-border-tertiary); transition: background .1s; }
+tbody tr:hover { background: var(--color-background-secondary); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 6px 8px; vertical-align: middle; }
+.td-rank { color: var(--color-text-tertiary); font-size: 11px; text-align: right; padding-right: 10px; min-width: 26px; }
+.td-title { font-weight: 500; color: var(--color-text-primary); white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+.td-year { color: var(--color-text-tertiary); font-size: 11px; padding-left: 3px; }
+.td-narrator { color: var(--color-text-secondary); font-size: 11.5px; white-space: nowrap; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+.td-genre { font-size: 10.5px; padding: 2px 6px; border-radius: 3px; white-space: nowrap; display: inline-block; }
+.td-num { text-align: right; font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; padding-right: 10px; }
+.td-avg { text-align: right; font-size: 13px; font-weight: 500; padding-right: 10px; }
+.avg-bar { display: inline-flex; align-items: center; gap: 6px; }
+.bar-bg { width: 42px; height: 5px; background: var(--color-border-tertiary); border-radius: 3px; overflow: hidden; flex-shrink: 0; }
+.bar-fill { height: 100%; border-radius: 3px; }
+.top500-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #9B7FE6; margin-left: 3px; vertical-align: middle; }
+.cnt-label { font-size: 11.5px; color: var(--color-text-tertiary); margin-left: auto; }
+.legend { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary); align-items: center; }
+.leg { display: flex; align-items: center; gap: 3px; }
+.legdot { width: 7px; height: 7px; border-radius: 50%; }
+.sort-arrow { font-size: 9px; margin-left: 2px; opacity: 0.5; }
+.sorted .sort-arrow { opacity: 1; }
+</style>
+
+<div class="wrap">
+<div class="legend">
+  <span class="leg"><span class="legdot" style="background:#639922"></span> Avg ≥ 9.0 Masterpiece</span>
+  <span class="leg"><span class="legdot" style="background:#185FA5"></span> 8.5–8.9 Outstanding</span>
+  <span class="leg"><span class="legdot" style="background:#BA7517"></span> 8.0–8.4 Excellent</span>
+  <span class="leg"><span class="legdot" style="background:#888780"></span> &lt; 8.0 Good</span>
+  <span class="leg"><span class="legdot" style="background:#9B7FE6"></span> LB Top 500</span>
+</div>
+<div class="controls">
+  <input class="search-box" id="srch" placeholder="Search title, narrator, genre…" oninput="render()">
+  <button class="filter-btn active" data-t="all" onclick="setTier(this)">All</button>
+  <button class="filter-btn" data-t="9" onclick="setTier(this)">9.0+</button>
+  <button class="filter-btn" data-t="85" onclick="setTier(this)">8.5–8.9</button>
+  <button class="filter-btn" data-t="8" onclick="setTier(this)">8.0–8.4</button>
+  <button class="filter-btn" data-t="low" onclick="setTier(this)">&lt;8.0</button>
+  <span class="cnt-label" id="cnt"></span>
+</div>
+<div class="tbl-wrap">
+  <table id="tbl">
+    <thead><tr>
+      <th class="td-rank" onclick="sortBy('displayRank')"># <span class="sort-arrow">↕</span></th>
+      <th onclick="sortBy('title')">Title <span class="sort-arrow">↕</span></th>
+      <th onclick="sortBy('narrator')">Narrator <span class="sort-arrow">↕</span></th>
+      <th onclick="sortBy('genre')">Genre <span class="sort-arrow">↕</span></th>
+      <th onclick="sortBy('lb10')" style="text-align:right">LB /10 <span class="sort-arrow">↕</span></th>
+      <th onclick="sortBy('imdb')" style="text-align:right">IMDb <span class="sort-arrow">↕</span></th>
+      <th onclick="sortBy('avg')" style="text-align:right">Avg ↓ <span class="sort-arrow">↑</span></th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+</div>
+
+<script>
+const raw = [
+  {title:"The Shawshank Redemption", year:1994, narrator:"Red",               genre:"Drama",      lb:4.6, imdb:9.3, top500:true},
+  {title:"Cinema Paradiso",          year:1988, narrator:"Adult Salvatore",   genre:"Drama",      lb:4.7, imdb:8.5, top500:true},
+  {title:"GoodFellas",               year:1990, narrator:"Henry Hill",        genre:"Crime",      lb:4.5, imdb:8.7, top500:true},
+  {title:"City of God",              year:2002, narrator:"Rocket",            genre:"Crime",      lb:4.5, imdb:8.6, top500:true},
+  {title:"Fight Club",               year:1999, narrator:"The Narrator",      genre:"Thriller",   lb:4.3, imdb:8.8, top500:true},
+  {title:"Sunset Boulevard",         year:1950, narrator:"Joe Gillis",        genre:"Noir",       lb:4.4, imdb:8.4, top500:true},
+  {title:"All About Eve",            year:1950, narrator:"Addison DeWitt",    genre:"Drama",      lb:4.4, imdb:8.2, top500:true},
+  {title:"Apocalypse Now",           year:1979, narrator:"Capt. Willard",     genre:"War",        lb:4.3, imdb:8.5, top500:true},
+  {title:"Taxi Driver",              year:1976, narrator:"Travis Bickle",     genre:"Thriller",   lb:4.3, imdb:8.5, top500:true},
+  {title:"Double Indemnity",         year:1944, narrator:"Walter Neff",       genre:"Noir",       lb:4.3, imdb:8.3, top500:true},
+  {title:"Trainspotting",            year:1996, narrator:"Mark Renton",       genre:"Drama",      lb:4.3, imdb:8.1, top500:true},
+  {title:"Barry Lyndon",             year:1975, narrator:"Omniscient",        genre:"Epic",       lb:4.3, imdb:8.0, top500:true},
+  {title:"Oldboy",                   year:2003, narrator:"Oh Dae-su",         genre:"Thriller",   lb:4.2, imdb:8.4, top500:true},
+  {title:"The Usual Suspects",       year:1995, narrator:"Verbal Kint",       genre:"Thriller",   lb:4.1, imdb:8.5, top500:true},
+  {title:"A Clockwork Orange",       year:1971, narrator:"Alex DeLarge",      genre:"Sci-fi",     lb:4.2, imdb:8.3, top500:true},
+  {title:"Forrest Gump",             year:1994, narrator:"Forrest Gump",      genre:"Drama",      lb:4.0, imdb:8.8, top500:false},
+  {title:"Amadeus",                  year:1984, narrator:"Salieri",           genre:"Drama",      lb:4.1, imdb:8.4, top500:true},
+  {title:"Memento",                  year:2000, narrator:"Leonard Shelby",    genre:"Thriller",   lb:4.0, imdb:8.5, top500:false},
+  {title:"To Kill a Mockingbird",    year:1962, narrator:"Scout Finch",       genre:"Drama",      lb:4.2, imdb:8.3, top500:true},
+  {title:"Annie Hall",               year:1977, narrator:"Alvy Singer",       genre:"Comedy",     lb:4.2, imdb:8.0, top500:true},
+  {title:"Persepolis",               year:2007, narrator:"Marjane",           genre:"Animation",  lb:4.2, imdb:7.9, top500:true},
+  {title:"Stand By Me",              year:1986, narrator:"Gordie Lachance",   genre:"Drama",      lb:4.2, imdb:8.1, top500:false},
+  {title:"The Handmaiden",           year:2016, narrator:"Multiple chars",    genre:"Thriller",   lb:4.1, imdb:8.1, top500:true},
+  {title:"Kind Hearts and Coronets", year:1949, narrator:"Louis Mazzini",     genre:"Comedy",     lb:4.1, imdb:8.1, top500:true},
+  {title:"Waltz with Bashir",        year:2008, narrator:"Ari Folman",        genre:"Animation",  lb:4.0, imdb:7.9, top500:true},
+  {title:"Casino",                   year:1995, narrator:"Sam Rothstein",     genre:"Crime",      lb:4.0, imdb:8.2, top500:false},
+  {title:"The Big Lebowski",         year:1998, narrator:"The Stranger",      genre:"Comedy",     lb:4.0, imdb:8.1, top500:true},
+  {title:"American Beauty",          year:1999, narrator:"Lester Burnham",    genre:"Drama",      lb:4.0, imdb:8.3, top500:false},
+  {title:"Badlands",                 year:1973, narrator:"Holly Sargis",      genre:"Crime",      lb:4.1, imdb:7.8, top500:false},
+  {title:"Y Tu Mamá También",        year:2001, narrator:"Omniscient voice",  genre:"Drama",      lb:4.0, imdb:7.7, top500:true},
+  {title:"The Grand Budapest Hotel", year:2014, narrator:"Zero Moustafa",     genre:"Comedy",     lb:4.0, imdb:8.1, top500:false},
+  {title:"The Princess Bride",       year:1987, narrator:"The Grandfather",   genre:"Adventure",  lb:4.0, imdb:8.1, top500:false},
+  {title:"Days of Heaven",           year:1978, narrator:"Linda",             genre:"Drama",      lb:4.1, imdb:7.9, top500:true},
+  {title:"Platoon",                  year:1986, narrator:"Chris Taylor",      genre:"War",        lb:4.0, imdb:8.1, top500:false},
+  {title:"Rebecca",                  year:1940, narrator:"Mrs. de Winter",    genre:"Romance",    lb:4.0, imdb:8.1, top500:false},
+  {title:"The Wolf of Wall Street",  year:2013, narrator:"Jordan Belfort",    genre:"Biography",  lb:4.0, imdb:8.2, top500:false},
+  {title:"Almost Famous",            year:2000, narrator:"William Miller",    genre:"Drama",      lb:4.0, imdb:7.9, top500:false},
+  {title:"Blade Runner 2049",        year:2017, narrator:"K / Joe",           genre:"Sci-fi",     lb:4.1, imdb:8.0, top500:false},
+  {title:"The Thin Red Line",        year:1998, narrator:"Pvt. Witt",         genre:"War",        lb:4.0, imdb:7.8, top500:false},
+  {title:"Million Dollar Baby",      year:2004, narrator:"Scrap",             genre:"Sports",     lb:4.0, imdb:8.1, top500:false},
+  {title:"How Green Was My Valley",  year:1941, narrator:"Huw Morgan",        genre:"Drama",      lb:4.0, imdb:8.1, top500:false},
+  {title:"Atonement",                year:2007, narrator:"Briony Tallis",     genre:"Drama",      lb:3.9, imdb:7.8, top500:false},
+  {title:"American Psycho",         year:2000, narrator:"Patrick Bateman",    genre:"Satire",     lb:3.9, imdb:7.6, top500:false},
+  {title:"The Royal Tenenbaums",     year:2001, narrator:"Alec Baldwin",      genre:"Comedy",     lb:3.9, imdb:7.6, top500:false},
+  {title:"Big Fish",                 year:2003, narrator:"Edward Bloom",      genre:"Fantasy",    lb:3.9, imdb:8.0, top500:false},
+  {title:"Into the Wild",            year:2007, narrator:"Carine McCandless", genre:"Adventure",  lb:3.9, imdb:8.1, top500:false},
+  {title:"The Big Short",            year:2015, narrator:"Multiple chars",    genre:"Drama",      lb:3.9, imdb:7.8, top500:false},
+  {title:"Room",                     year:2015, narrator:"Jack",              genre:"Drama",      lb:3.9, imdb:8.2, top500:false},
+  {title:"Adaptation",               year:2002, narrator:"Charlie Kaufman",   genre:"Comedy",     lb:3.9, imdb:7.7, top500:false},
+  {title:"True Grit",                year:2010, narrator:"Mattie Ross",       genre:"Western",    lb:3.9, imdb:7.6, top500:false},
+  {title:"Life of Pi",               year:2012, narrator:"Pi Patel",          genre:"Adventure",  lb:3.9, imdb:7.9, top500:false},
+  {title:"Kiss Kiss Bang Bang",      year:2005, narrator:"Harry Lockhart",    genre:"Comedy",     lb:3.9, imdb:7.5, top500:false},
+  {title:"The Virgin Suicides",      year:1999, narrator:"Neighborhood boys", genre:"Drama",      lb:3.9, imdb:7.2, top500:false},
+  {title:"Raising Arizona",          year:1987, narrator:"H.I. McDunnough",   genre:"Comedy",     lb:3.9, imdb:7.7, top500:false},
+  {title:"The Tin Drum",             year:1979, narrator:"Oskar Matzerath",   genre:"Drama",      lb:3.9, imdb:7.8, top500:false},
+  {title:"O Brother Where Art Thou", year:2000, narrator:"Ulysses E. McGill", genre:"Comedy",     lb:3.9, imdb:7.7, top500:false},
+  {title:"Moonrise Kingdom",         year:2012, narrator:"Camp Narrator",     genre:"Comedy",     lb:3.9, imdb:7.8, top500:false},
+  {title:"The Motorcycle Diaries",   year:2004, narrator:"Ernesto Guevara",   genre:"Biography",  lb:3.9, imdb:7.8, top500:false},
+  {title:"Great Expectations",       year:1946, narrator:"Pip Pirrip",        genre:"Drama",      lb:3.9, imdb:7.6, top500:false},
+  {title:"Radio Days",               year:1987, narrator:"Joe (young)",       genre:"Comedy",     lb:3.9, imdb:7.3, top500:false},
+  {title:"Dances with Wolves",       year:1990, narrator:"John Dunbar",       genre:"Western",    lb:3.8, imdb:8.0, top500:false},
+  {title:"A Christmas Story",        year:1983, narrator:"Ralphie Parker",    genre:"Comedy",     lb:3.8, imdb:7.9, top500:false},
+  {title:"The Perks of a Wallflower",year:2012, narrator:"Charlie",           genre:"Drama",      lb:3.8, imdb:7.9, top500:false},
+  {title:"Fear and Loathing in LV",  year:1998, narrator:"Raoul Duke",        genre:"Comedy",     lb:3.8, imdb:7.6, top500:false},
+  {title:"Benjamin Button",          year:2008, narrator:"Daisy",             genre:"Drama",      lb:3.8, imdb:7.8, top500:false},
+  {title:"Election",                 year:1999, narrator:"Multiple chars",    genre:"Comedy",     lb:3.8, imdb:7.3, top500:false},
+  {title:"Submarine",                year:2010, narrator:"Oliver Tate",       genre:"Comedy",     lb:3.8, imdb:7.3, top500:false},
+  {title:"Alfie",                    year:1966, narrator:"Alfie",             genre:"Comedy",     lb:3.8, imdb:7.2, top500:false},
+  {title:"Lolita",                   year:1962, narrator:"Humbert Humbert",   genre:"Drama",      lb:3.8, imdb:7.7, top500:false},
+  {title:"The Sandlot",              year:1993, narrator:"Scotty Smalls",     genre:"Comedy",     lb:3.8, imdb:7.8, top500:false},
+  {title:"Tom Jones",                year:1963, narrator:"Omniscient",        genre:"Comedy",     lb:3.8, imdb:7.2, top500:false},
+  {title:"The Age of Innocence",     year:1993, narrator:"Joanne Woodward",   genre:"Drama",      lb:3.8, imdb:7.2, top500:false},
+  {title:"Breakfast at Tiffany's",   year:1961, narrator:"Paul Varjak",       genre:"Romance",    lb:3.8, imdb:7.6, top500:false},
+  {title:"The Remains of the Day",   year:1993, narrator:"Stevens",           genre:"Drama",      lb:3.8, imdb:7.8, top500:false},
+  {title:"The Reader",               year:2008, narrator:"Michael Berg",      genre:"Drama",      lb:3.8, imdb:7.6, top500:false},
+  {title:"The Color Purple",         year:1985, narrator:"Celie",             genre:"Drama",      lb:3.8, imdb:7.8, top500:false},
+  {title:"Swimming to Cambodia",     year:1987, narrator:"Spalding Gray",     genre:"Comedy",     lb:3.8, imdb:7.1, top500:false},
+  {title:"Dangerous Liaisons",       year:1988, narrator:"Multiple chars",    genre:"Drama",      lb:3.8, imdb:7.6, top500:false},
+  {title:"Notes on a Scandal",       year:2006, narrator:"Barbara Covett",    genre:"Thriller",   lb:3.7, imdb:7.5, top500:false},
+  {title:"Inherent Vice",            year:2014, narrator:"Doc Sportello",     genre:"Mystery",    lb:3.7, imdb:6.9, top500:false},
+  {title:"Beasts of the Southern Wild",year:2012,narrator:"Hushpuppy",        genre:"Drama",      lb:3.7, imdb:7.2, top500:false},
+  {title:"A River Runs Through It",  year:1992, narrator:"Norman Maclean",    genre:"Drama",      lb:3.7, imdb:7.2, top500:false},
+  {title:"Clueless",                 year:1995, narrator:"Cher Horowitz",     genre:"Comedy",     lb:3.7, imdb:7.0, top500:false},
+  {title:"The Outsiders",            year:1983, narrator:"Ponyboy Curtis",    genre:"Drama",      lb:3.7, imdb:7.1, top500:false},
+  {title:"Legends of the Fall",      year:1994, narrator:"One Stab",          genre:"Drama",      lb:3.7, imdb:7.5, top500:false},
+  {title:"Jarhead",                  year:2005, narrator:"Anthony Swofford",  genre:"War",        lb:3.7, imdb:7.0, top500:false},
+  {title:"Blow",                     year:2001, narrator:"George Jung",       genre:"Biography",  lb:3.7, imdb:7.6, top500:false},
+  {title:"Molly's Game",             year:2017, narrator:"Molly Bloom",       genre:"Biography",  lb:3.7, imdb:7.4, top500:false},
+  {title:"Fried Green Tomatoes",     year:1991, narrator:"Evelyn/Ninny",      genre:"Drama",      lb:3.7, imdb:7.7, top500:false},
+  {title:"Angela's Ashes",           year:1999, narrator:"Frank McCourt",     genre:"Drama",      lb:3.6, imdb:7.3, top500:false},
+  {title:"The Book Thief",           year:2013, narrator:"Death",             genre:"Drama",      lb:3.6, imdb:7.6, top500:false},
+  {title:"Secretary",                year:2002, narrator:"Lee Holloway",      genre:"Romance",    lb:3.6, imdb:7.1, top500:false},
+  {title:"Wild",                     year:2014, narrator:"Cheryl Strayed",    genre:"Adventure",  lb:3.6, imdb:7.1, top500:false},
+  {title:"The Help",                 year:2011, narrator:"Skeeter Phelan",    genre:"Drama",      lb:3.6, imdb:8.0, top500:false},
+  {title:"Love Story",               year:1970, narrator:"Oliver Barrett IV", genre:"Romance",    lb:3.6, imdb:6.9, top500:false},
+  {title:"My Own Private Idaho",     year:1991, narrator:"Mike Waters",       genre:"Drama",      lb:3.6, imdb:7.1, top500:false},
+  {title:"Catch-22",                 year:1970, narrator:"Yossarian",         genre:"War",        lb:3.6, imdb:7.3, top500:false},
+  {title:"The Lovely Bones",         year:2009, narrator:"Susie Salmon",      genre:"Drama",      lb:3.5, imdb:6.7, top500:false},
+  {title:"The Spectacular Now",      year:2013, narrator:"Sutter Keely",      genre:"Drama",      lb:3.5, imdb:7.2, top500:false},
+  {title:"The Great Gatsby",         year:2013, narrator:"Nick Carraway",     genre:"Drama",      lb:3.5, imdb:7.2, top500:false},
+];
+
+// compute derived fields
+const films = raw.map((f, i) => ({
+  ...f,
+  lb10: Math.round(f.lb * 2 * 10) / 10,
+  avg: Math.round((f.lb * 2 + f.imdb) / 2 * 100) / 100,
+  displayRank: i + 1
+}));
+
+// sort by avg desc initially
+films.sort((a, b) => b.avg - a.avg);
+films.forEach((f, i) => f.displayRank = i + 1);
+
+let currentTier = 'all';
+let sortKey = 'avg';
+let sortDir = -1;
+
+function tierOf(avg) {
+  if (avg >= 9.0) return '9';
+  if (avg >= 8.5) return '85';
+  if (avg >= 8.0) return '8';
+  return 'low';
+}
+
+function barColor(avg) {
+  if (avg >= 9.0) return '#639922';
+  if (avg >= 8.5) return '#185FA5';
+  if (avg >= 8.0) return '#BA7517';
+  return '#888780';
+}
+
+function lbColor(v) {
+  if (v >= 9.0) return '#639922';
+  if (v >= 8.5) return '#185FA5';
+  if (v >= 8.0) return '#BA7517';
+  return '#888780';
+}
+
+function imdbColor(v) {
+  if (v >= 9.0) return '#639922';
+  if (v >= 8.5) return '#185FA5';
+  if (v >= 8.0) return '#BA7517';
+  return '#888780';
+}
+
+function setTier(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTier = btn.dataset.t;
+  render();
+}
+
+function sortBy(key) {
+  if (sortKey === key) sortDir *= -1;
+  else { sortKey = key; sortDir = key === 'title' || key === 'narrator' || key === 'genre' ? 1 : -1; }
+  render();
+}
+
+function render() {
+  const q = document.getElementById('srch').value.toLowerCase();
+  let data = films.filter(f => {
+    if (currentTier !== 'all' && tierOf(f.avg) !== currentTier) return false;
+    if (q && ![f.title, f.narrator, f.genre, String(f.year)].some(s => s.toLowerCase().includes(q))) return false;
+    return true;
+  });
+
+  data = [...data].sort((a, b) => {
+    let av = a[sortKey], bv = b[sortKey];
+    if (typeof av === 'string') av = av.toLowerCase(), bv = bv.toLowerCase();
+    return sortDir * (av < bv ? -1 : av > bv ? 1 : 0);
+  });
+
+  document.getElementById('cnt').textContent = data.length + ' films';
+
+  const minAvg = 6.5, maxAvg = 9.5;
+  const tb = document.getElementById('tbody');
+  tb.innerHTML = data.map((f, i) => {
+    const pct = Math.min(100, Math.max(0, (f.avg - minAvg) / (maxAvg - minAvg) * 100)).toFixed(1);
+    const bc = barColor(f.avg);
+    const dot = f.top500 ? '<span class="top500-dot" title="Letterboxd Top 500"></span>' : '';
+    return `<tr>
+      <td class="td-rank">${i + 1}</td>
+      <td><span class="td-title">${f.title}${dot}</span><span class="td-year">${f.year}</span></td>
+      <td class="td-narrator">${f.narrator}</td>
+      <td><span class="td-genre" style="background:${bc}22;color:${bc}">${f.genre}</span></td>
+      <td class="td-num" style="color:${lbColor(f.lb10)}">${f.lb10.toFixed(1)}</td>
+      <td class="td-num" style="color:${imdbColor(f.imdb)}">${f.imdb.toFixed(1)}</td>
+      <td class="td-avg">
+        <span class="avg-bar">
+          <span class="bar-bg"><span class="bar-fill" style="width:${pct}%;background:${bc}"></span></span>
+          <span style="color:${bc};min-width:34px;text-align:right">${f.avg.toFixed(2)}</span>
+        </span>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.querySelectorAll('thead th').forEach(th => th.classList.remove('sorted'));
+}
+
+render();
+</script>
