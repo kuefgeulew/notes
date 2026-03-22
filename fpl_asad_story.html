@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Captain You Cannot Unsee — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --screen:  #080B06;
+  --screen2: #0E130A;
+  --screen3: #141A0F;
+  --screen4: #1C2414;
+  --phos:    #7ABF6A;
+  --phos2:   #5A9A4C;
+  --phos3:   #3A6A30;
+  --phos4:   #243E1C;
+  --glow:    rgba(122,191,106,.08);
+  --amber:   #D4A840;
+  --amber2:  #A07828;
+  --warm:    #EDE8DF;
+  --warm2:   #C8C0B0;
+  --warm3:   #A09880;
+  --rule:    rgba(122,191,106,.12);
+  --serif:   'Cormorant Garamond',Georgia,serif;
+  --pixel:   'VT323',monospace;
+  --mono:    'Share Tech Mono',monospace;
+  --read:    600px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--serif);
+  background:var(--screen);
+  color:var(--warm);
+  min-height:100vh;
+}
+
+/* Scanline overlay */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,.15) 0px,
+    rgba(0,0,0,.15) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events:none;z-index:999;
+}
+
+/* Phosphor screen flicker — very subtle */
+@keyframes flicker{
+  0%,98%,100%{opacity:1}
+  99%{opacity:.97}
+}
+.screen-wrap{animation:flicker 8s infinite}
+
+/* ══ NAV ══ */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 40px;
+  border-bottom:1px solid var(--rule);
+  background:var(--screen2);
+}
+.nav-back{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  text-decoration:none;color:var(--phos3);
+}
+.nav-back:hover{color:var(--phos)}
+.nav-r{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--phos4)}
+
+/* ══ TERMINAL HEADER ══ */
+.term-header{
+  padding:32px 40px 0;
+  max-width:var(--read);
+  margin:0 auto;
+}
+
+/* ASCII border top */
+.ascii-top{
+  font-family:var(--pixel);
+  font-size:18px;
+  color:var(--phos3);
+  letter-spacing:.04em;
+  line-height:1.2;
+  margin-bottom:0;
+  white-space:pre;
+}
+
+.th-inner{
+  border:1px solid var(--phos3);
+  border-top:none;
+  padding:20px 24px;
+  background:var(--screen2);
+  margin-bottom:0;
+}
+
+.th-prompt{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--phos3);margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.prompt-caret{
+  display:inline-block;width:8px;height:14px;
+  background:var(--phos);opacity:.7;
+  animation:blink 1.1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:.7}50%{opacity:0}}
+
+.th-title{
+  font-family:var(--pixel);
+  font-size:clamp(28px,5vw,48px);
+  line-height:1;
+  color:var(--phos);
+  letter-spacing:.04em;
+  margin-bottom:8px;
+  text-shadow:0 0 20px rgba(122,191,106,.35);
+}
+.th-sub{
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  color:var(--phos3);margin-bottom:16px;
+  line-height:1.6;
+}
+.th-meta{
+  display:flex;gap:0;flex-wrap:wrap;
+  border-top:1px solid var(--rule);
+  padding-top:12px;
+}
+.th-meta-item{
+  font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  color:var(--phos3);
+  padding:0 16px 0 0;
+  margin-right:16px;
+  border-right:1px solid var(--rule);
+}
+.th-meta-item:last-child{border-right:none}
+.ascii-bot{
+  font-family:var(--pixel);font-size:18px;
+  color:var(--phos3);white-space:pre;letter-spacing:.04em;line-height:1.2;
+}
+
+/* ══ STORY BODY ══ */
+.story{
+  max-width:var(--read);
+  margin:0 auto;
+  padding:0 40px;
+}
+
+/* ══ SCENE ══ */
+.scene{padding:44px 0 0}
+
+/* System timestamp */
+.sys-time{
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  color:var(--phos3);
+  display:block;margin-bottom:20px;
+}
+.sys-time::before{content:'> ';color:var(--phos4)}
+
+/* ══ PROSE — the warm serif contrast ══ */
+.p{
+  font-family:var(--serif);
+  font-size:20px;font-weight:300;
+  line-height:1.92;
+  color:var(--warm);
+  margin-bottom:22px;
+  /* Very subtle text glow */
+  text-shadow:0 0 30px rgba(237,232,223,.05);
+}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--warm);font-weight:400}
+
+/* Drop cap */
+.dropcap::first-letter{
+  font-family:var(--pixel);
+  font-size:88px;
+  float:left;line-height:.78;
+  margin:4px 6px 0 0;
+  color:var(--phos);
+  text-shadow:0 0 16px rgba(122,191,106,.5);
+}
+
+/* ══ SINGLE SENTENCE ══ */
+.lone{
+  font-family:var(--serif);
+  font-size:22px;font-weight:400;font-style:italic;
+  color:var(--warm);
+  display:block;
+  margin:28px 0;
+  text-align:center;
+  letter-spacing:.02em;
+}
+
+/* ══ TENSION LINE ══ */
+.tension{
+  margin:32px 0;
+  padding:16px 20px;
+  border:1px solid var(--phos3);
+  background:var(--screen2);
+  position:relative;
+}
+.tension::before{
+  content:'! ALERT';
+  position:absolute;top:-10px;left:16px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  background:var(--screen);padding:0 8px;color:var(--amber);
+  border:1px solid var(--amber2);
+}
+.tension .p{
+  font-family:var(--serif);font-size:19px;font-style:italic;font-weight:300;
+  color:var(--warm);margin-bottom:0;
+}
+
+/* ══ FPL NOTE — terminal output ══ */
+.fpl-note{
+  margin:28px 0;
+  background:var(--screen2);
+  border:1px solid var(--phos4);
+  padding:0;
+  position:relative;
+}
+.fpl-note::before{
+  content:'> notes.txt';
+  display:block;
+  font-family:var(--mono);font-size:9px;letter-spacing:.12em;
+  background:var(--phos4);color:var(--screen);
+  padding:4px 12px;
+}
+.fn-body{
+  padding:14px 16px;
+}
+.fn-line{
+  font-family:var(--mono);font-size:13px;font-weight:300;
+  color:var(--phos);line-height:1.8;
+  display:block;
+}
+.fn-line::before{content:'  ';letter-spacing:.04em}
+
+/* ══ SCENE BREAK ══ */
+.brk{
+  padding:36px 0;
+  font-family:var(--pixel);font-size:16px;letter-spacing:.12em;
+  color:var(--phos3);text-align:center;
+  display:block;
+}
+
+/* ══ RANK DROP DISPLAY ══ */
+.rank-display{
+  margin:28px 0;
+  border:1px solid var(--rule);
+  padding:16px 18px;
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  background:var(--screen2);
+}
+.rd-item{padding:10px 16px;border-right:1px solid var(--rule)}
+.rd-item:last-child{border-right:none}
+.rd-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--phos3);margin-bottom:6px}
+.rd-val{font-family:var(--pixel);font-size:32px;color:var(--phos);line-height:1;text-shadow:0 0 12px rgba(122,191,106,.3)}
+.rd-val.red{color:var(--amber);text-shadow:0 0 12px rgba(212,168,64,.3)}
+
+/* ══ CLOSING ══ */
+.closing{
+  max-width:var(--read);
+  margin:0 auto;
+  padding:44px 40px 72px;
+}
+.cl-top{
+  font-family:var(--pixel);font-size:16px;letter-spacing:.1em;
+  color:var(--phos3);margin-bottom:20px;
+  border-top:1px solid var(--rule);
+  padding-top:20px;
+}
+.cl-text{
+  font-family:var(--serif);
+  font-size:clamp(16px,2.5vw,20px);font-style:italic;font-weight:300;
+  color:var(--warm2);
+  line-height:1.75;margin-bottom:24px;
+}
+.cl-prompt{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--phos3);
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ══ FOOTER ══ */
+.site-footer{
+  background:var(--screen2);
+  border-top:1px solid var(--rule);
+  padding:12px 40px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+}
+.sf-l{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--phos3)}
+.sf-r{font-family:var(--pixel);font-size:14px;letter-spacing:.1em;color:var(--phos4)}
+
+@media(max-width:640px){
+  .nav,.term-header,.story,.closing,.site-footer{padding-left:20px;padding-right:20px}
+  .dropcap::first-letter{font-size:64px}
+  .rank-display{grid-template-columns:1fr}
+  .rd-item{border-right:none;border-bottom:1px solid var(--rule)}
+  .rd-item:last-child{border-bottom:none}
+}
+</style>
+</head>
+<body>
+<div class="screen-wrap">
+
+<div class="nav">
+  <a class="nav-back" href="index.html">&lt; notes by al amin</a>
+  <div class="nav-r">session: fpl_story.txt</div>
+</div>
+
+<!-- TERMINAL HEADER -->
+<div class="term-header">
+  <div class="ascii-top">+----------------------------------------------------+</div>
+  <div class="th-inner">
+    <div class="th-prompt">
+      <span>RUET-HALL3 login:</span>
+      <span>asad</span>
+      <span class="prompt-caret"></span>
+    </div>
+    <div class="th-title">THE CAPTAIN YOU<br>CANNOT UNSEE</div>
+    <div class="th-sub">
+      // on FPL, control, and a hamstring<br>
+      // that changed nothing and everything at once
+    </div>
+    <div class="th-meta">
+      <span class="th-meta-item">GW24 / DGW</span>
+      <span class="th-meta-item">Mané · 29'</span>
+      <span class="th-meta-item">RUET · Bangladesh</span>
+      <span class="th-meta-item">fiction</span>
+    </div>
+  </div>
+  <div class="ascii-bot">+----------------------------------------------------+</div>
+</div>
+
+<div class="story">
+
+  <!-- SCENE 1 -->
+  <div class="scene">
+    <span class="sys-time">23:58:14  GW24 deadline in 00:01:46</span>
+
+    <div class="p dropcap">The cursor hovered. He had been in this position eleven times before, not that he counted, except that he did, in a notes file on his phone titled simply "GW" with a number, each entry a few lines about what he had decided and why, written in the flat neutral tone of someone trying to convince himself he was being rational. The file was never opened after the week it was written. He kept it anyway.</div>
+
+    <div class="p">The room was the small one on the third floor of the hall, which meant the window faced the water tank instead of the road, which meant it was quieter than the rooms on the other side, which meant he had taken it without thinking much and then spent seven months deciding whether that had been a good decision. The desk lamp was on. His roommate Rifat was asleep, turned toward the wall, breathing in that slow deliberate way that felt almost accusatory.</div>
+
+    <div class="lone">Mané or Salah.</div>
+
+    <div class="p">He had run this through his head for four days. Since Sunday, when the double gameweek fixtures had been confirmed and the podcasts had started and the Reddit threads had filled with the kind of certainty that made you feel stupid for considering anything else. <em>Mané is the pick. Wolves at home then Southampton away. His form. The underlying stats. The xG. The rotation risk is low. This is the gameweek.</em></div>
+
+    <div class="p">He had not used the triple captain chip. He had decided against it twice, and each time the decision had felt correct in a way that only decisions made in retrospect feel fully correct. He had the chip still. He stared at the captain armband next to Mané's name.</div>
+
+    <div class="p">He clicked it.</div>
+
+    <div class="p">The app processed for a moment, the small circle spinning, and then Mané had the armband and the screen settled and Asad closed the app and put his phone face-down on the desk and looked at the wall for a while.</div>
+  </div>
+
+  <span class="brk">- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+  <!-- SCENE 2 -->
+  <div class="scene">
+    <span class="sys-time">background process / context</span>
+
+    <div class="p">He was in his third year at RUET. Computer Science and Engineering. It was a degree that felt, on the days when he thought about it honestly, like a decision made by a version of himself at seventeen who had wanted to make his parents' choice feel like his own choice, and had succeeded well enough that five years later he could not remember which part of the wanting had come from where. He was not unhappy. He was in a pattern. He was doing well by the measurements that existed for doing well, and the measurements existed because they were measurable, and the alternative, asking what he actually wanted, felt less like a question than a door he was not ready to open.</div>
+
+    <div class="p">He picked up his phone. Put it down again.</div>
+
+    <div class="p">In the morning he had a lab at eight. Embedded systems. He liked it well enough, the systems part, the logic of components that did exactly what you wired them to do, the satisfying click of a circuit that completed correctly. He had a mental model for how the lab would go: arrive five minutes early, sit in the third row, finish in forty-five minutes, wait while everyone else finished, leave without talking much to anyone except maybe Nasir who sat two seats down and was easy to be around because he did not ask questions.</div>
+
+    <div class="p">He slept.</div>
+  </div>
+
+  <span class="brk">- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+  <!-- SCENE 3 -->
+  <div class="scene">
+    <span class="sys-time">00:30:00  match thread active / liverpool vs wolves</span>
+
+    <div class="p">He watched the first twenty minutes in bed with his back against the wall and his phone propped on a book. Liverpool were good. Mané was involved. In the seventeenth minute he touched the ball in the box and Asad shifted position without meaning to. In the twenty-second minute Mané moved past a defender and Asad felt the specific tightening in his chest that was not anxiety but was something next to anxiety, something that lived in the same neighborhood and sometimes borrowed from it.</div>
+
+    <div class="tension">
+      <div class="p">In the twenty-ninth minute Mané went down.</div>
+    </div>
+
+    <div class="p">It was not dramatic. This was the thing that Asad would keep returning to over the next twenty-four hours, the quietness of it. A tackle, a landing that was slightly wrong, and then the small hesitation before Mané rolled onto his side and held his hamstring with both hands. The way a player holds a hamstring is different from the way they hold a knee. There is something almost resigned about it, a muscle that has been asked too much for too long and has finally, politely, stopped cooperating.</div>
+
+    <div class="p">The physio came on. Asad watched the medical staff crouch around Mané and he felt something that was not grief but had the shape of it, the sudden exposure of having wanted something too directly.</div>
+
+    <div class="p">Mané was helped off the pitch.</div>
+
+    <div class="p">The word <em>hamstring</em> appeared in the feed, then <em>substituted</em>, then <em>potentially out for DGW2</em> with a question mark that the next tweet removed.</div>
+
+    <div class="p">Asad put his phone down on the book. He looked at the ceiling for a while. His roommate was breathing in that slow way again. Outside, a motorbike passed on the road behind the water tank, its engine coming and fading with a regularity that seemed almost deliberate. He watched the ceiling until his eyes adjusted properly to the dark, and the familiar water stain in the upper corner resolved into its usual uncertain shape, which might have been anything depending on how you held your head.</div>
+
+    <div class="p">He did not feel angry. This surprised him slightly. He had felt angry in the past: the Salah blank in GW11, the double failure of his bench not triggering correctly, the week he had transferred out a striker one day before the striker scored a hat-trick. The anger had been straightforward and almost satisfying, a clear response to a clear cause.</div>
+
+    <div class="p">This was different. This was something quieter.</div>
+
+    <div class="fpl-note">
+      <div class="fn-body">
+        <span class="fn-line">GW24. Mané captain.</span>
+        <span class="fn-line">Injury min 29. Hamstring.</span>
+        <span class="fn-line">Out for DGW2.</span>
+      </div>
+    </div>
+
+    <div class="p">Then he stopped and looked at the line and thought about writing something else and instead put the phone down and tried to sleep, and after a while, he did.</div>
+  </div>
+
+  <span class="brk">- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+  <!-- SCENE 4 -->
+  <div class="scene">
+    <span class="sys-time">morning / rank update received</span>
+
+    <div class="rank-display">
+      <div class="rd-item">
+        <div class="rd-label">rank before</div>
+        <div class="rd-val">34,112</div>
+      </div>
+      <div class="rd-item">
+        <div class="rd-label">rank after</div>
+        <div class="rd-val red">214,880</div>
+      </div>
+    </div>
+
+    <div class="p">He checked it three times on the walk to the canteen, which he noted and then kept doing.</div>
+
+    <div class="p">The week that followed had a texture he could not quite describe. He went to lectures. He submitted a lab report. He ate at the canteen with Rifat and sometimes with others from the cohort, and he was present in the conversations in the way that he was usually present, which was mostly present with occasional lapses that nobody mentioned because the lapses were quiet and did not interrupt anyone else's sentences.</div>
+
+    <div class="p">At night he looked at his FPL team for longer than was useful. The numbers were what they were. His GW score was twelve. The average was thirty-one. He had taken hits in previous weeks that had not paid off, but this was different, this was not a decision that could be second-guessed because the decision had been correct by the logic available to him when he made it. Mané had been the right captain. The injury was not a consequence of bad analysis. The injury was a consequence of being a physical human doing a physical thing, and the only information Asad had been missing was information that did not exist at the time he had needed it.</div>
+
+    <div class="p">He understood this. He wrote it down, approximately.</div>
+
+    <div class="fpl-note">
+      <div class="fn-body">
+        <span class="fn-line">Was the right pick.</span>
+        <span class="fn-line">Information wasn't there.</span>
+        <span class="fn-line">This is what the game is.</span>
+      </div>
+    </div>
+
+    <div class="p">He closed the file and opened it again and read what he had written and thought: yes, but.</div>
+
+    <div class="p">The <em>but</em> did not have a clear object. He sat with it for a while.</div>
+
+    <div class="p">He thought about the embedded systems lab. The way a circuit did what you wired it to do. The way you could trace a fault backward from an output to a cause and fix it by replacing the component. He had always found this satisfying not because he enjoyed circuitry especially but because the causal chain was visible and the fix was finite. You did not need to account for the hamstring.</div>
+
+    <div class="p">His mother had texted that afternoon asking if he had eaten. He had eaten. He had texted back that he had eaten and added a thumbs up emoji and then looked at the thumbs up emoji for a moment before sending it, the small cartoon gesture carrying the full weight of his ability to communicate without actually communicating.</div>
+
+    <div class="p">It occurred to him, sitting on his bed with his phone displaying a rank above 200,000, that he had organized his relationship with FPL in almost exactly the same way he organized his relationship with his degree. Work steadily. Make decisions based on available information. Accept variance. Iterate. The framework was sound. The framework was functioning.</div>
+
+    <div class="tension">
+      <div class="p">And yet here was the rank above 200,000. And here was the Mané injury that the framework had not protected him from. And here was the feeling that did not have a clear name.</div>
+    </div>
+  </div>
+
+  <span class="brk">- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+  <!-- SCENE 5 -->
+  <div class="scene">
+    <span class="sys-time">wednesday / wednesday / wednesday</span>
+
+    <div class="p">On Wednesday he called his father. His father was an engineer, a civil one, worked for a construction company that had contracts across three districts, spoke about work in the abbreviated way of people who have been doing the same thing for twenty years and no longer feel the need to explain it. They talked about the family thing, the academic thing, the usual inventory.</div>
+
+    <div class="p">The call lasted twelve minutes. He looked at his phone afterward for a while. This was a habit he had noticed about himself, the looking at the phone after the call ended, before putting it away. He was not sure what he was looking for. Some confirmation, maybe, that the call had been what it was. A receipt.</div>
+
+    <div class="p">He went to the library. He worked on an assignment. He did the work at the level of quality he did work, which was a level he had arrived at through a combination of ability and habit, and which other people mostly found impressive and which he mostly found neutral, the output of his inputs, the result of the circuit he had built for himself, and he was inside it too completely to see it from the outside.</div>
+
+    <div class="p">At eleven PM the library closed and he walked back to the hall. The air was cold in the way it got in February, a dry cold with no edge to it. The campus was mostly quiet. A few people on the road. The sound of a television from one of the ground-floor rooms he passed, something with a laugh track.</div>
+
+    <div class="p">He stopped walking. Just for a moment. Not because anything had happened but because something had not happened, the usual forward motion, the implicit progress toward the next thing, had paused without cause and he was standing in the cold with his bag over one shoulder and the library assignment finished and the FPL transfer made and no reason to stop.</div>
+
+    <div class="p">He stood there for maybe fifteen seconds.</div>
+
+    <div class="p">Then he walked on.</div>
+  </div>
+
+  <span class="brk">- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+  <!-- SCENE 6 -->
+  <div class="scene">
+    <span class="sys-time">GW25 complete / reading notes file</span>
+
+    <div class="p">The GW25 fixtures were fine. His transferred player got thirty-five minutes as a substitute and scored once. His rank improved. Not to where it had been. Somewhere between where it had been and where it had gone.</div>
+
+    <div class="p">He opened the notes file. He looked at the GW24 entry.</div>
+
+    <div class="fpl-note">
+      <div class="fn-body">
+        <span class="fn-line">Was the right pick.</span>
+        <span class="fn-line">Information wasn't there.</span>
+        <span class="fn-line">This is what the game is.</span>
+      </div>
+    </div>
+
+    <div class="p">He thought about adding to it. He held his thumb over the screen. He put the phone down.</div>
+
+    <div class="p">He looked at the window. The water tank was there, as it always was, humming or not humming depending on the pressure. The familiar shape in the corner of the ceiling. Rifat breathing.</div>
+
+    <div class="p">There was a version of this where he played better and felt worse. There was a version where he played worse and felt about the same. There was the actual version, which was complicated and ongoing and did not have an endpoint he could see from here. He had made careful decisions for eleven months. He had made them with the information available. Some of them had worked and some had not and the ones that had not worked were not, mostly, the result of bad reasoning, they were the result of the game being a game, which meant that it contained within it the specific cruelty of outcomes you could not fully govern however carefully you prepared.</div>
+
+    <div class="p">He knew this. He had always known it.</div>
+
+    <div class="p">In the morning there was a lab at eight. He would arrive five minutes early. He would sit in the third row. He would finish in forty-five minutes and wait while everyone else finished and leave without talking much to anyone except maybe Nasir.</div>
+
+    <div class="p">He closed his eyes.</div>
+
+    <div class="p">The water tank hummed.</div>
+
+    <div class="p">Somewhere in the middle of the night, not at any particular moment he could identify, he stopped waiting for the next thing to start and let the current thing simply be what it was.</div>
+
+    <div class="p">He was not sure what to do with that.</div>
+
+    <div class="p">He slept.</div>
+  </div>
+
+</div><!-- end story -->
+
+<div class="closing">
+  <div class="cl-top">// end of file</div>
+  <div class="cl-text">Written around real FPL data: Sadio Mané, DGW24, 2019 to 20 season. Injured in the twenty-ninth minute against Wolves. Out for the second fixture. The framework was correct. The outcome was not. These are not the same thing.</div>
+  <div class="cl-prompt">
+    <span>session closed</span>
+    <span class="prompt-caret"></span>
+  </div>
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">fpl_asad_story.txt / notes by al amin</div>
+  <div class="sf-r">fiction</div>
+</div>
+
+</div><!-- end screen-wrap -->
+</body>
+</html>
