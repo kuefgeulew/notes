@@ -41,13 +41,6 @@ const POSTS = [
     theme: "teal"
   },
 
-  {
-    file:  "wordle_btier_words.html",
-    title: "Wordle — covering G,M,B,F,W,K with 1 vowel each",
-    desc:  "FUNKY + WOMBS + GRAPH: three words covering all 6 B-tier consonants with exactly one vowel per word and zero repeated letters.",
-    tag:   "Wordle",
-    date:  "Jun 2025",
-    theme: "coral"
-  },
+
 
 ];
