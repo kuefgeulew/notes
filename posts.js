@@ -22,6 +22,14 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "death_in_the_gunj_review.html",
+  title: "A Death in the Gunj — on being the last to be picked",
+  desc:  "Konkona Sen Sharma's 2016 debut is about invisibility — the slow kind, the kind that happens in full view of people who love you in their way, just not enough to actually look.",
+  tag:   "Movie",
+  date:  "Nov 2022",
+  theme: "dark"
+},
+  {
   file:  "utshob_review.html",
   title: "Utshob — a celebration that earns its tears",
   desc:  "Begins as a light Bangla comedy, becomes something much quieter. Zahid Hasan's best in years, and the kind of film you recommend to your parents without having to explain why.",
