@@ -13,7 +13,14 @@
 // ─────────────────────────────────────────────────────────────
 
 const POSTS = [
-
+{
+  file:  "green_papaya_review.html",
+  title: "The Scent of Green Papaya — three readings of one film",
+  desc:  "Trần Anh Hùng's 1993 film resists plot, rewards patience, and raises questions about the beauty of a life observed without consent.",
+  tag:   "Movie",
+  date:  "Feb 2024",
+  theme: "green"
+},
   {
   file:  "valverde_little_bird.html",
   title: "The Little Bird takes flight — Valverde's 22-minute hat-trick",
