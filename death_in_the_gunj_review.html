@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Death in the Gunj — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600&family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;1,7..72,300;1,7..72,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:     #F9F6F1;
+  --bg2:    #F1EDE4;
+  --bg3:    #E8E2D6;
+  --ink:    #1C1810;
+  --ink2:   #3A3428;
+  --ink3:   #7A7060;
+  --ink4:   #B0A898;
+  --rule:   rgba(28,24,16,.1);
+  --red:    #8B1A1A;
+  --serif:  'Newsreader','Georgia',serif;
+  --body:   'Literata','Georgia',serif;
+  --mono:   'DM Mono',monospace;
+  --max:    680px;
+  --wide:   860px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+}
+
+/* ══ NAV ══ */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 40px;
+  border-bottom:1px solid var(--rule);
+  max-width:var(--wide);
+  margin:0 auto;
+}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink3)}
+.nav-back:hover{color:var(--red)}
+.nav-r{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+
+/* ══ TOP RULE ══ */
+.top-rule{
+  max-width:var(--wide);
+  margin:0 auto;
+  padding:0 40px;
+}
+.tr-line{
+  height:4px;
+  background:var(--ink);
+  margin-top:0;
+}
+
+/* ══ HEADER ══ */
+.header{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:64px 40px 0;
+  text-align:center;
+}
+.h-kicker{
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:20px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.h-kicker::before,.h-kicker::after{content:'';width:32px;height:1px;background:var(--rule)}
+.h-title{
+  font-family:var(--serif);
+  font-size:clamp(36px,6vw,64px);
+  font-weight:400;
+  line-height:1.05;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-bottom:12px;
+}
+.h-subtitle{
+  font-family:var(--serif);
+  font-size:clamp(16px,2.5vw,22px);
+  font-weight:300;
+  font-style:italic;
+  color:var(--ink3);
+  margin-bottom:40px;
+  line-height:1.45;
+}
+.h-meta{
+  display:flex;align-items:center;justify-content:center;
+  gap:20px;flex-wrap:wrap;
+  padding-top:20px;padding-bottom:48px;
+  border-top:1px solid var(--rule);
+}
+.hm-item{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+.hm-dot{width:3px;height:3px;border-radius:50%;background:var(--ink4)}
+
+/* ══ OPENING LINE ══ */
+.opening{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 40px 56px;
+  border-bottom:1px solid var(--rule);
+}
+.op-sentence{
+  font-family:var(--serif);
+  font-size:clamp(20px,3vw,28px);
+  font-weight:400;
+  line-height:1.45;
+  color:var(--ink);
+  letter-spacing:-.01em;
+}
+.op-sentence em{font-style:italic;color:var(--red)}
+
+/* ══ ARTICLE BODY ══ */
+.article{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 40px;
+}
+
+/* ══ SECTION ══ */
+.section{padding:56px 0 0}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(20px,3vw,30px);
+  font-weight:500;
+  font-style:italic;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  margin-bottom:28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--rule);
+}
+
+/* ══ BODY TEXT ══ */
+.p{
+  font-family:var(--body);
+  font-size:18px;
+  font-weight:300;
+  line-height:1.9;
+  color:var(--ink2);
+  margin-bottom:24px;
+}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--ink)}
+.p strong{font-weight:500;color:var(--ink)}
+
+/* First letter */
+.dropcap::first-letter{
+  font-family:var(--serif);
+  font-size:72px;
+  font-weight:500;
+  float:left;
+  line-height:.82;
+  margin:6px 12px 0 0;
+  color:var(--ink);
+}
+
+/* ══ PULL QUOTE ══ */
+.pq{
+  margin:48px 0;
+  padding:0 0 0 28px;
+  border-left:3px solid var(--ink);
+}
+.pq-text{
+  font-family:var(--serif);
+  font-size:clamp(18px,3vw,26px);
+  font-weight:400;
+  font-style:italic;
+  line-height:1.45;
+  color:var(--ink);
+  letter-spacing:-.01em;
+}
+.pq-text em{font-style:normal;color:var(--red)}
+.pq-attr{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink4);margin-top:10px;
+  display:block;
+}
+
+/* ══ WIDE PULL QUOTE (full bleed) ══ */
+.pq-wide{
+  max-width:var(--wide);
+  margin:56px auto;
+  padding:0 40px;
+  text-align:center;
+}
+.pqw-text{
+  font-family:var(--serif);
+  font-size:clamp(22px,4vw,38px);
+  font-weight:300;
+  font-style:italic;
+  line-height:1.35;
+  letter-spacing:-.02em;
+  color:var(--ink);
+}
+.pqw-text em{color:var(--red);font-style:normal}
+.pqw-rule{width:48px;height:2px;background:var(--ink);margin:20px auto 0}
+
+/* ══ WORD LIST (Shutu's diary) ══ */
+.word-list-section{
+  background:var(--bg2);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:40px 40px;
+  margin:48px 0;
+  max-width:var(--wide);
+  margin-left:auto;margin-right:auto;
+}
+.wl-header{
+  display:flex;align-items:baseline;gap:16px;
+  margin-bottom:28px;
+}
+.wl-tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4)}
+.wl-title{font-family:var(--serif);font-size:20px;font-style:italic;color:var(--ink)}
+.wl-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+}
+.wl-item{
+  padding:14px 16px;
+  border-bottom:1px solid var(--rule);
+  border-right:1px solid var(--rule);
+}
+.wl-item:nth-child(3n){border-right:none}
+.wl-item:nth-last-child(-n+3){border-bottom:none}
+.wl-word{
+  font-family:var(--serif);font-size:15px;font-weight:500;
+  font-style:italic;color:var(--ink);margin-bottom:4px;
+}
+.wl-def{
+  font-family:var(--body);font-size:12px;font-weight:300;
+  line-height:1.6;color:var(--ink3);
+}
+
+/* ══ DIVIDER ══ */
+.divider{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;padding:40px 0;
+  max-width:var(--max);margin:0 auto;
+}
+.div-dot{width:4px;height:4px;border-radius:50%;background:var(--ink4)}
+
+/* ══ INLINE HIGHLIGHT ══ */
+.note{
+  background:var(--bg2);
+  border-left:2px solid var(--ink3);
+  padding:16px 20px;
+  margin:32px 0;
+  font-family:var(--body);
+  font-size:15px;font-weight:300;
+  line-height:1.75;color:var(--ink3);
+  font-style:italic;
+}
+
+/* ══ FINAL QUESTION ══ */
+.final-questions{
+  padding:56px 0 0;
+}
+.fq-item{
+  padding:20px 0;
+  border-top:1px solid var(--rule);
+  font-family:var(--serif);
+  font-size:18px;
+  font-weight:400;
+  font-style:italic;
+  line-height:1.6;
+  color:var(--ink2);
+}
+.fq-item:last-child{padding-bottom:0}
+
+/* ══ CLOSING ══ */
+.closing{
+  padding:64px 40px 80px;
+  max-width:var(--max);
+  margin:0 auto;
+  border-top:1px solid var(--rule);
+  text-align:center;
+}
+.closing-text{
+  font-family:var(--serif);
+  font-size:clamp(16px,2.5vw,22px);
+  font-weight:300;
+  font-style:italic;
+  line-height:1.65;
+  color:var(--ink3);
+  margin-bottom:32px;
+}
+.closing-grade{
+  font-family:var(--serif);
+  font-size:56px;
+  font-weight:500;
+  font-style:italic;
+  color:var(--ink);
+  display:block;
+  margin-bottom:4px;
+}
+.closing-grade-label{
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink4);
+}
+
+/* ══ FOOTER ══ */
+.site-footer{
+  background:var(--bg2);
+  border-top:3px solid var(--ink);
+  padding:20px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+  max-width:100%;
+}
+.sf-l{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ink3)}
+.sf-r{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4)}
+
+@media(max-width:640px){
+  .nav,.top-rule,.header,.opening,.article,.closing{padding-left:24px;padding-right:24px}
+  .wl-grid{grid-template-columns:1fr 1fr}
+  .wl-item:nth-child(2n){border-right:none}
+  .wl-item:nth-child(3n){border-right:1px solid var(--rule)}
+  .pq-wide{padding:0 24px}
+  .word-list-section{padding:32px 24px}
+  .site-footer{padding:20px 24px}
+  .dropcap::first-letter{font-size:52px}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
+  <div class="nav-r">Film review · 2016</div>
+</div>
+
+<div class="top-rule"><div class="tr-line"></div></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="h-kicker">Konkona Sen Sharma · 2016 · India</div>
+  <div class="h-title">A Death in the Gunj</div>
+  <div class="h-subtitle">On being the last to be picked, the first to be forgotten, and what that accumulation costs.</div>
+  <div class="h-meta">
+    <span class="hm-item">Vikrant Massey</span>
+    <span class="hm-dot"></span>
+    <span class="hm-item">McCluskieganj, 1979</span>
+    <span class="hm-dot"></span>
+    <span class="hm-item">110 min</span>
+    <span class="hm-dot"></span>
+    <span class="hm-item">Hindi / Bengali</span>
+  </div>
+</div>
+
+<!-- OPENING -->
+<div class="opening">
+  <div class="op-sentence">There is a scene in this film where Shutu is the last to be picked for a game of kabaddi. That is it. Nobody says anything cruel. Nobody laughs. It just happens — the way it always happens — with the casual, almost administrative indifference of people who have simply never thought about you hard enough to be <em>cruel on purpose.</em></div>
+</div>
+
+<div class="article">
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="section-title">The world it builds</div>
+    <div class="p dropcap">Konkona Sen Sharma's directorial debut is set in 1979 in McCluskieganj, Bihar — a small town carrying what one reviewer perfectly called a severe Raj-era hangover. A Bengali family arrives for a holiday. There are many of them: loud, warm, self-absorbed, full of bikes and mutton and drinks and pranks and love-games — the full, comfortable machinery of a family that functions well together. They are, as someone once put it, a bunch of well-adjusted, seemingly non-threatening abnormals.</div>
+    <div class="p">And then there is Shutu.</div>
+    <div class="p">Shutu is the younger brother. He is 23. He has recently lost his father. He has failed his exams. He is studying mathematics but wants to study literature. He reads. He draws. He cries instead of getting angry. He finds comfort in his father's old sweater. He is, by the family's quiet consensus, a problem to be managed rather than a person to be known.</div>
+    <div class="p">Vikrant Massey plays Shutu in what is, without question, one of the finest performances in recent Indian cinema. He acts almost entirely with his face, specifically his eyes, and what those eyes carry is not self-pity but something more painful: a continuous, exhausting effort to be fine. To not be a burden. To take up less space. To earn his place through accommodation rather than presence.</div>
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pq">
+    <div class="pq-text">Cruelty at least implies you registered. Indifference is <em>worse</em> than cruelty. It means you didn't.</div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <div class="section-title">The thing about Shutu</div>
+    <div class="p">What makes Shutu unbearable to watch — in the best possible way — is his recognizability. He is the boy who, when excluded from the cricket team, volunteers to be the umpire. Not because he doesn't want to play, but because the umpire at least gets to be on the field. Gets to hold the ball for a few seconds at the end of every over. Gets treated with a kind of neutral respect by both sides.</div>
+    <div class="p">It is a survival strategy disguised as generosity, and it costs something real: the slow burial of the self that needed to be on the field, not beside it. You lose your courage to cry in public. You lose your softer side, or at least suppress it for the longest time, to fit into a world that didn't ask for it and won't thank you for it.</div>
+    <div class="p">The film is seeded, from its very first scene, with the knowledge that Shutu will die. The title tells you. And yet when it happens, it hits like a truck. That is the measure of how completely the film makes you care.</div>
+  </div>
+
+  <!-- BUG SCENE -->
+  <div class="note">
+    There is a small scene where Shutu and his teenage niece Tani lie under the sun, pointing a magnifying glass at a tiny bug. The sunrays concentrate through the glass onto the bug. It dies under the pressure of all that focused light. That is the film. That is the whole film, in one small gesture.
+  </div>
+
+  <div class="p">Shutu is the bug. The family is not cruel. The family is simply going about its day, holding a magnifying glass in the sun, not noticing what they are concentrating on.</div>
+  <div class="p">He is not stuck at 23 in any poetic sense. He is literally stuck at 23. A boy with favorite words. A boy with a diary. A boy who wanted to study literature and ended up in mathematics, who wanted to be on the field and ended up as the umpire, who wanted to be known and ended up being managed. The film is, in the truest sense, a eulogy for everything he never got to become.</div>
+
+</div>
+
+<!-- WORD LIST (WIDE) -->
+<div class="word-list-section">
+  <div class="wl-header">
+    <span class="wl-tag">From Shutu's diary</span>
+    <span class="wl-title">Words I like that start with E</span>
+  </div>
+  <div class="wl-grid">
+    <div class="wl-item">
+      <div class="wl-word">Eulogy</div>
+      <div class="wl-def">A speech praising someone highly, especially a tribute to someone who has just died. The film itself is one.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Esoteric</div>
+      <div class="wl-def">Intended to be understood by only a small number of people. The film is about how careless events end a tortured soul understood by so few.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Eclectic</div>
+      <div class="wl-def">Deriving ideas from a broad range of sources. From the opening trunk shot to the first Assamese song in Bollywood, the film wears its influences with purpose.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Ephemeral</div>
+      <div class="wl-def">Lasting for a very short time. Everything Shutu had — his father, his hope, his presence in this world — was ephemeral. He knew it before the rest of them did.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Enigmatic</div>
+      <div class="wl-def">Difficult to understand. Mysterious. To the family he is simply quiet. To us, he is everything.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Ethereal</div>
+      <div class="wl-def">Extremely delicate and light in a way that seems not to be of this world. He was never quite of this world. That was never his failing.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Epiphany</div>
+      <div class="wl-def">A moment of sudden and great revelation. The film ends with one — but it comes too late, and it belongs to the people who are still alive.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Ennui</div>
+      <div class="wl-def">Listlessness arising from a lack of excitement. What everyone else at the holiday treats as boredom, Shutu carries as grief. They are not the same thing.</div>
+    </div>
+    <div class="wl-item">
+      <div class="wl-word">Elan</div>
+      <div class="wl-def">Energy, style, and enthusiasm. The word he most wanted to embody. The one furthest from how the family saw him.</div>
+    </div>
+  </div>
+</div>
+
+<div class="article">
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <div class="section-title">The gender of it</div>
+    <div class="p">The film is deeply, carefully aware of what it is doing with gender — more so than it is usually given credit for.</div>
+    <div class="p">Men in this film behave like boys behaving like men. They dominate, they prank, they perform. Vikram and Nandu mock Shutu with the easy confidence of people who have never had to question whether they belong. One of the most cutting lines in the film lands half-admiringly, half-dismissively: <em>you're so pretty, you could be a girl.</em> It is meant as a joke. It lands as a verdict.</div>
+    <div class="p">The one real bridge between Shutu's world and the family's world is Tani, his teenage niece, who is already bored of the games adults play and genuinely fascinated by Shutu's scientific-poetic lonely view of the world. It is not a coincidence that the bridge is female. The film knows that sensitivity in men especially gets recognized and protected more often by women than by other men.</div>
+    <div class="p">Fitting into this world of men is a constant struggle for men even. We built these rules. We made them this hard. We laid them so tough that now we are having a hard time catching up. The film asks why, quietly, without ever quite saying so.</div>
+    <div class="p">The aunty who learns something has happened to Shutu and responds not with care but with a lecture about responsibility — she is not a villain. She is a person whose own survival required her to be that way, and who has stopped noticing the cost. Mimi, quietly drowning in her feelings about Vikram's new wife, reaching for the bottle with the practiced invisibility of someone who has learned to grieve in the gaps — she is the other side of Shutu: also lost, also unseen, just more practiced at pretending not to care.</div>
+  </div>
+
+  <div class="divider">
+    <div class="div-dot"></div>
+    <div class="div-dot"></div>
+    <div class="div-dot"></div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <div class="section-title">What Konkona does</div>
+    <div class="p">This is a remarkable debut not because it is technically dazzling — though it has moments of real visual intelligence, including a Scorsese-esque trunk shot at the opening and the first Assamese song in a Bollywood film — but because of what it understands about people and how precisely it has written all of them.</div>
+    <div class="p">The Chekhov's gun in this film is not a gun at all, which is part of the point. The thing that ends Shutu is not a dramatic confrontation or a single cruel act. It is accumulation. It is the magnifying glass. It is the weight of every small moment in which he was the last to be picked, the last to be noticed, the first to be dismissed. It hits you hard like a truck, even though the title told you it was coming.</div>
+    <div class="p">The final shot — a car driving away — is one of the most quietly devastating things in recent cinema. What it communicates, wordlessly, is the value of Shutu's presence to the other characters: visible only now, in its absence. The characters who couldn't quite see him while he was alive finally, too late, feel the shape of the hole he has left.</div>
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pq">
+    <div class="pq-text">The film is itself a eulogy — one of Shutu's favorite words. A speech that praises someone highly, <em>especially a tribute to someone who has just died.</em> The tragedy is that Shutu never got to hear it while he was alive.</div>
+    <div class="pq-attr">The film's truest meaning</div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <div class="section-title">An honest note on what doesn't land</div>
+    <div class="p">One reviewer felt the ending was the film's weakest point — that it could have been more, that it let go too quickly of something it had built so carefully. That is a fair criticism. The first half can feel fast or uneven at times, establishing the world quickly, perhaps too quickly. The controlled accumulation of the first two-thirds gives way to something slightly more conventional in the final act. The death itself, when it comes, is perhaps less earned dramatically than it is emotionally — you feel it deeply, but a second viewing reveals that the film assumed some of that emotional weight rather than fully constructing it.</div>
+    <div class="p">And yet the car shot at the end redeems almost everything. It is enough. It is more than enough.</div>
+  </div>
+
+  <!-- FINAL QUESTIONS -->
+  <div class="final-questions">
+    <div class="section-title">What it leaves you with</div>
+    <div class="p">When does it finally hit you? Is it when you see your family having fun without even noticing your presence, much less missing you? Or when the few bonds you manage to make dwindle away because there's always other, better people out there?</div>
+    <div class="p">The film's answer is: neither. It hits when something seemingly insignificant pulls the trigger. When the accumulation reaches a weight that the person carrying it can no longer pretend is manageable.</div>
+
+    <div class="fq-item">We all have been Shutu. Maybe not at 23, in McCluskieganj, in 1979. But in some version of that field, waiting to be picked, offering to be the umpire instead.</div>
+    <div class="fq-item">How many Shutus are in the rooms around us, right now, writing their favorite words in a diary, waiting to be seen?</div>
+    <div class="fq-item">Did we see him?</div>
+  </div>
+
+</div>
+
+<!-- WIDE CLOSING QUOTE -->
+<div class="pq-wide">
+  <div class="pqw-text">We did not. We do not. And the film's enduring cruelty — its gift — is that it makes you feel, for 110 minutes, <em>exactly what it costs.</em></div>
+  <div class="pqw-rule"></div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-text">A Death in the Gunj is not about death. It is about invisibility — the slow kind, the kind that happens in full view of people who love you in their way, just not enough to actually look.</div>
+  <span class="closing-grade">A</span>
+  <span class="closing-grade-label">Personal rating</span>
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">A Death in the Gunj — 2016 · Film Review</div>
+  <div class="sf-r">Notes by Al Amin</div>
+</div>
+
+</body>
+</html>
