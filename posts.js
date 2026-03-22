@@ -28,7 +28,7 @@ const POSTS = [
     title: "Joachim Trier's Best Film Is About Someone Making His Worst",
     desc:  "A deeply layered family drama that uses filmmaking as both subject and method. It dissects memory, identity, and inherited pain with rare precision — and arrives at something honest: love is limited by one's ability to express it.",
     tag:   "Movie",
-    date:  "Jun 2025",
+    date:  "Mar 2026",
     theme: "green"
   },
   
@@ -37,7 +37,7 @@ const POSTS = [
     title: "Bangladesh clothing brands — personal analysis",
     desc:  "Brand hierarchy, discount windows, value comparisons, and family tree of 8 local brands including Yellow, Artisan, Infinity, STC and more.",
     tag:   "Lifestyle",
-    date:  "Jun 2025",
+    date:  "Nov 2025",
     theme: "amber"
   },
   
@@ -46,7 +46,7 @@ const POSTS = [
     title: "Myth, fascism & mass psychology",
     desc:  "Structural breakdown of how myth functions as a control mechanism, Hegel's influence on fascist thought, and the full pipeline from narrative to power.",
     tag:   "Politics",
-    date:  "Jun 2025",
+    date:  "Feb 2025",
     theme: "dark"
   },
 
@@ -55,7 +55,7 @@ const POSTS = [
     title: "Wordle — S+A tier 3-word greedy analysis",
     desc:  "Greedy word selection from the top 15 Wordle letter frequencies. ALERT + PIONS + DUCHY for a fixed grand total of 415% across all S and A tier letters.",
     tag:   "Wordle",
-    date:  "Jun 2025",
+    date:  "Mar 2026",
     theme: "teal"
   },
 
