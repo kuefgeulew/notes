@@ -24,6 +24,15 @@ const POSTS = [
   },
 
 {
+    file:  "sentimental_value_review.html",
+    title: "Joachim Trier's Best Film Is About Someone Making His Worst",
+    desc:  "A deeply layered family drama that uses filmmaking as both subject and method. It dissects memory, identity, and inherited pain with rare precision — and arrives at something honest: love is limited by one's ability to express it.",
+    tag:   "Movie",
+    date:  "Jun 2025",
+    theme: "green"
+  },
+  
+{
     file:  "bd_clothing_brands.html",
     title: "Bangladesh clothing brands — personal analysis",
     desc:  "Brand hierarchy, discount windows, value comparisons, and family tree of 8 local brands including Yellow, Artisan, Infinity, STC and more.",
