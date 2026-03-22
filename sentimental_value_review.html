@@ -3,264 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sentimental Value — Review</title>
+<title>Sentimental Value — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, sans-serif; background: #f5f4f0; color: #1a1a18; }
 
-/* ── Hero ── */
-.hero { background: #1a1a18; padding: 48px 32px 40px; }
-.hero-inner { max-width: 860px; margin: 0 auto; }
-.hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #5F5E5A; margin-bottom: 16px; }
-.hero-title { font-size: 42px; font-weight: 700; color: #F1EFE8; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 8px; }
-.hero-director { font-size: 15px; color: #888780; margin-bottom: 24px; }
-.hero-meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.meta-chip { font-size: 12px; font-weight: 600; padding: 5px 13px; border-radius: 5px; }
-.grade { background: #F1EFE8; color: #1a1a18; font-size: 15px; font-weight: 700; padding: 5px 16px; border-radius: 5px; letter-spacing: .04em; }
-.cast-chip { background: #2C2C2A; color: #888780; border: 1px solid #444441; }
+:root {
+  --bg:    #0C0C0A;
+  --bg2:   #141412;
+  --bg3:   #1C1C19;
+  --bg4:   #242420;
+  --gold:  #C8A96E;
+  --gold2: #E8C98A;
+  --gold3: #6B5A3A;
+  --white: #EAE6DE;
+  --w2:    #B8B4AC;
+  --w3:    #787470;
+  --w4:    #3A3835;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --mono:  'IBM Plex Mono', monospace;
+}
 
-/* ── Page body ── */
-.page { max-width: 860px; margin: 0 auto; padding: 36px 32px 64px; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--white); min-height: 100vh; }
 
-/* ── Full-width prose block ── */
-.prose { font-size: 15px; line-height: 1.8; color: #2C2C2A; margin-bottom: 32px; }
-.prose b { font-weight: 700; color: #1a1a18; }
+/* ══ OPENING ══ */
+.opening { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; border-bottom: 1px solid var(--w4); }
 
-/* ── Section label ── */
-.sl { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #888780; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #D3D1C7; }
+.op-topbar { display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; border-bottom: 1px solid var(--w4); }
+.op-back { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--w3); text-decoration: none; }
+.op-back:hover { color: var(--gold); }
+.op-meta { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--w3); }
 
-hr { border: none; border-top: 1px solid #D3D1C7; margin: 36px 0; }
+.op-center { display: flex; flex-direction: column; justify-content: center; padding: 64px 48px; }
+.op-label { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 40px; display: flex; align-items: center; gap: 16px; }
+.op-label::before { content: '—'; }
+.op-title { font-family: var(--serif); font-size: clamp(56px, 10vw, 128px); font-weight: 400; line-height: .9; letter-spacing: -.03em; color: var(--white); margin-bottom: 16px; }
+.op-title em { font-style: italic; color: var(--gold); }
+.op-year { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; color: var(--w3); margin-bottom: 48px; }
+.op-cast { font-family: var(--sans); font-size: 14px; font-weight: 300; color: var(--w2); letter-spacing: .04em; }
+.op-cast strong { color: var(--white); font-weight: 500; }
 
-/* ── 2-col even grid ── */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-/* ── 3-col even grid ── */
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-/* ── 4-col even grid ── */
-.grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.op-bottom { padding: 24px 48px; border-top: 1px solid var(--w4); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.op-tagline { font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--w3); max-width: 480px; line-height: 1.6; }
+.op-scroll { font-family: var(--mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--w4); }
 
-/* ── Card ── */
-.gc { border-radius: 10px; padding: 16px 18px; }
-.gc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; }
-.gc-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
-.gc-body { font-size: 12px; line-height: 1.7; }
+/* ══ GOLD BAND ══ */
+.gold-band { background: var(--gold); padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.gb-text { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--bg); font-weight: 500; }
+.gb-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.gb-chip { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold3); padding: 3px 10px; border: 1px solid var(--gold3); border-radius: 1px; }
 
-/* card themes */
-.card-dark   { background: #2C2C2A; }
-.card-dark   .gc-label { color: #5F5E5A; }
-.card-dark   .gc-title { color: #F1EFE8; }
-.card-dark   .gc-body  { color: #B4B2A9; }
-.card-gray   { background: #F1EFE8; border: 1px solid #D3D1C7; }
-.card-gray   .gc-label { color: #888780; }
-.card-gray   .gc-title { color: #1a1a18; }
-.card-gray   .gc-body  { color: #5F5E5A; }
-.card-teal   { background: #E1F5EE; border: 1px solid #9FE1CB; }
-.card-teal   .gc-label { color: #0F6E56; }
-.card-teal   .gc-title { color: #085041; }
-.card-teal   .gc-body  { color: #0F6E56; }
-.card-amber  { background: #FAEEDA; border: 1px solid #FAC775; }
-.card-amber  .gc-label { color: #854F0B; }
-.card-amber  .gc-title { color: #412402; }
-.card-amber  .gc-body  { color: #633806; }
-.card-purple { background: #EEEDFE; border: 1px solid #AFA9EC; }
-.card-purple .gc-label { color: #3C3489; }
-.card-purple .gc-title { color: #26215C; }
-.card-purple .gc-body  { color: #3C3489; }
-.card-red    { background: #FCEBEB; border: 1px solid #F09595; }
-.card-red    .gc-label { color: #791F1F; }
-.card-red    .gc-title { color: #501313; }
-.card-red    .gc-body  { color: #791F1F; }
-.card-blue   { background: #E6F1FB; border: 1px solid #85B7EB; }
-.card-blue   .gc-label { color: #185FA5; }
-.card-blue   .gc-title { color: #042C53; }
-.card-blue   .gc-body  { color: #185FA5; }
+/* ══ SECTION ══ */
+.section { display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid var(--w4); }
+.section.rev { grid-template-columns: 1fr 200px; }
 
-/* ── Conflict row — full width split ── */
-.split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 10px; overflow: hidden; border: 1px solid #D3D1C7; margin-bottom: 10px; }
-.split-side { padding: 18px 20px; }
-.split-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
-.split-body { font-size: 13px; line-height: 1.7; }
+.sec-sb { border-right: 1px solid var(--w4); padding: 48px 32px 48px 48px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+.section.rev .sec-sb { border-right: none; border-left: 1px solid var(--w4); padding: 48px 48px 48px 32px; order: 2; }
+.sec-num { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--w4); }
+.sec-lbl { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); align-self: flex-start; }
+.sec-note { font-family: var(--sans); font-size: 11px; font-weight: 300; font-style: italic; color: var(--w3); line-height: 1.7; }
 
-/* ── Pull quote ── */
-.quote { border-left: 3px solid #1a1a18; padding: 4px 0 4px 20px; margin: 24px 0; }
-.quote-text { font-size: 18px; font-weight: 600; color: #1a1a18; line-height: 1.5; font-style: italic; letter-spacing: -.01em; }
-.quote-sub { font-size: 11px; color: #888780; margin-top: 6px; }
+.sec-main { padding: 48px 64px 48px 48px; }
+.section.rev .sec-main { padding: 48px 48px 48px 64px; }
+.sec-h { font-family: var(--serif); font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.05; letter-spacing: -.02em; color: var(--white); margin-bottom: 32px; }
+.sec-h em { font-style: italic; color: var(--gold); }
+.sec-b { font-family: var(--sans); font-size: 16px; font-weight: 300; line-height: 1.9; color: var(--w2); }
+.sec-b p { margin-bottom: 22px; }
+.sec-b p:last-child { margin-bottom: 0; }
+.sec-b strong { color: var(--white); font-weight: 500; }
 
-/* ── Final verdict ── */
-.verdict { background: #1a1a18; border-radius: 12px; padding: 28px 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-top: 36px; }
-.verdict-text { font-size: 14px; line-height: 1.8; color: #B4B2A9; }
-.verdict-text b { color: #F1EFE8; font-weight: 700; }
-.verdict-grade { font-size: 52px; font-weight: 700; color: #F1EFE8; line-height: 1; }
-.verdict-grade-sub { font-size: 10px; color: #5F5E5A; text-align: center; margin-top: 4px; letter-spacing: .06em; text-transform: uppercase; }
+/* ══ PULL QUOTE ══ */
+.pq-section { background: var(--bg2); padding: 72px 48px; border-bottom: 1px solid var(--w4); display: grid; grid-template-columns: 1fr 2px 1fr; gap: 64px; align-items: center; }
+.pq-rule { background: var(--w4); }
+.pq-text { font-family: var(--serif); font-size: clamp(22px, 3.5vw, 36px); font-weight: 400; font-style: italic; line-height: 1.35; letter-spacing: -.01em; color: var(--white); margin-bottom: 20px; }
+.pq-attr { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.pq-ctx { font-family: var(--sans); font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--w3); }
 
-/* ── Responsive ── */
-@media (max-width: 600px) {
-  .hero { padding: 32px 20px; }
-  .hero-title { font-size: 28px; }
-  .page { padding: 24px 20px 48px; }
-  .grid2, .grid3, .grid4, .split { grid-template-columns: 1fr; }
-  .verdict { grid-template-columns: 1fr; }
+/* ══ DARK FEATURE ══ */
+.dark-feature { background: var(--gold); padding: 64px 48px; border-bottom: 1px solid var(--w4); }
+.df-lbl { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold3); margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+.df-lbl::after { content: ''; flex: 1; height: 1px; background: var(--gold3); opacity: .3; }
+.df-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.df-item { padding: 32px 32px 28px 0; border-right: 1px solid rgba(107,90,58,.3); margin-right: 32px; }
+.df-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.df-n { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--gold3); margin-bottom: 16px; }
+.df-t { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--bg); margin-bottom: 12px; line-height: 1.15; letter-spacing: -.01em; }
+.df-b { font-family: var(--sans); font-size: 13px; font-weight: 300; line-height: 1.75; color: var(--bg3); }
+
+/* ══ ANNOTATIONS ══ */
+.ann-section { background: var(--bg2); padding: 64px 48px; border-bottom: 1px solid var(--w4); }
+.ann-lbl { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--w4); margin-bottom: 40px; }
+.ann-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.ann-item { padding: 28px 40px 28px 0; border-bottom: 1px solid var(--w4); display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: start; }
+.ann-item:nth-child(even) { padding: 28px 0 28px 40px; border-left: 1px solid var(--w4); }
+.ann-item:last-child, .ann-item:nth-last-child(2):not(:nth-child(even)) { border-bottom: none; }
+.ann-m { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--gold); margin-top: 3px; min-width: 20px; }
+.ann-t { font-family: var(--serif); font-size: 18px; font-weight: 400; color: var(--white); margin-bottom: 8px; letter-spacing: -.01em; }
+.ann-b { font-family: var(--sans); font-size: 13px; font-weight: 300; line-height: 1.78; color: var(--w3); }
+
+/* ══ CLOSING ══ */
+.closing { padding: 80px 48px; display: grid; grid-template-columns: 1fr 300px; gap: 80px; align-items: start; border-bottom: 1px solid var(--w4); }
+.cl-lbl { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+.cl-lbl::after { content: ''; flex: 1; height: 1px; background: var(--w4); }
+.cl-verdict { font-family: var(--serif); font-size: clamp(24px, 3.5vw, 38px); font-weight: 400; font-style: italic; line-height: 1.25; letter-spacing: -.015em; color: var(--white); margin-bottom: 36px; }
+.cl-body { font-family: var(--sans); font-size: 16px; font-weight: 300; line-height: 1.9; color: var(--w2); }
+.cl-aside { padding-top: 40px; }
+.cl-block { border: 1px solid var(--w4); padding: 24px; margin-bottom: 12px; }
+.cl-block:last-child { margin-bottom: 0; }
+.clb-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.clb-body { font-family: var(--sans); font-size: 13px; font-weight: 300; line-height: 1.75; color: var(--w3); }
+.clb-body strong { color: var(--white); font-weight: 500; }
+.rating { background: var(--bg3); padding: 24px; text-align: center; margin-bottom: 12px; }
+.rating-n { font-family: var(--serif); font-size: 72px; font-weight: 400; font-style: italic; color: var(--gold); line-height: 1; }
+.rating-l { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--w4); margin-top: 8px; }
+
+/* ══ COLOPHON ══ */
+.colophon { padding: 24px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.col-l, .col-r { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--w4); }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  .section, .section.rev { grid-template-columns: 1fr; }
+  .sec-sb { border-right: none; border-bottom: 1px solid var(--w4); padding: 28px 24px 20px; flex-direction: row; align-items: center; }
+  .section.rev .sec-sb { border-left: none; order: 0; padding: 28px 24px 20px; }
+  .sec-lbl { writing-mode: horizontal-tb; transform: none; }
+  .sec-main, .section.rev .sec-main { padding: 36px 24px; }
+  .pq-section { grid-template-columns: 1fr; gap: 32px; padding: 48px 24px; }
+  .pq-rule { display: none; }
+  .df-grid { grid-template-columns: 1fr; }
+  .df-item { padding: 24px 0; border-right: none; margin-right: 0; border-bottom: 1px solid rgba(107,90,58,.3); }
+  .df-item:last-child { border-bottom: none; }
+  .ann-grid { grid-template-columns: 1fr; }
+  .ann-item:nth-child(even) { padding: 28px 0; border-left: none; }
+  .closing { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
+  .cl-aside { padding-top: 0; }
+  .op-topbar, .op-bottom, .gold-band, .dark-feature, .ann-section, .colophon { padding-left: 24px; padding-right: 24px; }
+  .op-center { padding: 48px 24px; }
+  .sec-sb { padding-left: 24px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════ HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Film review · 2025</div>
-    <div class="hero-title">Sentimental Value</div>
-    <div class="hero-director">Directed by Joachim Trier</div>
-    <div class="hero-meta">
-      <span class="meta-chip grade">A</span>
-      <span class="meta-chip cast-chip">Stellan Skarsgård</span>
-      <span class="meta-chip cast-chip">Renate Reinsve</span>
-      <span class="meta-chip cast-chip">Elle Fanning</span>
+<div class="opening">
+  <div class="op-topbar">
+    <a class="op-back" href="index.html">← Notes by Al Amin</a>
+    <div class="op-meta">Film · 2025</div>
+  </div>
+  <div class="op-center">
+    <div class="op-label">Joachim Trier · 2025</div>
+    <div class="op-title">Sentimental<br><em>Value</em></div>
+    <div class="op-year">// Norway · Drama</div>
+    <div class="op-cast"><strong>Renate Reinsve</strong> &nbsp;·&nbsp; <strong>Stellan Skarsgård</strong> &nbsp;·&nbsp; Elle Fanning</div>
+  </div>
+  <div class="op-bottom">
+    <div class="op-tagline">"Not a story about events — an excavation of emotional residue passed down through generations."</div>
+    <div class="op-scroll">scroll &nbsp;↓</div>
+  </div>
+</div>
+
+<div class="gold-band">
+  <div class="gb-text">Composite reading — a film that hits late, but decisively</div>
+  <div class="gb-chips">
+    <span class="gb-chip">Memory</span>
+    <span class="gb-chip">Inheritance</span>
+    <span class="gb-chip">Art vs. Control</span>
+    <span class="gb-chip">Family</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-sb">
+    <div class="sec-num">01</div>
+    <div class="sec-lbl">The Core</div>
+    <div class="sec-note">The film's central gesture is simultaneously manipulative and sincere.</div>
+  </div>
+  <div class="sec-main">
+    <div class="sec-h">A father who speaks<br>in <em>film</em>, not apology</div>
+    <div class="sec-b">
+      <p>At its core is a father–daughter relationship defined not by absence alone, but by misrecognition. Gustav, a filmmaker, attempts reconciliation not through apology but through art — casting his estranged daughter Nora in a film that refracts his own past.</p>
+      <p>This gesture becomes the film's central paradox: <strong>can art express what direct language fails to, or does it simply repackage control under the guise of vulnerability?</strong> Trier never answers cleanly. The film earns its ambiguity by refusing to assign guilt and innocence to stable addresses.</p>
+      <p>Nearly every response converges on the same realization: this is not a story about events, but about what lingers after them. The quiet space where memory, guilt, and inheritance overlap.</p>
     </div>
   </div>
 </div>
 
-<div class="page">
-
-  <!-- ══════════════════════════════ PREMISE -->
-  <div class="prose">
-    An aging filmmaker, Gustav Borg, tries to re-enter his daughter Nora's life after her mother's death — not with an apology, but with a film. He casts her not as herself, but as his own mother, whose suicide is the wound he has never addressed. It's a gesture that blurs the line between intimacy and exploitation, and the film never fully lets him off the hook for it.
+<div class="pq-section">
+  <div>
+    <div class="pq-text">"Everything is our parents — except our parents, who are their parents."</div>
+    <div class="pq-attr">On inherited distortion</div>
   </div>
+  <div class="pq-rule"></div>
+  <div class="pq-ctx">The film expands into a broader thesis: identity is largely inherited distortion. Parents project unresolved selves onto their children; children internalize, resist, and eventually replicate those same patterns. <em>Sentimental Value</em> visualizes this recursive loop with unsettling clarity — broken people raising broken children, expecting wholeness as outcome.</div>
+</div>
 
-  <!-- ══════════════════════════════ CONFLICT -->
-  <div class="sl">The central tension</div>
-  <div class="split">
-    <div class="split-side" style="background:#2C2C2A">
-      <div class="split-label" style="color:#5F5E5A">Gustav</div>
-      <div class="split-body" style="color:#B4B2A9">Seeks understanding, not forgiveness. Uses the film as a vehicle to communicate what he cannot say in person. Not overtly cruel — <b style="color:#F1EFE8">passively harmful</b>, existing one step removed from the damage he causes.</div>
-    </div>
-    <div class="split-side" style="background:#F1EFE8;border-left:1px solid #D3D1C7">
-      <div class="split-label" style="color:#888780">Nora</div>
-      <div class="split-body" style="color:#5F5E5A">Rejects both the film and the emotional logic behind it. Torn between resentment and unresolved attachment. Her stage fright isn't professional — it's an identity crisis. She became an actress partly to avoid being herself.</div>
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- ══════════════════════════════ THEMES -->
-  <div class="sl">Key themes</div>
-  <div class="grid2">
-    <div class="gc card-amber">
-      <div class="gc-label">Mercy vs forgiveness</div>
-      <div class="gc-body">The film draws a careful line: mercy is allowance, a performance of goodwill. Forgiveness is absolution, a final act. Trier argues reconciliation can only begin with the former — and may never reach the latter.</div>
-    </div>
-    <div class="gc card-purple">
-      <div class="gc-label">Art as communication</div>
-      <div class="gc-body">Gustav uses cinema to articulate what direct speech fails to carry. The film-within-the-film becomes a bridge — and a trap — between an unresolved past and a present that keeps reopening it.</div>
-    </div>
-    <div class="gc card-red">
-      <div class="gc-label">Generational trauma</div>
-      <div class="gc-body">Gustav's mother's suicide isn't backstory — it's architecture. He doesn't originate the pain; he conducts it. Trauma here is inherited and passed forward, not resolved.</div>
-    </div>
-    <div class="gc card-teal">
-      <div class="gc-label">Identity and performance</div>
-      <div class="gc-body">Nora is made to watch another actress — Rachel — perform a version of her own life. The dissonance between lived experience and performed identity is where the film finds its sharpest emotional edges.</div>
+<div class="section rev">
+  <div class="sec-main">
+    <div class="sec-h">The house that<br><em>remembers</em> everything</div>
+    <div class="sec-b">
+      <p>What distinguishes the film is how concretely it anchors abstraction. The ancestral house is not metaphor-adjacent; it is the emotional nucleus. Rooms hold arguments long after voices fade. Renovations feel like violations.</p>
+      <p>A modern grey redesign lands like a jump scare — not because of aesthetics, but because it erases accumulated meaning. <strong>The house becomes a living archive: simultaneously shelter and battlefield</strong>, containing layers of love, resentment, and memory that refuse clean separation.</p>
+      <p>Multiple viewers fixate on this: a structure capable of provoking grief on its own, independent of the people inside it. Places carry emotional weight the way people carry trauma — absorbed, stratified, never fully released.</p>
     </div>
   </div>
+  <div class="sec-sb">
+    <div class="sec-num">02</div>
+    <div class="sec-lbl">Space</div>
+    <div class="sec-note">Rooms hold arguments long after voices fade.</div>
+  </div>
+</div>
 
-  <hr>
-
-  <!-- ══════════════════════════════ CHARACTERS -->
-  <div class="sl">Character breakdown</div>
-  <div class="grid3">
-    <div class="gc card-dark">
-      <div class="gc-title">Gustav Borg</div>
-      <div class="gc-label" style="color:#5F5E5A;margin-top:4px">Stellan Skarsgård</div>
-      <div class="gc-body" style="margin-top:8px">Seeks meaning in past trauma rather than accountability. His intelligence and talent make his emotional absence harder to forgive, not easier.</div>
+<div class="dark-feature">
+  <div class="df-lbl">Three tensions the film refuses to resolve</div>
+  <div class="df-grid">
+    <div class="df-item">
+      <div class="df-n">I —</div>
+      <div class="df-t">Art vs. Control</div>
+      <div class="df-b">Gustav uses cinema to say what he cannot. The film asks whether artistic sincerity and emotional manipulation are mutually exclusive — or whether, in certain hands, they are the same gesture.</div>
     </div>
-    <div class="gc card-gray">
-      <div class="gc-title">Nora</div>
-      <div class="gc-label" style="margin-top:4px">Renate Reinsve</div>
-      <div class="gc-body" style="margin-top:8px">The emotional centre. Her arc isn't about healing — it's about surviving proximity to someone who uses love as raw material. Reinsve holds the whole film together.</div>
+    <div class="df-item">
+      <div class="df-n">II —</div>
+      <div class="df-t">Siblings share nothing</div>
+      <div class="df-b">One of the film's most devastating insights: siblings do not share the same childhood, even within the same home. Asymmetry — not shared trauma — is the defining condition of family.</div>
     </div>
-    <div class="gc card-blue">
-      <div class="gc-title">Rachel Kemp</div>
-      <div class="gc-label" style="margin-top:4px">Elle Fanning</div>
-      <div class="gc-body" style="margin-top:8px">A Hollywood actress seeking artistic credibility, cast in Nora's role. She represents outside intrusion into a private wound — an unwitting instrument of someone else's story.</div>
+    <div class="df-item">
+      <div class="df-n">III —</div>
+      <div class="df-t">Tenderness without resolution</div>
+      <div class="df-b">The film withholds catharsis until the final movement, where it lands not as release but as recognition: tenderness does not resolve history. It coexists with it.</div>
     </div>
   </div>
+</div>
 
-  <hr>
-
-  <!-- ══════════════════════════════ THE HOUSE -->
-  <div class="sl">The house as character</div>
-  <div class="grid2">
-    <div class="prose" style="margin-bottom:0;font-size:14px">
-      The ancestral Oslo home absorbs everything — grief, memory, the weight of unspoken things. It isn't a neutral setting. Its rooms hold emotional residue the way old wood holds damp. The physical structure of the house mirrors the Borg family's psychological one: load-bearing walls where there should be open doors.
+<div class="section">
+  <div class="sec-sb">
+    <div class="sec-num">03</div>
+    <div class="sec-lbl">Performance</div>
+    <div class="sec-note">Their exchanges feel less like dialogue than negotiation over reality itself.</div>
+  </div>
+  <div class="sec-main">
+    <div class="sec-h">Reinsve and Skarsgård:<br>precision against <em>opacity</em></div>
+    <div class="sec-b">
+      <p>Renate Reinsve and Stellan Skarsgård generate a volatile equilibrium — precision against opacity, restraint against quiet desperation. Their exchanges feel less like dialogue than <strong>negotiation over reality itself</strong>. Who suffered more. Who remembers accurately. Who has the right to make art from shared pain.</p>
+      <p>Neither wins. The film doesn't let them. Supporting performances, particularly Inga Lilleaas, deepen the field — suggesting inner lives that extend well beyond the frame. The film is populated by people who feel like they continue existing after the camera turns away.</p>
     </div>
-    <div class="gc card-dark" style="align-self:start">
-      <div class="gc-label">What the house represents</div>
-      <div class="gc-body" style="margin-top:6px">
-        Memory storage that no one agreed to keep<br><br>
-        Generational continuity as burden<br><br>
-        A space where the past is always present-tense
+  </div>
+</div>
+
+<div class="ann-section">
+  <div class="ann-lbl">Formal observations</div>
+  <div class="ann-grid">
+    <div class="ann-item">
+      <div class="ann-m">→</div>
+      <div><div class="ann-t">Humor as pressure valve</div><div class="ann-b">Trier punctures intensity at precise intervals, preventing collapse into melodrama. The laughs land exactly because everything surrounding them is heavy.</div></div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-m">→</div>
+      <div><div class="ann-t">Delayed impact</div><div class="ann-b">The film does not overwhelm immediately — it accumulates. The final sequence retroactively reorganizes everything preceding it. It hits late, but decisively.</div></div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-m">→</div>
+      <div><div class="ann-t">Structural withholding</div><div class="ann-b">Abrupt cuts and withheld resolutions mirror the incompleteness of memory. The form enacts its own argument. Incompleteness is not a failure of craft — it is the craft.</div></div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-m">→</div>
+      <div><div class="ann-t">The streaming irony</div><div class="ann-b">The father's project being a streaming production introduces quiet meta-irony: deeply personal memory mediated through industrial constraint. Whether meaning survives translation is the film's own concern.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="closing">
+  <div>
+    <div class="cl-lbl">Final reading</div>
+    <div class="cl-verdict">"The people who shape us most profoundly are also those least fully understood."</div>
+    <div class="cl-body">Ultimately, <em>Sentimental Value</em> is about the limits of expression. Love exists, but articulation fails. Understanding is desired, but arrives distorted. Art becomes the intermediary — not because it solves these gaps, but because it makes them visible.<br><br>It is less a film that tells you something new than one that forces recognition of something already known but unarticulated. That the spaces we call home remember everything, even when we try not to. Reconciliation is not a moment of clarity — it is an ongoing negotiation with what cannot be undone.</div>
+  </div>
+  <div class="cl-aside">
+    <div class="rating">
+      <div class="rating-n">A</div>
+      <div class="rating-l">Personal rating</div>
+    </div>
+    <div class="cl-block">
+      <div class="clb-lbl">If this film, then also</div>
+      <div class="clb-body">
+        <strong>The Worst Person in the World</strong> — Trier's own earlier work<br><br>
+        <strong>Aftersun</strong> — the child who cannot read the parent until too late<br><br>
+        <strong>Wild Strawberries</strong> — a man excavating his life<br><br>
+        <strong>Ordinary People</strong> — grief as a family system
+      </div>
+    </div>
+    <div class="cl-block">
+      <div class="clb-lbl">Cast</div>
+      <div class="clb-body">
+        <strong>Renate Reinsve</strong> as Nora<br>
+        <strong>Stellan Skarsgård</strong> as Gustav<br>
+        <strong>Elle Fanning</strong> as Rachel<br>
+        Inga Lilleaas · Agnes Kittelsen
       </div>
     </div>
   </div>
-
-  <hr>
-
-  <!-- ══════════════════════════════ CRAFT -->
-  <div class="sl">Form and style</div>
-  <div class="grid3">
-    <div class="gc card-gray">
-      <div class="gc-title">Structure</div>
-      <div class="gc-body">Non-linear, layered. Moves between present tensions, family history research, and film-within-film sequences without losing coherence. Blackouts and deliberate pacing give it a stage-like rhythm.</div>
-    </div>
-    <div class="gc card-gray">
-      <div class="gc-title">Tone</div>
-      <div class="gc-body">Emotionally rich but never overwrought. Blends quiet humor with deep psychological tension — the laughs land precisely because everything around them is heavy.</div>
-    </div>
-    <div class="gc card-gray">
-      <div class="gc-title">Visual texture</div>
-      <div class="gc-body">Tactile, lived-in spaces. The cinematography favors surfaces with history — worn wood, aged paper, the grain of a room that has been inhabited for decades.</div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════ PULL QUOTE -->
-  <div class="quote">
-    <div class="quote-text">"The ending is predictable in structure — and overwhelming in execution."</div>
-    <div class="quote-sub">Emotional payoff derives from accumulated detail, not surprise. The convergence of past, present, and memory lands because the film has earned every second of it.</div>
-  </div>
-
-  <!-- ══════════════════════════════ META LAYER -->
-  <div class="sl">Meta-cinema</div>
-  <div class="gc card-purple" style="margin-bottom:10px">
-    <div class="gc-body" style="font-size:13px">
-      Sentimental Value is genuinely rare among films-about-filmmaking: it earns the reflexivity. Gustav's past work is used to establish both his brilliance and his decline — not as decoration, but as evidence. The film critiques the artistic impulse without dismissing it. Art can reveal truth, Trier suggests, but it can also distort it, especially when the artist is both subject and author.
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- ══════════════════════════════ COMPARISONS -->
-  <div class="sl">Context</div>
-  <div class="grid2">
-    <div class="gc card-teal">
-      <div class="gc-title">Comparable to Aftersun</div>
-      <div class="gc-body">Similar in emotional register — what's withheld does more work than what's shown. Both films weaponize the gap between a parent's inner life and what a child can access.</div>
-    </div>
-    <div class="gc card-amber">
-      <div class="gc-title">Peak Trier</div>
-      <div class="gc-body">Functions as a culmination of his career's recurring themes — grief, identity, Oslo — but expanded from individual interiority to full family portrait. His most structurally ambitious film.</div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════ VERDICT -->
-  <div class="verdict">
-    <div class="verdict-text">
-      A deeply layered family drama that uses filmmaking as both subject and method. It dissects memory, identity, and inherited pain with rare precision — and arrives at something honest: <b>love is limited by one's ability to express it. Healing is not resolution. It is recognition.</b> Understanding requires performance before it can become authenticity.
-    </div>
-    <div>
-      <div class="verdict-grade">A</div>
-      <div class="verdict-grade-sub">Grade</div>
-    </div>
-  </div>
-
 </div>
+
+<div class="colophon">
+  <div class="col-l">Sentimental Value · Joachim Trier · 2025</div>
+  <div class="col-r">Notes by Al Amin</div>
+</div>
+
 </body>
 </html>
