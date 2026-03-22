@@ -22,11 +22,19 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "guti_real_madrid.html",
+  title: "Guti — the player who was always almost everything",
+  desc:  "542 appearances, 15 trophies, and the eternal promise. Real Madrid's most loyal servant was also its greatest what-if.",
+  tag:   "Football",
+  date:  "Jun 2020",
+  theme: "red"
+},
+  {
   file:  "bengal_partition_ecology.html",
   title: "How communal politics ruined agrarian Bengal",
   desc:  "The 1947 partition was not just about religion — it was about who controlled the delta, the water, and the rice fields. The game nobody won, told through the lens of Game of Thrones.",
   tag:   "Politics",
-  date:  "Jun 2025",
+  date:  "Apr 2019",
   theme: "dark"
 },
   {
