@@ -22,6 +22,14 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "bengal_partition_ecology.html",
+  title: "How communal politics ruined agrarian Bengal",
+  desc:  "The 1947 partition was not just about religion — it was about who controlled the delta, the water, and the rice fields. The game nobody won, told through the lens of Game of Thrones.",
+  tag:   "Politics",
+  date:  "Jun 2025",
+  theme: "dark"
+},
+  {
   file:  "utsab_review.html",
   title: "Utsab — what a family is actually held together by",
   desc:  "Rituparno Ghosh's 2000 film is not about a family falling apart. It's about thirty years of ordinary moments — the necklace, the cigarette, the tea and French toast — that are only understood as love in retrospect.",
