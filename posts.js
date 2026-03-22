@@ -26,7 +26,7 @@ const POSTS = [
   title: "The two nights that cannot be explained",
   desc:  "Real Madrid vs Manchester City in 2022 and 2024. Same clubs, same competition, same impossible situation. At some point you stop calling it luck.",
   tag:   "Football",
-  date:  "Mar 2026",
+  date:  "Dec 2025",
   theme: "blue"
 },
   {
