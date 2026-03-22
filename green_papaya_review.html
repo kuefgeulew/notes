@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Scent of Green Papaya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cormorant+SC:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --paper:  #F6F1E9;
+  --paper2: #EDE6D8;
+  --green:  #1C3A2A;
+  --green2: #2D5240;
+  --green3: #4A7A5E;
+  --green4: #8AB89A;
+  --green5: #D4E8DA;
+  --amber:  #A0622A;
+  --amber2: #C8893E;
+  --amber3: #F0C882;
+  --ink:    #1A1714;
+  --ink2:   #3D3830;
+  --ink3:   #6B6358;
+  --ink4:   #9B9388;
+  --rule:   #C8BFB0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ══════════ COVER ══════════ */
+.cover {
+  background: var(--green);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-texture {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(74,122,94,.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(160,98,42,.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.cover-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 10vw;
+  z-index: 1;
+}
+
+.cover-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--green4);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cover-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--green4);
+}
+
+.cover-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 9vw, 110px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: .92;
+  letter-spacing: -.02em;
+  color: var(--paper);
+  margin-bottom: 12px;
+}
+
+.cover-title-en {
+  font-family: 'Cormorant SC', serif;
+  font-size: clamp(13px, 2vw, 18px);
+  font-weight: 400;
+  letter-spacing: .12em;
+  color: var(--green4);
+  margin-bottom: 48px;
+  display: block;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.cover-meta-item { }
+.cmi-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--green4);
+  margin-bottom: 5px;
+}
+.cmi-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--paper);
+}
+
+.cover-bottom {
+  padding: 28px 10vw;
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.cb-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(255,255,255,.35);
+  max-width: 560px;
+  line-height: 1.6;
+}
+.cb-scroll {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--green4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cb-scroll::after {
+  content: '↓';
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+/* ══════════ INTRO BAND ══════════ */
+.intro-band {
+  background: var(--amber);
+  padding: 20px 10vw;
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.ib-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(255,255,255,.8);
+  line-height: 1.6;
+  flex: 1;
+  min-width: 240px;
+}
+.ib-tag {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  flex-shrink: 0;
+}
+
+/* ══════════ PAGE BODY ══════════ */
+.page { max-width: 1100px; margin: 0 auto; padding: 0 10vw; }
+
+/* ══════════ SECTION: FIRST ENCOUNTER ══════════ */
+.first-encounter {
+  padding: 80px 0 64px;
+  display: grid;
+  grid-template-columns: 1fr 2px 1fr;
+  gap: 0 56px;
+  border-bottom: 1px solid var(--rule);
+}
+.fe-rule { background: var(--rule); }
+
+.fe-left { }
+.fe-section-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--green3);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.fe-section-label::after { content: ''; flex: 1; height: 1px; background: var(--green5); }
+
+.fe-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  color: var(--green);
+  margin-bottom: 28px;
+}
+
+.fe-body {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--ink2);
+}
+.fe-body p { margin-bottom: 20px; }
+.fe-body p:last-child { margin-bottom: 0; }
+
+.fe-right {
+  padding-top: 52px;
+}
+
+.pull-quote {
+  border-top: 2px solid var(--green);
+  border-bottom: 1px solid var(--rule);
+  padding: 28px 0;
+  margin-bottom: 40px;
+}
+.pq-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--green);
+  letter-spacing: -.01em;
+}
+.pq-attr {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-top: 14px;
+}
+
+.fe-note {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--ink3);
+  font-style: italic;
+  padding-left: 20px;
+  border-left: 2px solid var(--green5);
+}
+
+/* ══════════ SECTION: THREE VOICES ══════════ */
+.voices {
+  padding: 72px 0 64px;
+  border-bottom: 1px solid var(--rule);
+}
+.voices-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.voices-title {
+  font-family: 'Cormorant SC', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: .04em;
+}
+.voices-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink4);
+}
+
+.voices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+.voice {
+  padding: 32px 32px 28px;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.voice:last-child { border-right: none; }
+
+.voice-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: var(--rule);
+}
+.voice-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 1px;
+  display: inline-block;
+  align-self: flex-start;
+}
+.vl-analytical { background: var(--green5); color: var(--green2); }
+.vl-lyrical    { background: #F0E8D8; color: var(--amber); }
+.vl-critical   { background: #F5ECEC; color: #8B2020; }
+
+.voice-text {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.82;
+  color: var(--ink2);
+  flex: 1;
+}
+.voice-footer {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  padding-top: 16px;
+  border-top: 1px solid var(--paper2);
+}
+
+/* ══════════ SECTION: CRAFT ══════════ */
+.craft {
+  padding: 72px 0 64px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.craft-sidebar { position: sticky; top: 80px; }
+.cs-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: var(--paper2);
+  margin-bottom: -12px;
+}
+.cs-label {
+  font-family: 'Cormorant SC', serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: var(--green);
+  margin-bottom: 20px;
+}
+.cs-note {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--ink3);
+  font-style: italic;
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+}
+
+.craft-body { }
+.craft-section-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.craft-section-label::after { content: ''; flex: 1; height: 1px; background: #EDE0CC; }
+
+.craft-items { display: flex; flex-direction: column; gap: 0; }
+.craft-item {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--paper2);
+  align-items: start;
+}
+.craft-item:last-child { border-bottom: none; }
+.ci-marker {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--green4);
+  margin-top: 2px;
+}
+.ci-content { }
+.ci-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
+.ci-body {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--ink2);
+}
+
+/* ══════════ SECTION: CLOSING ══════════ */
+.closing {
+  padding: 72px 0 80px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 80px;
+  align-items: start;
+}
+
+.closing-main { }
+.closing-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.closing-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.closing-verdict {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--green);
+  letter-spacing: -.01em;
+  margin-bottom: 28px;
+}
+
+.closing-body {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--ink2);
+}
+
+.closing-aside { padding-top: 8px; }
+.aside-card {
+  background: var(--green);
+  padding: 28px 28px 24px;
+  margin-bottom: 12px;
+}
+.ac-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--green4);
+  margin-bottom: 16px;
+}
+.ac-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.ac-list li {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255,255,255,.75);
+  line-height: 1.5;
+  padding-left: 14px;
+  border-left: 1px solid var(--green3);
+}
+.ac-list li span {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--green4);
+  margin-bottom: 3px;
+}
+
+.aside-note {
+  background: var(--amber3);
+  padding: 20px 24px;
+}
+.an-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--ink2);
+}
+
+/* ══════════ COLOPHON ══════════ */
+.colophon {
+  background: var(--green);
+  padding: 28px 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.col-left {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(255,255,255,.35);
+}
+.col-right {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.2);
+}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media (max-width: 900px) {
+  .first-encounter { grid-template-columns: 1fr; gap: 40px; }
+  .fe-rule { display: none; }
+  .voices-grid { grid-template-columns: 1fr; }
+  .voice { border-right: none; border-bottom: 1px solid var(--rule); }
+  .voice:last-child { border-bottom: none; }
+  .craft { grid-template-columns: 1fr; gap: 40px; }
+  .craft-sidebar { position: static; }
+  .cs-number { font-size: 72px; }
+  .closing { grid-template-columns: 1fr; gap: 40px; }
+  .page { padding: 0 6vw; }
+  .cover-body { padding: 60px 6vw; }
+  .cover-bottom { padding: 20px 6vw; }
+  .intro-band { padding: 18px 6vw; }
+  .colophon { padding: 24px 6vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-texture"></div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">Film · 1993 · Vietnam</div>
+    <div class="cover-title">L'Odeur de<br>la Papaye Verte</div>
+    <span class="cover-title-en">The Scent of Green Papaya</span>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cmi-label">Director</div>
+        <div class="cmi-val">Trần Anh Hùng</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cmi-label">Setting</div>
+        <div class="cmi-val">Saigon, 1951</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cmi-label">Genre</div>
+        <div class="cmi-val">Mood cinema</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cmi-label">Language</div>
+        <div class="cmi-val">Vietnamese</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cb-quote">"It is the contemplation of an existence that develops with serenity — a poem that evokes happiness."</div>
+    <div class="cb-scroll">Continue reading</div>
+  </div>
+</div>
+
+<!-- ══════════ INTRO BAND ══════════ -->
+<div class="intro-band">
+  <div class="ib-text">A young servant girl. A Saigon household. The slow accumulation of moments that cannot be summarized — only experienced.</div>
+  <div class="ib-tag">Personal review · 2025</div>
+</div>
+
+<div class="page">
+
+  <!-- ══════════ FIRST ENCOUNTER ══════════ -->
+  <div class="first-encounter">
+    <div class="fe-left">
+      <div class="fe-section-label">First encounter</div>
+      <div class="fe-heading">A film that refuses<br>to be followed</div>
+      <div class="fe-body">
+        <p>The Scent of Green Papaya is difficult to approach on a first viewing because it quietly rejects the expectations you bring into it. It opens like it might unfold into a conventional narrative set in Vietnam, but that assumption collapses quickly. For a while, that creates friction — the early stretch feels almost disorienting, because the film refuses to supply the usual structure of plot, conflict, or progression.</p>
+        <p>That confusion only resolves once the expectation of "story" is abandoned. The film is not built around events but around presence. It operates on an experiential level, asking to be observed rather than followed. There are no dramatic climaxes, no sharp emotional pivots, no narrative urgency. What exists instead is a quiet, continuous attention to life.</p>
+      </div>
+    </div>
+    <div class="fe-rule"></div>
+    <div class="fe-right">
+      <div class="pull-quote">
+        <div class="pq-text">"The absence of plot stops being a limitation and becomes the film's defining strength."</div>
+        <div class="pq-attr">On the shift in perception</div>
+      </div>
+      <div class="fe-note">
+        The shift happens gradually. By the time the film moves forward in time, the resistance fades and the rhythm starts to take hold. What initially felt empty begins to feel deliberate. It creates space — for texture, for stillness, for detail that has no obligation to mean anything beyond itself.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ THREE VOICES ══════════ -->
+  <div class="voices">
+    <div class="voices-header">
+      <div class="voices-title">Three Readings</div>
+      <div class="voices-sub">The same film — seen differently</div>
+    </div>
+    <div class="voices-grid">
+      <div class="voice">
+        <div class="voice-num">I</div>
+        <span class="voice-label vl-analytical">Analytical</span>
+        <div class="voice-text">
+          The film is closer to watching moments accumulate than watching a story unfold. Each scene feels like a fragment — small, self-contained, and delicate. Over time, those fragments form something cohesive, but not in a way that can be easily summarized. It's less about what happens and more about what is felt. On a first watch, it can be frustrating if approached with conventional expectations. Once those are stripped away, it becomes absorbing in a different way — calm, patient, deeply attentive.
+        </div>
+        <div class="voice-footer">Observation · Process · Patience</div>
+      </div>
+      <div class="voice">
+        <div class="voice-num">II</div>
+        <span class="voice-label vl-lyrical">Lyrical</span>
+        <div class="voice-text">
+          A sensory experience that demands the audience to get intoxicated by its textures and aromas while guiding them with elegant poetry through the fine tapestry of life. It is a small tribute to the Vietnamese woman — like fresh seed taken from a fruit, growing pure and shining with great splendor. A poem that evokes happiness. A contemplation of an existence that develops with serenity, in a world unknown to many of us.
+        </div>
+        <div class="voice-footer">Sensation · Poetry · Light</div>
+      </div>
+      <div class="voice">
+        <div class="voice-num">III</div>
+        <span class="voice-label vl-critical">Critical</span>
+        <div class="voice-text">
+          The proficiency of Anh Hùng's craft makes us question whether what we're watching is worth being observed with such beauty in the first place. A caged cricket at peace with its existence — but we can't attribute our own feelings to the near-wordless life of the person actually enduring it. Whether the director approves of the culturally enforced subjugation of his lead never seems to enter the equation, and that's largely what gives the film its indescribable, troubling allure.
+        </div>
+        <div class="voice-footer">Complicity · Power · Gaze</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CRAFT ══════════ -->
+  <div class="craft">
+    <div class="craft-sidebar">
+      <div class="cs-number">IV</div>
+      <div class="cs-label">The Craft</div>
+      <div class="cs-note">The world feels natural and lived-in, yet it is meticulously constructed — all shot entirely on a French soundstage.</div>
+    </div>
+    <div class="craft-body">
+      <div class="craft-section-label">What the camera does</div>
+      <div class="craft-items">
+        <div class="craft-item">
+          <div class="ci-marker">—</div>
+          <div class="ci-content">
+            <div class="ci-title">Image as language</div>
+            <div class="ci-body">The close-ups — papaya sap dripping, water trembling in a basin, light shifting across surfaces — are not decorative. They are the film's language. The camera lingers, drifts, observes. Each texture carries weight the dialogue never needs to carry.</div>
+          </div>
+        </div>
+        <div class="craft-item">
+          <div class="ci-marker">—</div>
+          <div class="ci-content">
+            <div class="ci-title">The voyeuristic frame</div>
+            <div class="ci-body">Benoît Delhomme's camera slides along from the vantage point of a windowsill or open doorway, augmenting the impression that we are simply outside observers to a life we cannot judge. There is an almost Spielbergian control to the motion — each smooth glide makes way for a potential shift in subject.</div>
+          </div>
+        </div>
+        <div class="craft-item">
+          <div class="ci-marker">—</div>
+          <div class="ci-content">
+            <div class="ci-title">Inhabited space</div>
+            <div class="ci-body">The homes — filled with greenery, objects, quiet rituals — are presented with such care that they begin to feel inhabited beyond the characters. The camera doesn't just show the environment; it invites you into it. You stop watching and start existing alongside it.</div>
+          </div>
+        </div>
+        <div class="craft-item">
+          <div class="ci-marker">—</div>
+          <div class="ci-content">
+            <div class="ci-title">Score and silence</div>
+            <div class="ci-body">Combined with the restrained, melancholic score, it builds a form of mood cinema that is immersive without ever being forceful. The music arrives not to underscore emotion but to deepen the quality of air in the room.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CLOSING ══════════ -->
+  <div class="closing">
+    <div class="closing-main">
+      <div class="closing-label">Final reading</div>
+      <div class="closing-verdict">"Its impact is quiet but lasting, built entirely on image, sound, and the discipline of restraint."</div>
+      <div class="closing-body">
+        There is technically a romantic thread, but it arrives late and functions more as a quiet extension of the film's tone than its driving force. It doesn't reframe the film into a narrative; it simply adds another layer to the atmosphere. The experience resists summary because it was never built to be summarized. Each viewing deposits something different — a texture noticed, a silence felt more deeply. This is a film that becomes more itself the less you ask of it.
+      </div>
+    </div>
+    <div class="closing-aside">
+      <div class="aside-card">
+        <div class="ac-label">If this film, then also</div>
+        <ul class="ac-list">
+          <li><span>Yasujirō Ozu</span>Tokyo Story — stillness as a moral position</li>
+          <li><span>Andrei Tarkovsky</span>The Mirror — memory as image, not event</li>
+          <li><span>Claire Denis</span>Beau Travail — bodies in space, plot dissolved</li>
+          <li><span>Terrence Malick</span>Days of Heaven — the world as a character</li>
+        </ul>
+      </div>
+      <div class="aside-note">
+        <div class="an-text">"A caged cricket at peace with the circumstance of her existence." — the film's most troubling and precise image of Mùi.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ COLOPHON ══════════ -->
+<div class="colophon">
+  <div class="col-left">The Scent of Green Papaya · Trần Anh Hùng · 1993</div>
+  <div class="col-right">Notes by Al Amin</div>
+</div>
+
+</body>
+</html>
