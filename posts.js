@@ -23,6 +23,15 @@ const POSTS = [
     theme: "amber"
   },
 
+{
+    file:  "bd_clothing_brands.html",
+    title: "Bangladesh clothing brands — personal analysis",
+    desc:  "Brand hierarchy, discount windows, value comparisons, and family tree of 8 local brands including Yellow, Artisan, Infinity, STC and more.",
+    tag:   "Lifestyle",
+    date:  "Jun 2025",
+    theme: "amber"
+  },
+  
   {
     file:  "myth_power_notes.html",
     title: "Myth, fascism & mass psychology",
