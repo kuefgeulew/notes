@@ -21,6 +21,14 @@ const POSTS = [
   date:  "Feb 2024",
   theme: "green"
 },
+  {
+  file:  "paris_texas_review.html",
+  title: "Paris, Texas — I did not expect to be moved like this",
+  desc:  "Wim Wenders, 1984. A man walks out of the desert. What follows is the most honest film about grief, fatherhood, and the cost of leaving that I have ever seen.",
+  tag:   "Movie",
+  date:  "Jun 2025",
+  theme: "dark"
+},
  
   {
   file:  "ytmt_review.html",
