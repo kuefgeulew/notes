@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lives of Others — Das Leben der Anderen | Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Jost:wght@200;300;400;500;600&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────
+   RESET & TOKENS
+───────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+:root {
+  --bg:         #04090f;
+  --bg2:        #080f1c;
+  --bg3:        #0c1525;
+  --bg4:        #0f1b2e;
+  --bg5:        #141f33;
+  --navy:       #1a2d45;
+  --blue:       #3d7ea6;
+  --blue-lt:    #5fa3cc;
+  --blue-dim:   #1e4060;
+  --blue-faint: rgba(61,126,166,0.10);
+  --blue-edge:  rgba(61,126,166,0.22);
+  --cream:      #ddd7cc;
+  --cream2:     #aca69c;
+  --cream3:     #6e6a63;
+  --stamp-red:  #7a1a1a;
+  --stamp-fade: rgba(122,26,26,0.65);
+  --gold:       #a68940;
+  --rule:       rgba(61,126,166,0.16);
+  --rule2:      rgba(61,126,166,0.08);
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --sans:       'Jost', system-ui, sans-serif;
+  --mono:       'IBM Plex Mono', monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* Blueprint grid */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(61,126,166,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61,126,166,.022) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─────────────────────────────────
+   MASTHEAD
+───────────────────────────────── */
+.masthead {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(4,9,15,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 56px;
+  height: 44px;
+}
+.mast-left {
+  font-family: var(--mono);
+  font-size: 9.5px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--blue);
+  display: flex; align-items: center; gap: 14px;
+}
+.mast-left::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--blue); opacity: .55;
+}
+.mast-right {
+  font-family: var(--mono);
+  font-size: 8.5px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--cream3);
+  display: flex; align-items: center; gap: 22px;
+}
+.mast-divider { width: 1px; height: 16px; background: var(--rule); }
+
+/* ─────────────────────────────────
+   HERO
+───────────────────────────────── */
+.hero {
+  border-bottom: 1px solid var(--rule);
+  padding: 0 56px;
+  position: relative; overflow: hidden;
+}
+
+/* Corner registration marks */
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  width: 22px; height: 22px;
+  border-color: var(--blue-dim); border-style: solid;
+  opacity: .55; z-index: 2;
+}
+.hero::before { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+.hero::after  { top: 20px; right: 20px; border-width: 1px 1px 0 0; }
+
+.hero-top {
+  padding: 52px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  min-height: 82vh;
+  align-items: end;
+}
+
+.hero-main { display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 0; }
+
+.hero-tag {
+  font-family: var(--mono);
+  font-size: 8.5px; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--blue);
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 36px;
+}
+.hero-tag::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--blue-dim), transparent);
+}
+
+.hero-title-de {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--cream3);
+  margin-bottom: 14px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(52px, 8.5vw, 108px);
+  font-weight: 700;
+  line-height: .90;
+  letter-spacing: -.03em;
+  color: var(--cream);
+  margin-bottom: 32px;
+}
+.hero-title em { font-style: italic; color: var(--blue-lt); }
+
+.hero-tagline {
+  font-family: var(--serif);
+  font-size: 14px; font-style: italic;
+  color: var(--cream3); line-height: 1.65;
+  max-width: 480px;
+  margin-bottom: 0;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Hero aside */
+.hero-aside {
+  border-left: 1px solid var(--rule);
+  padding: 0 0 36px 40px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+}
+
+.aside-label {
+  font-family: var(--mono);
+  font-size: 8px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--cream3);
+  margin-bottom: 10px;
+}
+
+.peak-box {
+  border: 1px solid var(--blue-dim);
+  padding: 22px 20px;
+  position: relative; margin-bottom: 28px;
+  background: rgba(61,126,166,.05);
+}
+.peak-box::before {
+  content: 'PEAK RESULT';
+  position: absolute; top: -9px; left: 14px;
+  font-family: var(--mono); font-size: 7.5px;
+  letter-spacing: .2em; text-transform: uppercase;
+  background: var(--bg); padding: 0 8px; color: var(--blue);
+}
+.peak-model {
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: .1em;
+  color: var(--cream3); margin-bottom: 10px;
+}
+.peak-score {
+  font-family: var(--serif);
+  font-size: 72px; font-weight: 700;
+  font-style: italic; color: var(--blue-lt);
+  line-height: 1;
+}
+.peak-denom {
+  font-family: var(--mono);
+  font-size: 8px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cream3);
+  margin-top: 3px; margin-bottom: 14px;
+}
+.stars {
+  display: flex; gap: 5px; margin-bottom: 14px;
+}
+.star {
+  width: 11px; height: 11px;
+  background: var(--gold);
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+.star.empty { background: var(--cream3); opacity: .25; }
+.award-badge {
+  font-family: var(--mono);
+  font-size: 7.5px; letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--blue); border: 1px solid var(--blue-dim);
+  padding: 5px 9px; display: inline-block;
+}
+
+.aside-chips { display: flex; flex-direction: column; gap: 0; }
+.chip {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 9px 0; border-bottom: 1px solid var(--rule2);
+  font-family: var(--mono); font-size: 9.5px;
+}
+.chip-key { letter-spacing: .1em; text-transform: uppercase; color: var(--cream3); }
+.chip-val { color: var(--cream2); font-weight: 400; }
+
+/* Meta strip */
+.hero-meta {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--rule);
+  display: flex; gap: 0; flex-wrap: wrap;
+}
+.meta-item {
+  padding: 16px 28px 16px 0;
+  border-right: 1px solid var(--rule2);
+  margin-right: 28px;
+}
+.meta-item:last-child { border-right: none; }
+.meta-k {
+  font-family: var(--mono);
+  font-size: 7.5px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--cream3);
+  margin-bottom: 3px;
+}
+.meta-v {
+  font-size: 12.5px; font-weight: 400;
+  color: var(--cream2); letter-spacing: .02em;
+}
+
+/* ─────────────────────────────────
+   ARTICLE SHELL
+───────────────────────────────── */
+.article {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 56px 100px;
+}
+
+/* ─────────────────────────────────
+   SECTION DIVIDERS
+───────────────────────────────── */
+.sdiv {
+  display: flex; align-items: center; gap: 0;
+  margin: 64px 0 40px;
+}
+.sdiv-num {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .14em;
+  color: var(--blue); flex-shrink: 0;
+  margin-right: 16px;
+}
+.sdiv-tick {
+  width: 36px; height: 1px;
+  background: var(--blue); opacity: .45;
+  flex-shrink: 0; margin-right: 16px;
+}
+.sdiv-label {
+  font-family: var(--mono);
+  font-size: 8.5px; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--cream3);
+  flex-shrink: 0; margin-right: 16px;
+}
+.sdiv-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--rule), transparent);
+}
+
+/* ─────────────────────────────────
+   PROSE
+───────────────────────────────── */
+.prose p {
+  font-size: 15.5px; line-height: 1.9;
+  color: var(--cream2); margin-bottom: 22px; font-weight: 300;
+}
+.prose p:last-child { margin-bottom: 0; }
+
+/* Drop cap */
+.prose .dropcap::first-letter {
+  font-family: var(--serif);
+  font-size: 6em; font-weight: 700;
+  float: left; line-height: .78;
+  margin: 6px 10px 0 0;
+  color: var(--blue-lt);
+}
+
+/* ─────────────────────────────────
+   OPENER — full width single col
+───────────────────────────────── */
+.opener {
+  padding: 60px 0 0;
+  max-width: 700px;
+}
+
+/* ─────────────────────────────────
+   GRID LAYOUTS
+───────────────────────────────── */
+.col2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px; margin: 36px 0;
+}
+.col2-main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 56px; margin: 36px 0;
+}
+.col3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px; margin: 36px 0;
+}
+.ruled-left {
+  border-left: 1px solid var(--rule);
+  padding-left: 56px;
+}
+
+/* ─────────────────────────────────
+   STASI DOCUMENT BLOCKS
+───────────────────────────────── */
+.stasi {
+  background: var(--bg4);
+  border: 1px solid var(--blue-dim);
+  border-left: 3px solid var(--blue);
+  padding: 0;
+  margin: 52px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top gradient line */
+.stasi::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+}
+
+/* Background watermark */
+.stasi::after {
+  content: 'MfS';
+  position: absolute;
+  bottom: -20px; right: 20px;
+  font-family: var(--mono);
+  font-size: 120px; font-weight: 700;
+  color: rgba(61,126,166,.04);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -.05em;
+}
+
+.stasi-inner { padding: 28px 36px 28px; }
+
+.stasi-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 18px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.stasi-agency {
+  font-family: var(--mono);
+  font-size: 7.5px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--blue);
+  line-height: 1.9;
+}
+.stasi-ref {
+  font-family: var(--mono);
+  font-size: 7.5px; letter-spacing: .1em;
+  color: var(--cream3); text-align: right;
+  line-height: 1.9;
+}
+
+/* Stamp */
+.stasi-stamp {
+  position: absolute; top: 26px; right: 32px;
+  font-family: var(--mono); font-size: 10px;
+  font-weight: 700; letter-spacing: .22em;
+  color: var(--stamp-red);
+  border: 2px solid var(--stamp-red);
+  padding: 4px 10px;
+  transform: rotate(-9deg);
+  opacity: .7; text-transform: uppercase;
+  z-index: 2;
+}
+
+.stasi-subject {
+  font-family: var(--mono);
+  font-size: 8px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--cream3);
+  margin-bottom: 16px;
+}
+
+.stasi-quote {
+  font-family: var(--serif);
+  font-size: clamp(17px, 2vw, 22px);
+  font-style: italic; font-weight: 400;
+  color: var(--cream);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.stasi-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule2);
+  font-family: var(--mono);
+  font-size: 7.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--cream3);
+}
+
+/* Discussion strip below quote */
+.stasi-discuss {
+  background: var(--bg3);
+  border-top: 1px solid var(--rule);
+  padding: 24px 36px;
+  font-size: 14px; line-height: 1.82;
+  color: var(--cream2); font-weight: 300;
+  font-family: var(--sans);
+}
+
+/* ─────────────────────────────────
+   FILM REFERENCE BOXES
+───────────────────────────────── */
+.film-ref {
+  background: var(--blue-faint);
+  border: 1px solid var(--blue-edge);
+  border-top: 2px solid var(--blue-dim);
+  padding: 22px 24px;
+  margin: 0 0 20px;
+}
+.fr-eyebrow {
+  font-family: var(--mono);
+  font-size: 7.5px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--blue);
+  margin-bottom: 7px;
+}
+.fr-title {
+  font-family: var(--serif);
+  font-size: 16px; font-weight: 600;
+  font-style: italic; color: var(--cream);
+  margin-bottom: 12px; line-height: 1.3;
+}
+.fr-body {
+  font-size: 13.5px; line-height: 1.8;
+  color: var(--cream2); font-weight: 300;
+}
+.fr-body em {
+  font-style: italic; color: var(--cream);
+}
+
+/* ─────────────────────────────────
+   CLOSING + VERDICT
+───────────────────────────────── */
+.closing-wrap {
+  border-top: 1px solid var(--rule);
+  padding-top: 56px; margin-top: 64px;
+}
+.closing-inner { max-width: 700px; }
+
+.verdict {
+  background: var(--bg4);
+  border: 1px solid var(--blue-dim);
+  padding: 40px 44px;
+  margin-top: 72px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px; align-items: center;
+  position: relative;
+}
+.verdict::before {
+  content: 'FINAL ASSESSMENT';
+  position: absolute; top: -10px; left: 28px;
+  font-family: var(--mono); font-size: 7.5px;
+  letter-spacing: .22em; text-transform: uppercase;
+  background: var(--bg4); padding: 0 10px; color: var(--blue);
+}
+.verdict::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+}
+.verdict-quote {
+  font-family: var(--serif);
+  font-size: 21px; font-style: italic;
+  color: var(--cream); line-height: 1.55; font-weight: 400;
+}
+.verdict-right {
+  text-align: center;
+  border-left: 1px solid var(--rule);
+  padding-left: 48px;
+  flex-shrink: 0;
+}
+.verdict-num {
+  font-family: var(--serif);
+  font-size: 80px; font-weight: 700;
+  line-height: 1; color: var(--blue-lt);
+  margin-bottom: 2px;
+}
+.verdict-denom {
+  font-family: var(--mono);
+  font-size: 8.5px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cream3);
+}
+.verdict-stars { display: flex; gap: 4px; justify-content: center; margin-top: 14px; }
+
+/* ─────────────────────────────────
+   FOOTER
+───────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 18px 56px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sf-l { font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--cream3); }
+.sf-r { font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
+
+/* ─────────────────────────────────
+   LOAD ANIMATION
+───────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-title { animation: fadeUp .9s ease both; animation-delay: .1s; }
+.hero-tagline { animation: fadeUp .9s ease both; animation-delay: .25s; }
+.hero-aside { animation: fadeUp .9s ease both; animation-delay: .35s; }
+
+/* ─────────────────────────────────
+   RESPONSIVE
+───────────────────────────────── */
+@media (max-width: 960px) {
+  .masthead, .hero, .article, .site-footer { padding-left: 24px; padding-right: 24px; }
+  .hero-top { grid-template-columns: 1fr; min-height: auto; }
+  .hero-aside { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 32px; margin-top: 32px; }
+  .col2, .col2-main, .col3 { grid-template-columns: 1fr; gap: 0; }
+  .ruled-left { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 36px; margin-top: 36px; }
+  .verdict { grid-template-columns: 1fr; gap: 28px; }
+  .verdict-right { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 24px; }
+  .stasi-stamp { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════
+     MASTHEAD
+══════════════════════════ -->
+<header class="masthead">
+  <div class="mast-left">Frames &amp; Fictions</div>
+  <div class="mast-right">
+    <span>Film Criticism</span>
+    <span class="mast-divider"></span>
+    <span>Foreign Cinema</span>
+    <span class="mast-divider"></span>
+    <span>Issue XLVII</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════
+     HERO
+══════════════════════════ -->
+<section class="hero">
+  <div class="hero-top">
+
+    <div class="hero-main">
+      <div>
+        <div class="hero-tag">Das Leben der Anderen &nbsp;·&nbsp; Germany &nbsp;·&nbsp; 2006</div>
+        <div class="hero-title-de">Das Leben der Anderen</div>
+        <h1 class="hero-title">The Lives<br>of <em>Others</em></h1>
+      </div>
+      <p class="hero-tagline">
+        "Better than almost any other film I have seen, it treats the conscience as the most radical, dangerous, and human thing a person can still possess."
+      </p>
+    </div>
+
+    <div class="hero-aside">
+      <div>
+        <div class="aside-label">Critical Verdict</div>
+        <div class="peak-box">
+          <div class="peak-model">Florian Henckel von Donnersmarck</div>
+          <div class="peak-score">5</div>
+          <div class="peak-denom">Out of Five</div>
+          <div class="stars">
+            <div class="star"></div><div class="star"></div>
+            <div class="star"></div><div class="star"></div>
+            <div class="star"></div>
+          </div>
+          <div class="award-badge">Academy Award &nbsp;·&nbsp; Best Foreign Language Film</div>
+        </div>
+      </div>
+      <div>
+        <div class="aside-label">Film Details</div>
+        <div class="aside-chips">
+          <div class="chip"><span class="chip-key">Director</span><span class="chip-val">Florian H. von Donnersmarck</span></div>
+          <div class="chip"><span class="chip-key">Year</span><span class="chip-val">2006</span></div>
+          <div class="chip"><span class="chip-key">Country</span><span class="chip-val">Germany</span></div>
+          <div class="chip"><span class="chip-key">Runtime</span><span class="chip-val">137 Minutes</span></div>
+          <div class="chip"><span class="chip-key">Setting</span><span class="chip-val">East Berlin, 1984</span></div>
+          <div class="chip"><span class="chip-key">Lead Actor</span><span class="chip-val">Ulrich Mühe</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-k">Subject</div>
+        <div class="meta-v">Gerd Wiesler &nbsp;·&nbsp; Stasi Captain</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-k">Supporting</div>
+        <div class="meta-v">Sebastian Koch &nbsp;·&nbsp; Martina Gedeck</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-k">Themes</div>
+        <div class="meta-v">Surveillance &nbsp;·&nbsp; Conscience &nbsp;·&nbsp; Redemption</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-k">Comparisons</div>
+        <div class="meta-v">The Conversation &nbsp;·&nbsp; Tinker Tailor &nbsp;·&nbsp; Bridge of Spies</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     ARTICLE
+══════════════════════════ -->
+<main class="article">
+
+  <!-- ── SECTION I ── -->
+  <div class="sdiv">
+    <span class="sdiv-num">I.</span>
+    <span class="sdiv-tick"></span>
+    <span class="sdiv-label">The Grey That Gets In</span>
+    <span class="sdiv-line"></span>
+  </div>
+
+  <div class="opener">
+    <div class="prose">
+      <p class="dropcap">I did not know what kind of night it would turn out to be when I pressed play. I just knew the film had been sitting on my list for too long. So I watched. And somewhere in the middle of it, without realising when exactly it happened, I stopped watching a film and started living inside one.</p>
+      <p>The Lives of Others is set in East Germany in 1984. Five years before the Wall would fall. The city breathes grey in every frame. The buildings are grey. The coats are grey. The faces carry a particular kind of grey that does not come from weather but from years of being watched. Director Florian Henckel von Donnersmarck was only thirty two years old when he made this. He was sixteen when the Wall came down. And yet the film feels like it was made by someone who had lived every single day of that era. That is not a small thing. That is the kind of filmmaking that makes you stop and ask how.</p>
+      <p>The story begins with a lecture. A Stasi captain named Gerd Wiesler stands in front of a room and teaches interrogation. He is calm. He is precise. He believes every word he is saying.</p>
+    </div>
+  </div>
+
+  <!-- STASI DOC 1 -->
+  <div class="stasi">
+    <div class="stasi-inner">
+      <div class="stasi-stamp">Geheim</div>
+      <div class="stasi-head">
+        <div class="stasi-agency">
+          Ministerium für Staatssicherheit<br>
+          Abteilung XX &nbsp;·&nbsp; Operative Observierung &nbsp;·&nbsp; Ost-Berlin
+        </div>
+        <div class="stasi-ref">
+          Aktenzeichen: HGW XX/7<br>
+          Datum: November 1984
+        </div>
+      </div>
+      <div class="stasi-subject">Recorded Testimony &nbsp;·&nbsp; Interrogation Doctrine &nbsp;·&nbsp; Hauptmann Gerd Wiesler</div>
+      <div class="stasi-quote">
+        "An innocent prisoner will become more angry by the hour due to the injustice suffered. He will shout and rage. A guilty prisoner becomes more calm and quiet. Or he cries. He knows he is there for a reason."
+      </div>
+      <div class="stasi-foot">
+        <span>Hauptmann Gerd Wiesler &nbsp;·&nbsp; The Lives of Others</span>
+        <span>Classified &nbsp;·&nbsp; Internal Use Only</span>
+      </div>
+    </div>
+    <div class="stasi-discuss">
+      I remember sitting with that for a long moment. Because it sounds like a lesson about interrogation but it is actually a lesson about guilt. About how guilt settles differently inside a person than injustice does. Wiesler has built his entire life on this distinction. He is certain of it. He teaches it to young agents with the quiet confidence of a man who has never once been wrong. And the whole film is patiently, devastatingly, about what happens when that certainty begins to come apart. What I found most chilling about that opening is not what Wiesler says. It is how the young agents in the room receive it. They write it down. They nod. Nobody questions it. And I thought about how many rooms in how many countries across how many years have looked exactly like that one. A man with authority saying something that sounds like knowledge, and everyone around him deciding that is enough.
+    </div>
+  </div>
+
+  <!-- ── SECTION II ── -->
+  <div class="sdiv">
+    <span class="sdiv-num">II.</span>
+    <span class="sdiv-tick"></span>
+    <span class="sdiv-label">The Observer and the Observed</span>
+    <span class="sdiv-line"></span>
+  </div>
+
+  <div class="col2">
+    <div class="prose">
+      <p>Wiesler is assigned to surveil a playwright named Georg Dreyman and his lover, an actress named Christa Maria Sieland. He sets up microphones inside their apartment. He sits in a cold grey room above them with headphones on and listens. That is his job. That is his whole life. And for a while that is enough for him.</p>
+      <p>He listens to Georg and Christa talk. He listens to them love each other. He listens to their friends gather and speak freely and laugh and argue about things that matter. And something happens to him that he has no language for because his whole training was built to prevent exactly this. He starts to care. Not in a way he can name or report or file. Just in the quiet way that a person starts to care when they are shown what a real life looks like from the outside while their own life has nothing in it at all.</p>
+      <p>There is a scene where Wiesler comes home after a long shift of listening to someone else's warmth and sits alone in his apartment. The camera does not rush. It just holds on him. And I did not need the film to explain anything in that moment. His face said everything. He had been listening to a fire all day and then walked back into a room with no heat in it.</p>
+    </div>
+    <div class="ruled-left">
+      <div class="film-ref">
+        <div class="fr-eyebrow">In Comparison &nbsp;·&nbsp; Surveillance Cinema</div>
+        <div class="fr-title">The Conversation &nbsp;·&nbsp; Francis Ford Coppola &nbsp;·&nbsp; 1974</div>
+        <div class="fr-body">Gene Hackman plays Harry Caul, a surveillance expert who records a conversation in a park and becomes slowly destroyed by what he hears inside it. He says at one point, <em>"I'm not afraid of death. I'm afraid of murder."</em> He does not fully understand what he means when he says it. But the audience does. Both films understand something that most thrillers do not bother with. That listening is not a passive thing. That hearing someone's real life does something to the person holding the headphones. It gets in. Where The Conversation turns inward and becomes a portrait of paranoia collapsing on itself, The Lives of Others turns outward. Wiesler does not collapse. He opens.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STASI DOC 2 -->
+  <div class="stasi">
+    <div class="stasi-inner">
+      <div class="stasi-stamp">Vertraulich</div>
+      <div class="stasi-head">
+        <div class="stasi-agency">
+          Ministerium für Staatssicherheit<br>
+          Überwachungsprotokoll &nbsp;·&nbsp; Tonaufzeichnung &nbsp;·&nbsp; Wohnungswanze
+        </div>
+        <div class="stasi-ref">
+          Subjekt: Dreyman, Georg<br>
+          Aufzeichnung: 03.11.1984
+        </div>
+      </div>
+      <div class="stasi-subject">Intercepted Audio &nbsp;·&nbsp; Residential Bug &nbsp;·&nbsp; Piano Sonata Session</div>
+      <div class="stasi-quote">
+        "Can anyone who has heard this music, truly heard it, really be a bad person?"
+      </div>
+      <div class="stasi-foot">
+        <span>Georg Dreyman &nbsp;·&nbsp; The Lives of Others</span>
+        <span>Audio Intercept &nbsp;·&nbsp; Observed by HGW XX/7</span>
+      </div>
+    </div>
+    <div class="stasi-discuss">
+      Wiesler hears this. He sits very still. His hand stops moving. The film does not tell us what he thinks. It does not need to. Because we can see in the stillness of him that something has just arrived that he does not have a category for. This is the turning point of the entire film. Not a dramatic one. Not a loud one. Just a man alone with a piece of music and a question he has never been asked before and cannot now unhear. Georg plays a piano sonata slowly in the near dark and the music fills the apartment and travels through the walls and up through the ceiling into the room where Wiesler sits with his headphones on. The film understands something that most political dramas miss entirely. Art does not knock on doors. It comes through walls.
+    </div>
+  </div>
+
+  <!-- ── SECTION III ── -->
+  <div class="sdiv">
+    <span class="sdiv-num">III.</span>
+    <span class="sdiv-tick"></span>
+    <span class="sdiv-label">The Characters</span>
+    <span class="sdiv-line"></span>
+  </div>
+
+  <div class="col2-main">
+    <div class="prose">
+      <p>Ulrich Mühe plays Wiesler. And I want to be careful here because what he does in this film is the kind of acting that does not feel like acting at all. He barely speaks. He barely moves. His face is controlled and still in the way that a man's face gets when he has spent decades making sure nothing shows. And yet everything shows. Every small doubt. Every small wonder. Every moment where he hears something through those headphones and it lands somewhere inside him that he did not know was still open.</p>
+      <p>Mühe was himself an actor in East Berlin during the 1980s. The Stasi watched him in real life. After reunification he accessed his files and found that his own life had been documented exactly the way he documents others in this film. I think about that every time I watch him. I think about what it must have felt like to stand on that set, put those headphones on, and play this role knowing that someone had once sat exactly where his character sits and listened to him.</p>
+      <p>He died the year after the film released. That fact sits heavy every time the credits roll.</p>
+    </div>
+    <div class="ruled-left">
+      <div class="prose">
+        <p>Georg and Christa are played by Sebastian Koch and Martina Gedeck. They bring warmth into what would otherwise be a very cold film. Georg is a writer who believes his loyalty to the state protects him. He is a little arrogant in the way that talented people sometimes are when they think their talent makes them safe.</p>
+        <p>Christa is caught in something much darker. A powerful official has leverage over her. There is a scene where she sits at a table with this man and the camera holds on her face and her eyes are empty in a way that is unbearable to watch.</p>
+        <p>Her story is the part of the film I kept returning to after it ended. Because in a story full of men and systems and moral awakenings, Christa pays the highest price. And she pays it quietly. And the film moves on. I did not move on as quickly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STASI DOC 3 -->
+  <div class="stasi">
+    <div class="stasi-inner">
+      <div class="stasi-stamp">Observiert</div>
+      <div class="stasi-head">
+        <div class="stasi-agency">
+          Ministerium für Staatssicherheit<br>
+          Kulturelle Subversion &nbsp;·&nbsp; Abteilung Literatur
+        </div>
+        <div class="stasi-ref">
+          Subjekt: Dreyman, Georg<br>
+          Klassifizierung: Kulturell Verdächtig
+        </div>
+      </div>
+      <div class="stasi-subject">Recorded Statement &nbsp;·&nbsp; Dissident Sentiment &nbsp;·&nbsp; Subversive Content</div>
+      <div class="stasi-quote">
+        "Our rulers don't believe in God, but they believe in the power of art. That's why they fear us."
+      </div>
+      <div class="stasi-foot">
+        <span>Georg Dreyman &nbsp;·&nbsp; The Lives of Others</span>
+        <span>Evidence File &nbsp;·&nbsp; Subversive Content Confirmed</span>
+      </div>
+    </div>
+    <div class="stasi-discuss">
+      And he is right. And that rightness makes what happens to him later even harder to watch because he was right and it did not protect him at all. This is one of the film's quietest cruelties. The system does not punish Georg because he is wrong. It targets him because someone with power wants him gone for personal reasons. The corruption is not ideological. It is human. It is small. And that smallness makes it more devastating than any grand political machinery could be. A country's entire apparatus of fear, turned against one man because a minister wants his girlfriend.
+    </div>
+  </div>
+
+  <!-- STASI DOC 4 -->
+  <div class="stasi">
+    <div class="stasi-inner">
+      <div class="stasi-stamp">Akte</div>
+      <div class="stasi-head">
+        <div class="stasi-agency">
+          Ministerium für Staatssicherheit<br>
+          Verhörprotokoll &nbsp;·&nbsp; Subjekt: Sieland, Christa-Maria
+        </div>
+        <div class="stasi-ref">
+          Status: Informantin unter Zwang<br>
+          Beziehungsdokument: Dreyman
+        </div>
+      </div>
+      <div class="stasi-subject">Relationship Record &nbsp;·&nbsp; Private Residence &nbsp;·&nbsp; Monitored Exchange</div>
+      <div class="stasi-quote">
+        "If you love yourself at all, you won't go back."
+      </div>
+      <div class="stasi-foot">
+        <span>Georg Dreyman to Christa-Maria &nbsp;·&nbsp; The Lives of Others</span>
+        <span>Context: Private Residence &nbsp;·&nbsp; Audio Monitored</span>
+      </div>
+    </div>
+    <div class="stasi-discuss">
+      I sat with this line for a long time. Because Georg says it as though she has a simple choice. As though the system she is trapped inside is something she can decide to step out of. He is a man who writes about oppression. And he still does not fully understand it when it is sitting across the dinner table from him wearing the face of the woman he loves. The film is brave enough to let that contradiction breathe. To let a sympathetic character be wrong in a way that costs someone else everything. Georg's tragedy is public and literary. Christa's is private and total. The film gives him a book dedication. It gives her a road.
+    </div>
+  </div>
+
+  <!-- ── SECTION IV ── -->
+  <div class="sdiv">
+    <span class="sdiv-num">IV.</span>
+    <span class="sdiv-tick"></span>
+    <span class="sdiv-label">The Quiet Courage</span>
+    <span class="sdiv-line"></span>
+  </div>
+
+  <div class="col2">
+    <div>
+      <div class="film-ref">
+        <div class="fr-eyebrow">In Comparison &nbsp;·&nbsp; Cold War Cinema</div>
+        <div class="fr-title">Bridge of Spies &nbsp;·&nbsp; Steven Spielberg &nbsp;·&nbsp; 2015</div>
+        <div class="fr-body">There is a moment in that film where Tom Hanks asks his client Rudolf Abel why he never seems worried. And Abel says simply, <em>"Would it help?"</em> It is such a small answer. But it carries the full weight of a man who has looked at his situation completely and decided what he is. Wiesler has a version of that moment in this film. He decides something. And then he acts on it. At great personal cost. And he never tells anyone. The heroism in both films is the kind that happens in silence, in small rooms, with no audience and no reward.</div>
+      </div>
+      <div class="film-ref">
+        <div class="fr-eyebrow">In Comparison &nbsp;·&nbsp; Intelligence Drama</div>
+        <div class="fr-title">Tinker Tailor Soldier Spy &nbsp;·&nbsp; Tomas Alfredson &nbsp;·&nbsp; 2011</div>
+        <div class="fr-body">Both films move slowly and deliberately. Both are built on the idea that intelligence work is mostly sitting very still in a grey room and thinking. Smiley says, <em>"I've been in the business long enough to know that the most dangerous agent is one who believes his own lies."</em> That line could live comfortably inside The Lives of Others. But Tinker Tailor stays cold throughout. It stays inside the mechanism. The Lives of Others finds a heartbeat inside the mechanism and follows it all the way to the end.</div>
+      </div>
+    </div>
+    <div class="ruled-left">
+      <div class="film-ref">
+        <div class="fr-eyebrow">In Comparison &nbsp;·&nbsp; Institutional Silence</div>
+        <div class="fr-title">Spotlight &nbsp;·&nbsp; Tom McCarthy &nbsp;·&nbsp; 2015</div>
+        <div class="fr-body">On the surface they seem nothing alike. But both are about ordinary people inside corrupt and powerful systems who reach a point where they cannot keep pretending they do not know what they know. In Spotlight, one of the journalists says, <em>"We knew. We all knew."</em> That line is about the specific horror of institutional silence. Of everyone looking at the same truth and agreeing not to name it. The Lives of Others lives inside that same horror. An entire country built on the agreement not to say what everyone already knows.</div>
+      </div>
+      <div class="film-ref">
+        <div class="fr-eyebrow">In Comparison &nbsp;·&nbsp; Obsession and Crossing Lines</div>
+        <div class="fr-title">The Secret in Their Eyes &nbsp;·&nbsp; Juan José Campanella &nbsp;·&nbsp; 2009</div>
+        <div class="fr-body">Both are films about obsession that becomes something it was never supposed to be. The investigator says, <em>"A man can change anything. His face, his home, his family, his God. But there is one thing he can't change. He can't change his passion."</em> Wiesler cannot change his either. He was trained to be a machine. But somewhere in those hours of listening through a wall to people who are fully alive, his passion returns. And it turns out to be not for the state. But for something older and quieter and more dangerous than the state ever was.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION V ── -->
+  <div class="sdiv">
+    <span class="sdiv-num">V.</span>
+    <span class="sdiv-tick"></span>
+    <span class="sdiv-label">Redemption</span>
+    <span class="sdiv-line"></span>
+  </div>
+
+  <div style="max-width: 700px;" class="prose">
+    <p>Near the end of the film, when the Wall has fallen and years have passed and the world has changed, Georg begins to understand what happened during those years of surveillance. He begins to understand that someone was watching and chose to protect him instead of destroy him. He does not know who. He cannot find the face to match the protection. And so he writes a book. And he names it after the file code of the agent who watched over him without ever being seen.</p>
+    <p>He dedicates it simply. <em style="color:var(--cream);font-family:var(--serif);">"HGW XX/7. In gratitude."</em></p>
+    <p>And then, in the very last scene, Wiesler walks into a bookshop. He sees the book. He picks it up.</p>
+  </div>
+
+  <!-- STASI DOC 5 — FINAL -->
+  <div class="stasi">
+    <div class="stasi-inner">
+      <div class="stasi-stamp">Abgeschlossen</div>
+      <div class="stasi-head">
+        <div class="stasi-agency">
+          Ministerium für Staatssicherheit<br>
+          Akte Geschlossen &nbsp;·&nbsp; Fall Abgeschlossen &nbsp;·&nbsp; Agent Rehabilitiert
+        </div>
+        <div class="stasi-ref">
+          Agent: HGW XX/7<br>
+          Status: Post-Reunification &nbsp;·&nbsp; 1993
+        </div>
+      </div>
+      <div class="stasi-subject">Final Record &nbsp;·&nbsp; Bookshop Encounter &nbsp;·&nbsp; Case Closed</div>
+      <div class="stasi-quote">
+        "Would you like it gift wrapped?"<br><br>
+        "No. It is for me."
+      </div>
+      <div class="stasi-foot">
+        <span>Gerd Wiesler &nbsp;·&nbsp; The Lives of Others &nbsp;·&nbsp; Final Scene</span>
+        <span>File Closed &nbsp;·&nbsp; No Further Action</span>
+      </div>
+    </div>
+    <div class="stasi-discuss">
+      Four words. And I sat there in the dark and felt something move in my chest that I am still not entirely able to name. Because that line is everything. It is a man who gave up everything and received nothing and is now holding the only proof that his choice mattered. And he is not sharing it with anyone. He is keeping it. For himself. Because it is the one true thing he has ever owned. The film earns this ending completely. Not through sentimentality. Not through a speech or a reunion or a moment of recognition. Just a man in a bookshop, a book in his hands, and four words that carry the whole weight of every choice he made in silence.
+    </div>
+  </div>
+
+  <!-- ── CLOSING ── -->
+  <div class="closing-wrap">
+    <div class="closing-inner">
+      <div class="prose">
+        <p>This is what the film does that I did not expect. I came for a political thriller. I came for the history and the craft and the grey cinematography of a divided city. And all of that was there. Every bit of it. But what I was not prepared for was how personal it would feel. How much it would make me think about what kind of life I am actually living. About whether I am listening to the right things. About what I would do if the right thing cost me everything and no one would ever know I had done it.</p>
+        <p>Wiesler at the start of the film is a man who has no life of his own. He lives only in the lives of others. And the film is named for that. The title is not poetic decoration. It is a diagnosis. But somewhere in those hours of listening, something returns to him that he thought he had trained out of himself completely.</p>
+        <p>His conscience. That quiet inner voice that this film, better than almost any other I have seen, treats not as a weakness, not as a flaw in the system, but as the most radical and dangerous and human thing a person can still possess.</p>
+        <p>I waited too long to watch this. Do not make the same mistake.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VERDICT ── -->
+  <div class="verdict">
+    <div class="verdict-quote">
+      "The heroism in it is completely invisible. Wiesler does something that requires everything from him and receives nothing in return. No recognition. No reward. Not even a witness."
+    </div>
+    <div class="verdict-right">
+      <div class="verdict-num">5</div>
+      <div class="verdict-denom">Out of Five</div>
+      <div class="verdict-stars">
+        <div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div>
+        <div class="star"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══════════════════════════
+     FOOTER
+══════════════════════════ -->
+<footer class="site-footer">
+  <div class="sf-l">Frames &amp; Fictions &nbsp;·&nbsp; Film Criticism &nbsp;·&nbsp; Das Leben der Anderen &nbsp;·&nbsp; 2006</div>
+  <div class="sf-r">Florian Henckel von Donnersmarck</div>
+</footer>
+
+</body>
+</html>
