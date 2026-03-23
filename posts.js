@@ -7,7 +7,7 @@
 //    file  → filename of your HTML (e.g. "my_note.html")
 //    title → title shown on the card
 //    desc  → 1–2 sentence description shown on the card
-//    tag   → category label (used for filter buttons)
+//    tag   → category label (used for filter buttons) 
 //    date  → display date (e.g. "Jun 2025")
 //    theme → card color: teal | amber | purple | red | dark | green | blue | coral
 // ─────────────────────────────────────────────────────────────
