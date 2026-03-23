@@ -28,7 +28,7 @@ const POSTS = [
   "tag":   "Movie",
   "date":  "Jan 2023",
   "theme": "dark"
-}
+},
   {
   file:  "paris_texas_review.html",
   title: "Paris, Texas — I did not expect to be moved like this",
