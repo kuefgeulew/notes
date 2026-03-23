@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paris, Texas — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=Oxanium:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --white:  #F9F8F6;
+  --white2: #EEF0F2;
+  --white3: #DDE2E8;
+  --blue:   #8DAABB;
+  --blue2:  #6B8FA4;
+  --blue3:  #4A6E84;
+  --blue4:  #2E4F64;
+  --blue5:  #1A3448;
+  --dust:   #C4BEBC;
+  --dust2:  #A8A4A2;
+  --dust3:  #7C7876;
+  --rust:   #9A4418;
+  --rust2:  #B85820;
+  --rust3:  #D4825A;
+  --ink:    #1A1E22;
+  --ink2:   #2E3438;
+  --ink3:   #525A62;
+  --rule:   rgba(26,30,34,.1);
+  --slab:   'Zilla Slab',Georgia,serif;
+  --body:   'Source Serif 4',Georgia,serif;
+  --label:  'Oxanium',system-ui,sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--white);
+  color:var(--ink);
+  min-height:100vh;
+}
+
+/* Overexposed film grain */
+body::after{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+
+/* ══ NAV ══ */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 40px;
+  border-bottom:1px solid var(--white3);
+  background:var(--white);
+  position:sticky;top:0;z-index:100;
+}
+.nav-back{font-family:var(--label);font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--dust2)}
+.nav-back:hover{color:var(--rust)}
+.nav-r{font-family:var(--label);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--white3)}
+
+/* ══ FILM STRIP HEADER ══ */
+.film-strip{
+  background:var(--ink);
+  padding:0;
+  border-bottom:3px solid var(--rust2);
+  display:flex;
+  min-height:90vh;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Perforations left */
+.perfs{
+  width:28px;flex-shrink:0;
+  background:var(--ink2);
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;
+  justify-content:space-around;
+  padding:12px 0;
+  gap:0;
+}
+.perf{
+  width:14px;height:10px;
+  background:rgba(255,255,255,.07);
+  border-radius:2px;
+  margin:0 auto;
+}
+.perfs.right{border-right:none;border-left:1px solid rgba(255,255,255,.06)}
+
+.strip-inner{
+  flex:1;
+  padding:52px 52px 48px;
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+}
+
+/* Faded blue light leak */
+.strip-inner::before{
+  content:'';
+  position:absolute;
+  top:0;right:0;
+  width:50%;height:100%;
+  background:linear-gradient(135deg,transparent 40%,rgba(141,170,187,.06) 100%);
+  pointer-events:none;
+}
+
+.fs-frame-num{
+  font-family:var(--label);font-size:10px;letter-spacing:.2em;
+  color:rgba(255,255,255,.18);margin-bottom:40px;
+}
+
+.fs-title-block{}
+.fs-small{
+  font-family:var(--label);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue3);margin-bottom:14px;
+}
+.fs-title{
+  font-family:var(--slab);
+  font-size:clamp(48px,8vw,108px);
+  font-weight:700;
+  line-height:.88;letter-spacing:-.02em;
+  color:var(--white);
+  margin-bottom:10px;
+  /* Overexposed bleed */
+  text-shadow:0 0 60px rgba(141,170,187,.12);
+}
+.fs-comma{color:var(--blue3)}
+.fs-year{
+  font-family:var(--label);font-size:13px;letter-spacing:.2em;
+  color:rgba(255,255,255,.2);margin-bottom:32px;
+}
+.fs-quote{
+  font-family:var(--slab);
+  font-size:clamp(16px,2.5vw,22px);
+  font-weight:300;font-style:italic;
+  color:rgba(255,255,255,.5);
+  line-height:1.45;max-width:480px;
+  padding-left:18px;
+  border-left:2px solid var(--rust2);
+}
+
+.fs-bottom{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:20px;
+}
+.fsb-item{padding:0 20px 0 0}
+.fsb-item:first-child{padding-left:0}
+.fsb-label{font-family:var(--label);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:4px}
+.fsb-val{font-family:var(--slab);font-size:14px;font-weight:400;color:rgba(255,255,255,.45)}
+
+/* ══ PAGE GRID ══ */
+.page{
+  max-width:1060px;
+  margin:0 auto;
+  padding:0 40px;
+}
+
+/* ══ FILM FRAME ══ */
+.frame{
+  border:1px solid var(--white3);
+  margin:32px 0;
+  position:relative;
+  background:var(--white);
+}
+.frame.blue-wash{background:linear-gradient(135deg,var(--white) 0%,#EDF2F6 100%)}
+.frame.dark-frame{background:var(--blue5);border-color:var(--blue4)}
+.frame.rust-frame{border-left:4px solid var(--rust2)}
+.frame.wide{margin-left:-40px;margin-right:-40px}
+
+/* Frame number stamp */
+.frame-num{
+  position:absolute;top:-11px;left:20px;
+  font-family:var(--label);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--white);padding:0 8px;color:var(--dust2);
+}
+.dark-frame .frame-num{background:var(--blue5);color:var(--blue3)}
+
+.frame-body{padding:32px 36px}
+.frame.wide .frame-body{padding:36px 76px}
+
+/* ══ SECTION LABEL ══ */
+.sec-label{
+  font-family:var(--label);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dust2);margin-bottom:10px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--white3)}
+
+/* ══ SLAB HEADING ══ */
+.sh{
+  font-family:var(--slab);
+  font-size:clamp(22px,4vw,40px);
+  font-weight:700;
+  line-height:.95;letter-spacing:-.02em;
+  color:var(--ink);margin-bottom:20px;
+}
+.sh em{font-style:italic;color:var(--blue3)}
+.dark-frame .sh{color:var(--white)}
+.dark-frame .sh em{color:var(--blue3)}
+
+/* ══ PROSE ══ */
+.p{
+  font-family:var(--body);
+  font-size:18px;font-weight:300;
+  line-height:1.9;color:var(--ink2);
+  margin-bottom:20px;
+}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--ink);font-weight:400}
+.dark-frame .p{color:rgba(255,255,255,.6)}
+.dark-frame .p em{color:rgba(255,255,255,.85)}
+
+/* Drop cap */
+.dropcap::first-letter{
+  font-family:var(--slab);font-size:88px;font-weight:700;
+  float:left;line-height:.78;margin:5px 8px 0 0;
+  color:var(--rust2);
+}
+
+/* ══ PULL QUOTE ══ */
+.pq{
+  padding:24px 0;
+  margin:24px 0;
+  border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--white3);
+}
+.pq-text{
+  font-family:var(--slab);
+  font-size:clamp(18px,3vw,26px);
+  font-weight:500;font-style:italic;
+  line-height:1.3;letter-spacing:-.01em;
+  color:var(--ink);
+}
+.dark-frame .pq{border-top-color:var(--blue3);border-bottom-color:rgba(255,255,255,.1)}
+.dark-frame .pq-text{color:var(--white)}
+.pq-attr{font-family:var(--label);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dust2);margin-top:10px;display:block}
+
+/* ══ TWO COL FRAME ══ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.tc-left{padding:32px 36px;border-right:1px solid var(--white3)}
+.tc-right{padding:32px 36px}
+
+/* ══ FILM COMPARE ══ */
+.compare{
+  padding:20px 24px;
+  background:var(--white2);
+  border-left:3px solid var(--blue3);
+  margin:24px 0;
+}
+.cmp-label{font-family:var(--label);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue3);margin-bottom:8px}
+.cmp-body{font-family:var(--body);font-size:16px;font-weight:300;font-style:italic;line-height:1.8;color:var(--ink3)}
+
+/* ══ QUOTE CARD ══ */
+.quote-card{
+  background:var(--blue5);
+  padding:28px 32px;
+  margin:24px 0;
+}
+.qc-text{
+  font-family:var(--slab);
+  font-size:clamp(16px,2.5vw,22px);
+  font-weight:300;font-style:italic;
+  line-height:1.5;color:var(--white);
+  margin-bottom:10px;
+}
+.qc-attr{font-family:var(--label);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue3)}
+
+/* ══ WIDE QUOTE ══ */
+.wide-quote{
+  max-width:1060px;margin:0 auto;
+  padding:0 40px;
+}
+.wq-inner{
+  background:var(--rust2);
+  padding:40px 52px;
+  display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start;
+}
+.wq-mark{
+  font-family:var(--slab);font-size:80px;font-weight:700;
+  color:rgba(255,255,255,.15);line-height:.7;flex-shrink:0;
+}
+.wq-text{
+  font-family:var(--slab);font-size:clamp(18px,3vw,28px);
+  font-weight:500;font-style:italic;line-height:1.25;
+  color:#fff;letter-spacing:-.01em;margin-bottom:12px;
+}
+.wq-sub{font-family:var(--label);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+
+/* ══ HORIZONTAL RULE ══ */
+.hrule{
+  display:flex;align-items:center;gap:14px;
+  padding:8px 0;margin:0;
+}
+.hr-line{flex:1;height:1px;background:var(--white3)}
+.hr-mark{font-family:var(--label);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dust)}
+
+/* ══ CLOSING FRAME ══ */
+.closing-frame{
+  margin:32px 0 0;
+  border-top:3px solid var(--ink);
+  border-bottom:1px solid var(--white3);
+  padding:40px 0 52px;
+}
+.cf-label{font-family:var(--label);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dust2);margin-bottom:20px}
+.cf-big{
+  font-family:var(--slab);
+  font-size:clamp(20px,4vw,42px);
+  font-weight:700;line-height:.95;letter-spacing:-.02em;
+  color:var(--ink);margin-bottom:20px;
+}
+.cf-sub{
+  font-family:var(--body);
+  font-size:18px;font-weight:300;font-style:italic;
+  line-height:1.75;color:var(--ink3);
+  max-width:560px;
+}
+
+/* ══ FOOTER ══ */
+.site-footer{
+  background:var(--ink);
+  border-top:3px solid var(--rust2);
+  padding:16px 40px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+}
+.sf-l{font-family:var(--label);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.sf-r{font-family:var(--slab);font-size:14px;font-weight:400;font-style:italic;color:rgba(255,255,255,.2)}
+
+@media(max-width:760px){
+  .film-strip{flex-direction:column}
+  .perfs{display:none}
+  .strip-inner{padding:36px 24px}
+  .fs-bottom{grid-template-columns:1fr 1fr;gap:12px}
+  .two-col{grid-template-columns:1fr}
+  .tc-left{border-right:none;border-bottom:1px solid var(--white3)}
+  .page,.wide-quote{padding-left:20px;padding-right:20px}
+  .frame.wide{margin-left:0;margin-right:0}
+  .frame.wide .frame-body{padding:28px 20px}
+  .nav,.site-footer{padding-left:20px;padding-right:20px}
+  .wq-inner{grid-template-columns:1fr;gap:8px;padding:28px 24px}
+  .wq-mark{display:none}
+  .dropcap::first-letter{font-size:64px}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">← notes by al amin</a>
+  <div class="nav-r">film review</div>
+</div>
+
+<!-- FILM STRIP HEADER -->
+<div class="film-strip">
+  <div class="perfs">
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+  </div>
+  <div class="strip-inner">
+    <div class="fs-frame-num">Frame 001 &nbsp;/&nbsp; Paris, Texas &nbsp;/&nbsp; Wim Wenders &nbsp;/&nbsp; 1984</div>
+    <div class="fs-title-block">
+      <div class="fs-small">Wim Wenders &nbsp;·&nbsp; 1984 &nbsp;·&nbsp; Personal review</div>
+      <div class="fs-title">Paris<span class="fs-comma">,</span><br>Texas</div>
+      <div class="fs-year">★★★★★ &nbsp;/&nbsp; 1984</div>
+      <div class="fs-quote">I did not expect to be moved like this. Not by silence.</div>
+    </div>
+    <div class="fs-bottom">
+      <div class="fsb-item"><div class="fsb-label">Director</div><div class="fsb-val">Wim Wenders</div></div>
+      <div class="fsb-item"><div class="fsb-label">Lead</div><div class="fsb-val">Harry Dean Stanton</div></div>
+      <div class="fsb-item"><div class="fsb-label">Cinematography</div><div class="fsb-val">Robby Müller</div></div>
+      <div class="fsb-item"><div class="fsb-label">Score</div><div class="fsb-val">Ry Cooder</div></div>
+    </div>
+  </div>
+  <div class="perfs right">
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+    <div class="perf"></div><div class="perf"></div><div class="perf"></div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page">
+
+  <!-- FRAME 01: OPENING -->
+  <div class="frame rust-frame" style="margin-top:40px">
+    <div class="frame-num">Frame 001 / Opening</div>
+    <div class="frame-body">
+      <div class="p dropcap">That is the first thing worth saying about Paris, Texas. The film opens on a man walking through the desert. No music yet. No explanation. Just the vast flat land of Texas in the heat, and a man in a red cap moving through it like he has forgotten there was anywhere else to go. You do not know who he is. You do not know where he came from or how long he has been walking. You only know that he is walking, and that something in the way he moves tells you he has been walking for a very long time.</div>
+      <div class="p">His name is Travis. He has been gone for four years. Nobody knows where he was or what he was doing. He barely knows himself. The film is about what happens when he comes back.</div>
+      <div class="p">Wim Wenders takes his time with everything. The camera does not rush. It lingers on the desert the way the desert lingers on everything, with a kind of patient indifference. Robby Müller's cinematography finds colors in the American landscape that feel like memory, dusty gold and faded orange and the blue of a sky that goes on longer than you want it to. Ry Cooder's slide guitar sits underneath it all like a man humming a sad song to himself on a porch. Together they build an atmosphere that does not announce itself. It simply surrounds you until you realize you are inside it.</div>
+    </div>
+  </div>
+
+  <!-- FRAME 02: SILENCE + LOST IN TRANSLATION -->
+  <div class="frame blue-wash">
+    <div class="frame-num">Frame 002 / The silence</div>
+    <div class="two-col">
+      <div class="tc-left">
+        <div class="sec-label">On what the silence carries</div>
+        <div class="p">Travis does not speak for a long time. When he finally does, it is in small pieces, tentative and careful, like someone relearning a language. His brother Walt drives from Los Angeles to collect him, and the drive itself is a kind of negotiation between two people who share blood but not quite the same world anymore. Walt is someone who stayed. Travis is someone who left.</div>
+        <div class="p">The silence that surrounds Travis in those early scenes is not empty. It is full of something he cannot yet name. He carries it the way people carry grief they have not finished grieving, not as a wound exactly, more as a weight they have grown so used to that they have stopped noticing how heavy it is.</div>
+        <div class="p">I recognized that silence. I have sat in rooms that felt like that. Quiet not because nothing was happening but because too much had happened and there were no more words left for it.</div>
+      </div>
+      <div class="tc-right">
+        <div class="compare">
+          <div class="cmp-label">Lost in Translation (2003) — Sofia Coppola</div>
+          <div class="cmp-body">Lost in Translation understood this kind of silence too. Bob and Charlotte sit in a foreign city and cannot quite connect to the world around them, and the film gives them each other as temporary shelter. The loneliness in Coppola's film is gentler and more ironic. In Tokyo you can be lonely and still be comfortable. In the Texas desert loneliness has a different texture. It bakes into you. Travis has not been lonely in a hotel. He has been lonely in a way that erases the person.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRAME 03: HUNTER + TREE OF LIFE -->
+  <div class="frame">
+    <div class="frame-num">Frame 003 / Father and son</div>
+    <div class="frame-body">
+      <div class="sh">What does a father look like?</div>
+      <div class="p">When Travis arrives at Walt's house in Los Angeles he meets his son Hunter, who was four years old when Travis disappeared and is now eight. Hunter does not remember his father. Travis does not remember how to be one. Walt asks Hunter on the phone: do you remember your father? The answer is no. Travis hears this and does not react, which is somehow worse than if he had.</div>
+      <div class="p">What follows is a slow and careful rebuilding. Travis learns to look at his son. Hunter learns to look at his father. They walk together. They eat together. By the time they are walking home from school and Hunter reaches up and takes Travis's hand, I felt it as if it happened to me. I was not prepared.</div>
+
+      <div class="quote-card">
+        <div class="qc-text">How can you have two fathers? Just lucky I guess.</div>
+        <div class="qc-attr">Hunter, to Walt</div>
+      </div>
+
+      <div class="compare">
+        <div class="cmp-label">The Tree of Life (2011) — Terrence Malick</div>
+        <div class="cmp-body">The Tree of Life placed a similar kind of fatherhood at its center, but Malick's approach was to go inward, to make memory and longing into something vast and cosmic. The father in that film is a force of nature, beautiful and terrible and difficult to hold. Paris, Texas is the quieter companion to that film. Travis is not a force of nature. He is a man who broke the people he loved and has come back to see what is left. The scale is smaller and the damage is more specific and somehow that makes it land harder. Travis tying his son's shoelace moved me more than any star-birth sequence in Malick's film, as beautiful as those are.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page, break for wide quote -->
+
+<!-- WIDE QUOTE -->
+<div class="wide-quote">
+  <div class="wq-inner">
+    <div class="wq-mark">"</div>
+    <div>
+      <div class="wq-text">I used to make long speeches to you after you left. I used to talk to you all the time, even though I was alone. I walked around for months talking to you. Now I don't know what to say. It was easier when I just imagined you.</div>
+      <div class="wq-sub">Travis to Jane &nbsp;·&nbsp; The confession scene</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- FRAME 04: THE GLASS SCENE -->
+  <div class="frame dark-frame">
+    <div class="frame-num">Frame 004 / One-way glass</div>
+    <div class="frame-body">
+      <div class="sec-label" style="color:var(--blue3)">The scene you cannot unsee</div>
+      <div class="sh">The most extraordinary thing the film does</div>
+      <div class="p">Jane works in a place where men pay to sit behind one-way glass and talk to women they cannot touch. Travis goes there. He sits on one side of the glass and she stands on the other and neither of them can see the other yet. He watches her through the glass. He picks up the phone. He asks her to turn off the lights so he can see her. She does.</div>
+      <div class="p">For the next several minutes, two people who were once everything to each other speak across a divide they built themselves.</div>
+      <div class="p">That line did something to me. Not because it is beautiful, though it is. Because it is true in the specific way that only things said at great cost are true. It is the line of someone who spent years having a conversation in his head, and who now, faced with the real person, finds that the imagined version was somehow easier to love. The real person requires you to account for what you did.</div>
+
+      <div class="pq">
+        <div class="pq-text">I can't heal up what happened.</div>
+        <div class="pq-attr">Travis to Jane</div>
+      </div>
+
+      <div class="p">Not I'm sorry and not I forgive you. Just the acknowledgment that some things do not heal. They scar over. The shape of you changes around them. I sat with that line for a long time after the film ended. I am still sitting with it.</div>
+    </div>
+  </div>
+
+  <!-- FRAME 05: MANCHESTER + NOMADLAND -->
+  <div class="frame">
+    <div class="frame-num">Frame 005 / Grief on the road</div>
+    <div class="two-col">
+      <div class="tc-left">
+        <div class="compare">
+          <div class="cmp-label">Manchester by the Sea (2016) — Lonergan</div>
+          <div class="cmp-body">Manchester by the Sea lives in this same territory. Lee Chandler carries something he cannot put down or leave behind. The film is about what happens when grief becomes so total that it stops being grief and starts being identity. What makes Paris, Texas different is that Travis has already lived through that stage. He wandered the desert until the grief became landscape. Now he is trying to come back from that. Manchester does not give Lee Chandler that journey. It leaves him in the grief. Paris, Texas asks what comes after.</div>
+        </div>
+      </div>
+      <div class="tc-right">
+        <div class="compare">
+          <div class="cmp-label">Nomadland (2020) — Chloé Zhao</div>
+          <div class="cmp-body">Nomadland thought about this from the other direction. Fern chooses the road not because she is running but because the thing she would return to is gone. Travis's grief is different because it is a life he ended himself. He is not displaced by loss. He is the one who did the leaving. Coming back requires him to account for that in a way Fern never has to. Fern's wandering is finally peaceful. Travis's was a punishment he gave himself. The road means something different depending on what you are moving away from.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRAME 06: JANE -->
+  <div class="frame rust-frame">
+    <div class="frame-num">Frame 006 / Jane</div>
+    <div class="frame-body">
+      <div class="sh">The woman in the pink sweater</div>
+      <div class="p">Jane tells Travis, through the glass, about the early days after he left.</div>
+
+      <div class="quote-card">
+        <div class="qc-text">I didn't want to use him to fill all my emptiness.</div>
+        <div class="qc-attr">Jane &nbsp;·&nbsp; about Hunter</div>
+      </div>
+
+      <div class="p">She means Hunter. She means she tried not to make her son carry the weight of two absent parents. She did not always succeed. She was young and alone and frightened and the film does not judge her for any of it. Nastassja Kinski plays Jane with a kind of stillness that matches Harry Dean Stanton's, and in that room, on those phones, two people who failed each other completely manage to speak with more honesty than most couples manage in a lifetime of trying.</div>
+
+      <div class="compare">
+        <div class="cmp-label">Y Tu Mamá También (2001) — Cuarón</div>
+        <div class="cmp-body">Y Tu Mamá También put two boys in a car with a woman and drove them across Mexico until everything they were pretending not to feel had to come out. That film was about desire and youth and the particular violence of being seventeen and not yet knowing what you want. Paris, Texas is what comes after that. It is about the aftermath of desire. The wreckage of having wanted someone too much and handled that wanting badly. Both films understand that the road is not an escape. It is a way of getting close enough to something to finally see it. I think about both films together often. They feel like two chapters of the same story, one told in heat and hunger and the other in dust and regret.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRAME 07: ENDING -->
+  <div class="frame blue-wash">
+    <div class="frame-num">Frame 007 / The last ride</div>
+    <div class="frame-body">
+      <div class="sh">Lost in a deep<em>,</em> vast country</div>
+      <div class="p">Travis makes a decision near the end of the film. He delivers Hunter to Jane, the two of them finally together in the parking lot of a Houston hotel. He watches from a distance, in his truck, the window of the truck framing them the way the one-way glass framed Jane. Still watching. Still on the other side of something. Then he drives away.</div>
+      <div class="p">He does not stay. He cannot stay. The film does not explain exactly why, and it does not need to. I understood. Some people break something so completely that the kindest thing they can do is remove themselves from the repair. Watching him drive away, I did not feel sad exactly. I felt something more like recognition.</div>
+
+      <div class="quote-card">
+        <div class="qc-text">He wished he were lost in a deep, vast country where nobody knew him. Somewhere without language, or streets.</div>
+        <div class="qc-attr">Travis &nbsp;·&nbsp; the confession</div>
+      </div>
+
+      <div class="p">He ran toward that place once and it destroyed him. Now he is running toward it again, but this time with something he did not have before. He knows what he left. He has looked at it. He has said the things that needed saying. He cannot heal what happened, but he has named it, and that is the closest he will get.</div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing-frame">
+    <div class="cf-label">Final frame &nbsp;/&nbsp; what stays</div>
+    <div class="cf-big">Travis reached the truth. Then he let it go.</div>
+    <div class="cf-sub">The film stays with me the way a song stays, not as an idea but as a feeling I cannot quite locate. Something about the slide guitar. Something about the desert light. I watched the credits in silence. I did not move. I am not sure how long I sat there. That is the most honest thing this film does. It does not let him keep it.</div>
+  </div>
+
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">Paris, Texas (1984) &nbsp;·&nbsp; Wim Wenders &nbsp;·&nbsp; Notes by Al Amin</div>
+  <div class="sf-r">Film review</div>
+</div>
+
+</body>
+</html>
