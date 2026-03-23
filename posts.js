@@ -124,7 +124,7 @@ const POSTS = [
     file:  "bd_clothing_brands.html",
     title: "Bangladesh clothing brands — personal analysis",
     desc:  "Brand hierarchy, discount windows, value comparisons, and family tree of 8 local brands including Yellow, Artisan, Infinity, STC and more.",
-    tag:   "Lifestyle",
+    tag:   "Random",
     date:  "Nov 2025",
     theme: "amber"
   },
@@ -148,9 +148,9 @@ const POSTS = [
 
   {
     file:  "wordle_sa_analysis.html",
-    title: "Wordle — S+A tier 3-word greedy analysis",
+    title: "Wordle Starter",
     desc:  "Greedy word selection from the top 15 Wordle letter frequencies. ALERT + PIONS + DUCHY for a fixed grand total of 415% across all S and A tier letters.",
-    tag:   "Wordle",
+    tag:   "Random",
     date:  "Mar 2026",
     theme: "teal"
   },
