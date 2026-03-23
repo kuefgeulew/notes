@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Y Tu Mamá También — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --sand:   #F0E6CC;
+  --sand2:  #E4D5B0;
+  --sand3:  #D4C090;
+  --sand4:  #B8A070;
+  --sand5:  #8A7050;
+  --dust:   #C8A870;
+  --dust2:  #A08050;
+  --ink:    #1C1408;
+  --ink2:   #2E2010;
+  --ink3:   #6A5030;
+  --ink4:   #9A8060;
+  --rust:   #8A2810;
+  --rust2:  #B84020;
+  --sun:    #D4940A;
+  --sun2:   #F0C040;
+  --rule:   rgba(28,20,8,.12);
+  --type:   'Special Elite',monospace;
+  --courier:'Courier Prime',monospace;
+  --poster: 'Alfa Slab One',serif;
+  --read:   660px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--courier);
+  background:var(--sand);
+  color:var(--ink);
+  min-height:100vh;
+}
+
+/* Aged paper grain */
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+*{position:relative;z-index:1}
+
+/* ══ NAV ══ */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 40px;
+  border-bottom:2px solid var(--ink);
+  background:var(--ink);
+}
+.nav-back{
+  font-family:var(--type);font-size:11px;letter-spacing:.04em;
+  text-decoration:none;color:rgba(240,230,204,.45);
+}
+.nav-back:hover{color:var(--sun2)}
+.nav-r{font-family:var(--type);font-size:11px;letter-spacing:.04em;color:rgba(240,230,204,.2)}
+
+/* ══ POSTER COVER ══ */
+.poster{
+  background:var(--ink2);
+  border-bottom:4px solid var(--rust2);
+  position:relative;
+  overflow:hidden;
+  min-height:96vh;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+}
+
+/* Sun burst behind title */
+.poster::before{
+  content:'';
+  position:absolute;
+  top:-10%;left:50%;
+  transform:translateX(-50%);
+  width:120%;
+  height:80%;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,148,10,.18) 0%,rgba(212,148,10,.06) 40%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Horizontal lines like an old poster */
+.poster::after{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,.04) 0px,
+    rgba(0,0,0,.04) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+  pointer-events:none;
+}
+
+.poster-inner{
+  padding:0 52px 60px;
+  position:relative;z-index:2;
+}
+
+/* Top strip */
+.poster-top{
+  position:absolute;top:0;left:0;right:0;
+  padding:20px 52px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid rgba(240,230,204,.08);
+}
+.pt-label{font-family:var(--type);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,230,204,.25)}
+.pt-year{font-family:var(--poster);font-size:14px;letter-spacing:.1em;color:var(--dust);opacity:.5}
+
+/* Big Spanish text mark */
+.poster-mark{
+  font-family:var(--type);
+  font-size:clamp(10px,1.5vw,14px);
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dust);opacity:.4;
+  margin-bottom:20px;
+}
+
+.poster-title{
+  font-family:var(--poster);
+  font-size:clamp(52px,10vw,130px);
+  line-height:.85;
+  letter-spacing:-.01em;
+  color:var(--sand);
+  margin-bottom:4px;
+  /* Slight imperfection */
+  text-shadow:2px 2px 0 rgba(0,0,0,.2), -1px -1px 0 rgba(212,148,10,.1);
+}
+
+.poster-subtitle{
+  font-family:var(--type);
+  font-size:clamp(11px,1.8vw,17px);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dust);
+  margin-bottom:40px;
+  opacity:.6;
+}
+
+/* Ruling lines */
+.poster-rule{
+  display:flex;flex-direction:column;gap:3px;
+  margin-bottom:28px;
+  width:100%;
+}
+.pr-thick{height:3px;background:var(--rust2)}
+.pr-thin{height:1px;background:rgba(240,230,204,.2)}
+
+.poster-lede{
+  font-family:var(--type);
+  font-size:clamp(18px,3vw,28px);
+  line-height:1.35;
+  color:var(--sand2);
+  max-width:540px;
+  margin-bottom:44px;
+  /* Typed feel */
+  letter-spacing:.02em;
+}
+.poster-lede em{font-style:italic;color:var(--sun2)}
+
+.poster-credits{
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+  padding-top:20px;
+  border-top:1px solid rgba(240,230,204,.1);
+}
+.pc-item{font-family:var(--type);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,230,204,.3)}
+.pc-sep{width:1px;height:12px;background:rgba(240,230,204,.12);flex-shrink:0}
+
+/* Stars */
+.poster-rating{
+  position:absolute;
+  top:72px;right:52px;
+  text-align:right;
+}
+.pr-stars{
+  font-family:var(--poster);font-size:28px;
+  color:var(--sun2);letter-spacing:.08em;
+  text-shadow:0 0 20px rgba(240,192,64,.3);
+}
+.pr-label{font-family:var(--type);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,230,204,.2);margin-top:4px}
+
+/* ══ SAND BAND ══ */
+.sand-band{
+  background:var(--sand3);
+  border-bottom:2px solid var(--ink);
+  padding:12px 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+}
+.sb-text{font-family:var(--type);font-size:12px;letter-spacing:.04em;color:var(--ink3);font-style:italic}
+.sb-films{display:flex;gap:16px;flex-wrap:wrap}
+.sb-film{font-family:var(--type);font-size:10px;letter-spacing:.06em;color:var(--ink4)}
+.sb-film::before{content:'∙ '}
+
+/* ══ REVIEW BODY ══ */
+.review{
+  max-width:var(--read);
+  margin:0 auto;
+  padding:60px 40px 80px;
+}
+
+/* ══ PARAGRAPH ══ */
+.p{
+  font-family:var(--courier);
+  font-size:17px;
+  line-height:1.95;
+  color:var(--ink2);
+  margin-bottom:24px;
+  /* Typewriter character */
+  letter-spacing:.012em;
+}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--ink);font-weight:700}
+
+/* Drop cap */
+.dropcap::first-letter{
+  font-family:var(--poster);
+  font-size:82px;
+  float:left;line-height:.8;
+  margin:4px 8px 0 0;
+  color:var(--rust2);
+  text-shadow:2px 2px 0 rgba(0,0,0,.15);
+}
+
+/* ══ FILM COMPARISON BLOCK ══ */
+.film-compare{
+  margin:36px 0;
+  background:var(--sand2);
+  border:1px solid var(--sand4);
+  border-left:4px solid var(--rust2);
+  padding:22px 24px;
+  position:relative;
+}
+.film-compare::before{
+  content:attr(data-film);
+  position:absolute;top:-11px;left:16px;
+  font-family:var(--type);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--sand);padding:0 8px;
+  color:var(--rust);border:1px solid var(--sand4);
+}
+.fc-body{
+  font-family:var(--courier);font-size:16px;
+  line-height:1.85;color:var(--ink3);
+  font-style:italic;
+  letter-spacing:.012em;
+}
+
+/* ══ QUOTE ══ */
+.quote{
+  margin:32px 0;
+  padding:0 32px;
+  text-align:center;
+}
+.q-marks{
+  font-family:var(--poster);font-size:56px;
+  color:var(--sand3);line-height:0.5;
+  display:block;margin-bottom:12px;
+}
+.q-text{
+  font-family:var(--type);
+  font-size:clamp(16px,2.5vw,22px);
+  font-style:italic;line-height:1.5;
+  color:var(--ink);letter-spacing:.02em;
+}
+.q-en{
+  font-family:var(--courier);font-size:14px;
+  color:var(--ink4);margin-top:8px;
+  font-style:italic;letter-spacing:.02em;
+}
+
+/* ══ SCENE BREAK ══ */
+.brk{
+  display:flex;align-items:center;gap:16px;
+  padding:32px 0;
+}
+.brk-line{flex:1;height:1px;background:var(--sand4);opacity:.5}
+.brk-mark{
+  font-family:var(--type);font-size:13px;
+  color:var(--sand4);letter-spacing:.12em;
+}
+
+/* ══ CHAPTER MARKER ══ */
+.chapter{
+  margin:44px 0 0;
+  font-family:var(--type);
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dust2);
+  padding-bottom:10px;
+  border-bottom:1px solid var(--sand3);
+  margin-bottom:24px;
+}
+
+/* ══ CLOSING ══ */
+.closing{
+  margin-top:52px;
+  padding-top:32px;
+  border-top:2px solid var(--ink);
+}
+.cl-quote{
+  font-family:var(--type);
+  font-size:clamp(14px,2vw,18px);
+  font-style:italic;line-height:1.65;
+  color:var(--ink3);margin-bottom:24px;
+  letter-spacing:.02em;
+}
+.cl-final{
+  font-family:var(--type);
+  font-size:clamp(16px,2.5vw,22px);
+  color:var(--ink);line-height:1.4;
+  letter-spacing:.02em;
+}
+
+/* ══ FOOTER ══ */
+.site-footer{
+  background:var(--ink);
+  border-top:2px solid var(--rust2);
+  padding:16px 40px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+}
+.sf-l{font-family:var(--type);font-size:11px;letter-spacing:.04em;color:rgba(240,230,204,.3)}
+.sf-r{font-family:var(--type);font-size:11px;letter-spacing:.04em;color:rgba(240,230,204,.15)}
+
+@media(max-width:680px){
+  .poster-inner,.poster-top,.sand-band{padding-left:24px;padding-right:24px}
+  .review{padding-left:24px;padding-right:24px}
+  .nav,.site-footer{padding-left:24px;padding-right:24px}
+  .poster-rating{top:68px;right:24px}
+  .dropcap::first-letter{font-size:60px}
+  .quote{padding:0 8px}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">&lt;-- notes by al amin</a>
+  <div class="nav-r">film review / 2001</div>
+</div>
+
+<!-- POSTER -->
+<div class="poster">
+  <div class="poster-top">
+    <div class="pt-label">Alfonso Cuarón &nbsp;·&nbsp; México &nbsp;·&nbsp; 2001</div>
+    <div class="pt-year">Directed by Alfonso Cuarón</div>
+  </div>
+
+  <div class="poster-rating">
+    <div class="pr-stars">★★★★★</div>
+    <div class="pr-label">personal rating</div>
+  </div>
+
+  <div class="poster-inner">
+    <div class="poster-mark">Y Tu Mamá También &nbsp;/&nbsp; And Your Mother Too</div>
+    <div class="poster-title">He did not<br>expect to<br>feel this<br>much.</div>
+    <div class="poster-rule">
+      <div class="pr-thick"></div>
+      <div class="pr-thin"></div>
+    </div>
+    <div class="poster-lede">Two boys. One woman. A road across Mexico. A beach that barely existed. <em>Everything else is what the film is actually about.</em></div>
+    <div class="poster-credits">
+      <span class="pc-item">Gael García Bernal</span>
+      <span class="pc-sep"></span>
+      <span class="pc-item">Diego Luna</span>
+      <span class="pc-sep"></span>
+      <span class="pc-item">Maribel Verdú</span>
+      <span class="pc-sep"></span>
+      <span class="pc-item">Written by the Cuarón brothers</span>
+    </div>
+  </div>
+</div>
+
+<!-- SAND BAND -->
+<div class="sand-band">
+  <div class="sb-text">reviewed alongside —</div>
+  <div class="sb-films">
+    <span class="sb-film">Before Sunrise (1995)</span>
+    <span class="sb-film">Call Me By Your Name (2017)</span>
+    <span class="sb-film">Moonlight (2016)</span>
+    <span class="sb-film">Boyhood (2014)</span>
+    <span class="sb-film">Roma (2018)</span>
+  </div>
+</div>
+
+<!-- REVIEW -->
+<div class="review">
+
+  <div class="p dropcap">He did not expect to feel this much. That is the first thing worth saying about Y Tu Mamá También. You sit down thinking it is a film about two teenage boys being horny on a road trip, and it is that, it is fully and unapologetically that, but then somewhere along the way the road opens up and the camera drifts outside the car window and you realize you are watching something much heavier than you signed up for.</div>
+
+  <div class="p">The story is simple on the surface. Julio and Tenoch are seventeen, bored, loud, and incapable of thinking about anything except sex. Their girlfriends leave for Italy for the summer. At a wedding, they meet Luisa, the wife of a cousin, older and beautiful and clearly carrying something the boys cannot yet name. They invite her on a made-up road trip to a beach they have invented on the spot. She says no. Then her husband calls and confesses he has been cheating, and she calls them back and says yes.</div>
+
+  <div class="p">So the three of them get in a car and drive across Mexico.</div>
+
+  <div class="film-compare" data-film="Before Sunrise (1995) — Linklater">
+    <div class="fc-body">Before Sunrise came six years before this film and it understood something similar about roads and time. Jesse and Celine have one night in Vienna and they spend it walking and talking and falling into something they cannot name before the morning takes it away. The journey is everything. The destination is almost beside the point. Y Tu Mamá También knows this too, but where Before Sunrise is careful and tender and built from words, this film is built from bodies and movement and the things people refuse to say. Both films understand that travel removes you from your ordinary life long enough that you forget to perform yourself. And in that gap, something true gets in.</div>
+  </div>
+
+  <div class="p">What follows is one of the most honest films ever made about being young. Not honest in the polished, careful way that most coming-of-age films try to be. Honest in the way that is sometimes embarrassing to watch because it is too close to something true. The boys finish too quickly. They argue over nothing. They have a manifesto with rules they immediately break. They talk about sex the way people talk about things they do not actually understand yet, loudly and with great confidence.</div>
+
+  <div class="p">Early in the film, in one of those brash unguarded exchanges that only teenagers have without embarrassment, Tenoch says something like, <em>I fucked Ceci a few times.</em> Julio responds, <em>No big deal. I poked Ana a bunch of times.</em> It is a throwaway exchange. Two boys one-upping each other. But it tells you everything about where they are. They are at the age where saying a thing out loud is the same as understanding it. Where the vocabulary of sex has arrived before the emotional comprehension has. The film never mocks them for this. It watches them the way the narrator watches everything, with patience and a kind of affection that has no illusions.</div>
+
+  <div class="p">And underneath all of it, they are in love with each other. Not in a way either of them can say out loud. Not in a way the film forces onto the screen. But it is there in every scene, in the way they move around each other, in the rules they make about what they are allowed to do and who they are allowed to touch.</div>
+
+  <div class="film-compare" data-film="Moonlight (2016) — Jenkins">
+    <div class="fc-body">Moonlight covered this same territory fifteen years later with an entirely different register. Chiron's desire is buried under survival, under violence, under a world that has no space for what he feels. The suppression in Moonlight is active and brutal. In Y Tu Mamá También the suppression is almost unconscious. Julio and Tenoch are not suffering. They are having the time of their lives. And yet the rules they make, the constant need to assert themselves, the particular discomfort when conversations get too close — it is all performance. Both films arrive at the same truth from completely different directions. The things people most need to say are the things they build the most elaborate systems to avoid saying.</div>
+  </div>
+
+  <div class="film-compare" data-film="Call Me By Your Name (2017) — Guadagnino">
+    <div class="fc-body">Call Me By Your Name took a more romantic approach to this same silence. Elio and Oliver circle each other through an Italian summer, and the film gives them a tenderness that Julio and Tenoch never quite get. Elio's father delivers a speech near the end about not suppressing what you feel, about the cost of closing yourself off. It is the speech this film never gives anyone. Cuarón is not interested in comfort. He does not want his characters to be told what to do with what they feel. He wants to show you what happens when nobody says the speech, when the summer ends and the boys go back to their separate lives and take the unsaid thing with them permanently.</div>
+  </div>
+
+  <div class="brk">
+    <div class="brk-line"></div>
+    <div class="brk-mark">* * *</div>
+    <div class="brk-line"></div>
+  </div>
+
+  <div class="chapter">On Luisa. On time. On giving yourself to the sea.</div>
+
+  <div class="p">Luisa is the one who holds it together for a while. She is not just the older woman who teaches the boys about sex. She is someone in the middle of her own reckoning. She has just found out her husband has been unfaithful. She is carrying something the audience does not fully understand until near the end. She gets in the car not because of the boys but because she needs to go somewhere, and the boys happen to have a car.</div>
+
+  <div class="p">At some point during the trip, Luisa asks the boys whether they would want to live forever. It is a question that seems casual in the moment. She asks it with the lightness of someone making conversation. But knowing what we know by the end, the question does not feel casual at all. She is the only one of the three who knows exactly how much time is worth. The boys laugh it off.</div>
+
+  <div class="quote">
+    <span class="q-marks">"</span>
+    <div class="q-text">La vida es como la espuma, por eso hay que darse como el mar.</div>
+    <div class="q-en">Life is like the surf, so give yourself away like the sea.</div>
+  </div>
+
+  <div class="p">The boys say this like a motto, like something cool they invented. When Luisa says it, it means something different. She is the only one who is actually doing it. She is giving herself to whatever comes next without resistance or bitterness. She floats in the ocean at Heaven's Mouth and she smiles. Not because everything is fine. Because she has decided to let things be what they are.</div>
+
+  <div class="film-compare" data-film="Boyhood (2014) — Linklater">
+    <div class="fc-body">Boyhood did something similar with time, though from a completely different angle. Linklater filmed his characters over twelve actual years, and the result was that you watched a boy age in real time on screen. The emotional weight came from accumulation, from small moments adding up into a life. Y Tu Mamá También compresses that same accumulation into a single road trip. The months between the beginning and the coffee shop at the end feel like years. The boys who get in that car at the start are not quite the same people who sit across from each other in silence at the end, and the film makes you feel that change without explaining it.</div>
+  </div>
+
+  <div class="brk">
+    <div class="brk-line"></div>
+    <div class="brk-mark">* * *</div>
+    <div class="brk-line"></div>
+  </div>
+
+  <div class="chapter">The narrator. The country outside the window. The margins that become the point.</div>
+
+  <div class="p">The narrator is one of the strangest choices in the film and also one of the best. Every so often the sound drops out and a calm, detached voice tells you something about a character that the character will never know. A small detail, a piece of context, something that happened before or will happen after. At one point, about a small roadside shrine that the boys drive past without looking, the narrator pauses the entire film to explain the story behind it. A man who died there. A family left behind. The country continuing its life around these three people who are too young to notice.</div>
+
+  <div class="film-compare" data-film="Roma (2018) — Cuarón">
+    <div class="fc-body">Roma becomes unavoidable here. Cuarón returned to Mexico nearly two decades later with a film that did almost exactly the opposite. Where Y Tu Mamá También follows two boys who cannot see past their own immediate desires, Roma centers on Cleo, a domestic worker whose quiet suffering exists in the background of a wealthy family that barely sees her. Both films hold class at arm's length from the main story and let it accumulate in the margins. The difference is that in Y Tu Mamá También the boys are on the privileged side of that distance. In Roma, Cuarón closes it entirely. He had learned by then how to make the margins the center.</div>
+  </div>
+
+  <div class="p">There is a line from the manifesto the boys wrote for themselves, something about always telling each other the truth.</div>
+
+  <div class="quote">
+    <span class="q-marks">"</span>
+    <div class="q-text">La verdad es lo mejor, pero es dificilísimo de alcanzar.</div>
+    <div class="q-en">The truth is the best thing, but it is very hard to reach.</div>
+  </div>
+
+  <div class="p">They wrote this rule as teenagers, the way teenagers write rules, believing that making a thing a rule is the same as living by it. By the end of the film every significant truth between them has gone unsaid. They slept with each other's girlfriends and said nothing for months. They kissed each other in the night and pretended it did not happen. The rule about truth was the rule they broke most completely.</div>
+
+  <div class="brk">
+    <div class="brk-line"></div>
+    <div class="brk-mark">* * *</div>
+    <div class="brk-line"></div>
+  </div>
+
+  <div class="chapter">The threesome. The ending. What does not survive.</div>
+
+  <div class="p">The threesome near the end, when it finally happens, is not the celebration it sounds like. It is the moment everything breaks. Two boys who have been performing a version of themselves for each other their entire lives finally close the distance they were never supposed to close. The next morning neither of them can look at the other. The friendship, which was the whole point, does not survive.</div>
+
+  <div class="p">This is where the film diverges sharply from Call Me By Your Name, which allows its characters a long and painful grief after the summer ends. Elio cries by the fireplace and the film holds that cry for as long as it needs to. Y Tu Mamá También does not give the boys a fireplace or a long cry. It gives them a coffee shop and a brief conversation and the narrator telling you afterward that they never met again. Most endings are not even recognized as endings until much later.</div>
+
+  <div class="p">The ending is quiet and devastating. They meet at a coffee shop months later. One of them mentions that Luisa died not long after they returned. The other does not know what to say. They go their separate ways. The narrator tells you this the way it tells you everything, without drama, as a simple fact.</div>
+
+  <div class="p">Every film mentioned here, Before Sunrise, Call Me By Your Name, Moonlight, Boyhood, Roma, they all know this feeling. They all found different ways into it. But Y Tu Mamá También found it first among this particular group, and in some ways it found it most honestly, because it was not trying to be beautiful. It was just trying to be true.</div>
+
+  <div class="closing">
+    <div class="cl-quote">She was the only one of the three who actually managed to give herself away like the sea. The boys were too young and too afraid. They will spend years becoming people who are less free than they were in that car, on that road, heading toward a beach that barely existed.</div>
+    <div class="cl-final">He did not expect to feel this much.<br>But that is exactly what the film was counting on.</div>
+  </div>
+
+</div>
+
+<div class="site-footer">
+  <div class="sf-l">Y Tu Mamá También (2001) &nbsp;·&nbsp; Film Review &nbsp;·&nbsp; Notes by Al Amin</div>
+  <div class="sf-r">Alfonso Cuarón</div>
+</div>
+
+</body>
+</html>
