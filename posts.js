@@ -22,11 +22,19 @@ const POSTS = [
   theme: "green"
 },
   {
+  "file":  "lives_of_others_review.html",
+  "title": "The Lives of Others — I stopped watching a film and started living inside one",
+  "desc":  "Florian Henckel von Donnersmarck, 2006. A Stasi agent sits in a grey room above two people and listens. What follows is the most quietly devastating film about conscience, surveillance, and the cost of a single act of invisible courage that I have ever seen.",
+  "tag":   "Movie",
+  "date":  "Jan 2023",
+  "theme": "dark"
+}
+  {
   file:  "paris_texas_review.html",
   title: "Paris, Texas — I did not expect to be moved like this",
   desc:  "Wim Wenders, 1984. A man walks out of the desert. What follows is the most honest film about grief, fatherhood, and the cost of leaving that I have ever seen.",
   tag:   "Movie",
-  date:  "Jun 2025",
+  date:  "Apr 2022",
   theme: "dark"
 },
  
@@ -35,7 +43,7 @@ const POSTS = [
   title: "Y Tu Mamá También — he did not expect to feel this much",
   desc:  "A review of Cuarón's 2001 film alongside Before Sunrise, Call Me By Your Name, Moonlight, Boyhood, and Roma. About roads, unsaid things, and giving yourself away like the sea.",
   tag:   "Movie",
-  date:  "Jun 2025",
+  date:  "Jul 2024",
   theme: "amber"
 },
   {
