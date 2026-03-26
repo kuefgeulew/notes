@@ -22,6 +22,14 @@ const POSTS = [
   theme: "green"
 },
   {
+  file:  "friends_house_review.html",
+  title: "Where Is the Friend's House? — the point was always the walk",
+  desc:  "On Kiarostami's 1987 film. A boy, a notebook, a village. And what it means that growing up, for most of us, meant learning to stop.",
+  tag:   "Movie",
+  date:  "Sep 2025",
+  theme: "warm"
+},
+  {
   "file":  "lives_of_others_review.html",
   "title": "The Lives of Others — I stopped watching a film and started living inside one",
   "desc":  "Florian Henckel von Donnersmarck, 2006. A Stasi agent sits in a grey room above two people and listens. What follows is the most quietly devastating film about conscience, surveillance, and the cost of a single act of invisible courage that I have ever seen.",
