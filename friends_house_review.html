@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where Is the Friend's House? — Notes by Al Amin</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --parch:   #ECE3CC;
+  --parch2:  #E4D8BA;
+  --parch3:  #D4C49A;
+  --parch4:  #BCA878;
+  --parch5:  #9A8858;
+  --earth:   #2E2418;
+  --earth2:  #3E3222;
+  --earth3:  #5C4A2E;
+  --earth4:  #8A7248;
+  --earth5:  #B09060;
+  --rust:    #7A4020;
+  --rust2:   #9A5828;
+  --rust3:   #C07840;
+  --sage:    #5A6848;
+  --sage2:   #7A8A60;
+  --sage3:   #B0BA98;
+  --fell:    'IM Fell English',Georgia,serif;
+  --prose:   'Crimson Pro',Georgia,serif;
+  --cinzel:  'Cinzel',Georgia,serif;
+  --col:     580px;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:var(--prose);
+  background:var(--parch);
+  color:var(--earth);
+  min-height:100vh;
+  /* Very subtle diagonal grain suggesting terrain */
+  background-image:
+    repeating-linear-gradient(
+      108deg,
+      transparent,
+      transparent 60px,
+      rgba(160,136,80,.04) 60px,
+      rgba(160,136,80,.04) 61px
+    );
+}
+
+/* Subtle paper texture */
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+*{position:relative;z-index:1}
+
+/* ══ NAV ══ */
+.nav{
+  padding:14px 40px;
+  border-bottom:1px solid var(--parch3);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-back{
+  font-family:var(--cinzel);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;color:var(--earth4);
+}
+.nav-back:hover{color:var(--rust)}
+.nav-r{font-family:var(--cinzel);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--parch4)}
+
+/* ══ MASTHEAD ══ */
+.masthead{
+  max-width:var(--col);
+  margin:0 auto;
+  padding:72px 24px 52px;
+  text-align:center;
+}
+
+.m-poem{
+  font-family:var(--fell);
+  font-size:14px;
+  font-style:italic;
+  color:var(--earth4);
+  line-height:1.8;
+  margin-bottom:40px;
+  letter-spacing:.02em;
+}
+
+/* Kiarostami zigzag path, drawn in CSS */
+.path-motif{
+  display:flex;justify-content:center;
+  margin-bottom:32px;
+}
+.path-svg{opacity:.35}
+
+.m-title{
+  font-family:var(--fell);
+  font-size:clamp(22px,5vw,40px);
+  line-height:1.15;
+  color:var(--earth);
+  margin-bottom:6px;
+  letter-spacing:.01em;
+}
+.m-title em{font-style:italic}
+.m-year{
+  font-family:var(--cinzel);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--earth4);margin-bottom:8px;
+}
+.m-dir{font-family:var(--fell);font-size:13px;font-style:italic;color:var(--earth4)}
+
+.m-rule{
+  width:40px;height:1px;background:var(--parch4);
+  margin:28px auto 0;
+}
+
+/* ══ ESSAY COLUMN ══ */
+.essay{
+  max-width:var(--col);
+  margin:0 auto;
+  padding:48px 24px 80px;
+}
+
+/* ══ PROSE ══ */
+.p{
+  font-family:var(--prose);
+  font-size:19.5px;
+  font-weight:300;
+  line-height:2.02;
+  color:var(--earth2);
+  margin-bottom:28px;
+  letter-spacing:.008em;
+}
+.p:last-child{margin-bottom:0}
+.p em{font-style:italic;color:var(--earth)}
+
+/* Drop cap — first paragraph only */
+.dropcap::first-letter{
+  font-family:var(--fell);
+  font-size:72px;
+  float:left;
+  line-height:.82;
+  margin:6px 8px 0 0;
+  color:var(--rust2);
+}
+
+/* ══ PAUSE MOMENT ══
+   Used sparingly — only 3 times in the whole piece.
+   A key sentence pulled slightly aside.
+*/
+.pause{
+  margin:36px 0 36px 24px;
+  padding-left:18px;
+  border-left:1px solid var(--parch4);
+}
+.pause .p{
+  font-family:var(--fell);
+  font-size:18px;
+  font-style:italic;
+  line-height:1.75;
+  color:var(--earth3);
+  margin-bottom:0;
+}
+
+/* ══ WALKING SEPARATOR ══
+   Used only at major thematic shifts.
+   The zigzag path symbol — Kiarostami's road.
+*/
+.walk{
+  display:flex;align-items:center;justify-content:center;
+  padding:36px 0;
+}
+.walk-inner{
+  display:flex;align-items:center;gap:10px;
+}
+.walk-line{width:32px;height:1px;background:var(--parch4)}
+.walk-mark{
+  display:flex;align-items:center;
+  opacity:.5;
+}
+
+/* ══ CLOSING ══ */
+.closing{
+  max-width:var(--col);
+  margin:0 auto;
+  padding:0 24px 72px;
+  border-top:1px solid var(--parch3);
+  padding-top:40px;
+}
+.closing-poem{
+  font-family:var(--fell);
+  font-size:16px;
+  font-style:italic;
+  line-height:1.9;
+  color:var(--earth3);
+  text-align:center;
+  margin-bottom:32px;
+}
+.closing-final{
+  font-family:var(--prose);
+  font-size:19px;
+  font-weight:300;
+  line-height:1.95;
+  color:var(--earth2);
+  text-align:center;
+}
+
+/* ══ FOOTER ══ */
+.site-footer{
+  border-top:1px solid var(--parch3);
+  padding:16px 40px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  background:var(--parch2);
+}
+.sf-l{font-family:var(--fell);font-size:13px;font-style:italic;color:var(--earth4)}
+.sf-r{font-family:var(--cinzel);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--parch4)}
+
+@media(max-width:640px){
+  .nav,.site-footer{padding-left:20px;padding-right:20px}
+  .masthead,.essay,.closing{padding-left:16px;padding-right:16px}
+  .pause{margin-left:8px}
+  .dropcap::first-letter{font-size:56px}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a class="nav-back" href="index.html">← Notes by Al Amin</a>
+  <div class="nav-r">Cinema · 1987</div>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="m-poem">
+    "Where is the friend's house?"<br>
+    the rider asked at dusk.<br>
+    The sky paused.<br>
+    A branch of light bloomed in the dark.
+  </div>
+
+  <div class="path-motif">
+    <svg class="path-svg" width="120" height="28" viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 24 L28 6 L52 24 L76 6 L100 24 L116 14" stroke="#9A8858" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="116" cy="6" r="2.5" fill="#9A8858"/>
+    </svg>
+  </div>
+
+  <div class="m-title"><em>Where Is the Friend's House?</em></div>
+  <div class="m-year">1987 &nbsp;·&nbsp; ★★★★★</div>
+  <div class="m-dir">Abbas Kiarostami</div>
+  <div class="m-rule"></div>
+</div>
+
+<!-- ESSAY -->
+<div class="essay">
+
+  <div class="p dropcap">Films about children almost always ask the wrong question. They want to know who we used to be, so they point a camera at a child and call it memory. What Kiarostami asks instead is stranger and more demanding: what if the child is not a reflection of the past, but a part of humanity we are still capable of learning from? It sounds simple. It is not. Most films cannot even hold that question steady, let alone answer it. <em>Where Is the Friend's House?</em> holds it for 83 minutes without looking away, and by the end it has put something into you that you cannot name but will not forget.</div>
+
+  <div class="p">The setup fits on a matchbook. Ahmed, eight years old, lives in the village of Koker in rural Iran. He has accidentally taken home his classmate Nematzadeh's notebook. The teacher has already made one thing clear: next missing notebook, and Nematzadeh is expelled. Ahmed knows this. So he sets out alone, across winding roads and the tight, twisting alleys of the neighboring village of Poshteh, to return what is not his to keep. That is the whole film. Everything else is what that walk costs him, and what it shows about the world he is walking through.</div>
+
+  <div class="p">It is a masterpiece. Let us move past that quickly, because the interesting thing is how.</div>
+
+  <!-- PAUSE 1 -->
+  <div class="pause">
+    <div class="p">What it exposes is not a story but a condition.</div>
+  </div>
+
+  <div class="p">From the very first scene, adults fail Ahmed in a particular, precise way. Not with cruelty. Not with drama. With the quiet, steady indifference of people who have simply stopped hearing children. His mother asks him to put two sugar cubes in a bottle. He instinctively puts in three. It is the kind of moment you almost miss, and it is the whole film pressed into a single gesture: kindness working just below the level of visibility, tenderness written in small acts that nobody is watching closely enough to read. When Ahmed tries to explain that he must go to Poshteh, his mother hears noise. She gives him more chores. Bring the laundry. Rock the baby. Fetch the bread. Her attention goes everywhere except toward him.</div>
+
+  <div class="p">This happens again and again. On purpose. Kiarostami uses repetition not as a style choice but as his core argument. Ahmed asks the same questions over and over. Adults give wrong directions, turn the conversation back to themselves, or simply do not hear him mid-sentence. The scene with the door-maker is the one that tightens your chest: Ahmed pleads, restates, pleads again, and the man does not register a single word. Not from cruelty. Children's voices, in this world, do not reach adults anymore. You feel the full weight of it. Being small, and powerless, and completely right.</div>
+
+  <!-- WALK SEPARATOR -->
+  <div class="walk">
+    <div class="walk-inner">
+      <div class="walk-line"></div>
+      <svg width="40" height="14" viewBox="0 0 40 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.4">
+        <path d="M2 12 L12 3 L22 12 L32 3 L38 7" stroke="#9A8858" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="walk-line"></div>
+    </div>
+  </div>
+
+  <div class="p">What keeps this from turning into a lecture is that Kiarostami does not build villains. The teacher who threatens expulsion genuinely believes he is teaching discipline. Ahmed's mother loves her son. Nobody in this film is acting in bad faith. And yet none of them can get on the same page as each other, let alone with a child. The gap Kiarostami is drawing is not about bad people. It is about a broken system. Reasonable people, each caught up in their own reasonable concerns, producing something that is quietly, completely unreasonable.</div>
+
+  <div class="p">The grandfather is where the system speaks most plainly. Someone asks what he would do if a child had done nothing wrong. He answers without pause: find an excuse, and give him a beating every other week so he would not forget. He says it casually. Almost proudly. Like wisdom. That is the part that cuts deepest, because this is not a cruel man saying a cruel thing. This is tradition speaking. The clean logic of a world that expects children to take punishment without explanation, to obey without being heard, to carry adult expectations while being treated as though they feel nothing.</div>
+
+  <div class="p">Then Kiarostami adds the detail that lifts this beyond a film about childhood. The adults in this film treat each other with the same dismissiveness they aim at children. Nobody really listens to anyone. The same refusal, cycling through generations. Children raised to silence themselves in front of authority grow into adults who cannot understand why a child's problem might matter.</div>
+
+  <!-- PAUSE 2 -->
+  <div class="pause">
+    <div class="p">The politics of a society show up in the way a parent talks to a child.</div>
+  </div>
+
+  <div class="p">Kiarostami's visual choices are just as exact as his ideas. His most recognizable image, the zigzag road cut into the hillside with a single tree at its peak, works here as a picture of moral life: progress is never a straight line, the path doubles back on itself, and you climb anyway. That road, by the way, was built from nothing. Kiarostami had it constructed. The maze-like streets of Poshteh, those narrow corridors and winding stairs and closed door after closed door, are not just a location. They are a feeling made physical. The village is designed to block you. So is the world, the film quietly suggests.</div>
+
+  <div class="p">Kiarostami rarely shows adults' faces during their exchanges with Ahmed. The camera drops to the boy's height. What we see is what Ahmed sees: chests, hands, mouths moving without looking down. It is a simple decision and a total one. You feel what it is physically like to be a child, not the romance of it but the actual scale. You are small. The world is tall. Nobody bends down.</div>
+
+  <!-- WALK SEPARATOR -->
+  <div class="walk">
+    <div class="walk-inner">
+      <div class="walk-line"></div>
+      <svg width="40" height="14" viewBox="0 0 40 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.4">
+        <path d="M2 12 L12 3 L22 12 L32 3 L38 7" stroke="#9A8858" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="walk-line"></div>
+    </div>
+  </div>
+
+  <div class="p">The emotional heart of the film arrives when night falls and an old carpenter makes his slow way through the dark streets of Poshteh. He is the one adult who listens. Not because he is wiser, but because of where he is in life: at the far end of the road, where you can finally see it clearly. He walks faster than his age should allow, trying to match the boy's pace, managing it for a few steps before slipping back into the shuffle of the very old. He has built doors for these houses by hand, with care, and he knows those doors are being replaced by iron ones that will last a lifetime, as though a lifetime of coldness were something worth choosing. He knows he will be replaced too. That he will be forgotten before anyone even properly noticed him. The boy gives him ten minutes of being seen. Ten minutes of mattering to someone. For a man who has spent his whole life giving without being received, it is more than enough.</div>
+
+  <div class="p">The old man gives Ahmed a flower. It is, in every sense, an act of passing something forward. They walk together through streets lit only by the windows the carpenter put in when he was young: his old light, guiding a new one. Their goodness meets in the dark, briefly, and becomes something without a name that can still be clearly felt.</div>
+
+  <div class="p">After they part, Ahmed slides the flower absentmindedly into the notebook he has carried all night. He almost forgets it immediately. In the film's final shot, which lasts one second but lands like something permanent, the notebook reaches Nematzadeh. The flower is still inside. Goodness passed on without knowing it was being passed. The act itself already forgotten. The petals still opening.</div>
+
+  <!-- PAUSE 3 -->
+  <div class="pause">
+    <div class="p">Kiarostami earns this ending without a single beat of forced feeling. That is the actually hard thing.</div>
+  </div>
+
+  <div class="p">What holds it is the film's refusal, across all 83 minutes, to argue that children are pure while adults are rotten. The film is more honest than that, and more complicated. What it argues instead is that caring about people is harder to kill than the world gives it credit for. Ahmed's compassion survives every obstacle: the wrong directions, the strangers who ignore him, the chores, the dark, the near-failure. It does not survive despite those things. It survives through them, the way a path survives every kind of weather.</div>
+
+  <div class="p">One more thing worth sitting with. This film could not exist today. Not because of censorship. Not because of money. Because of GPS. One tap on a screen and Ahmed finds Nematzadeh's house in thirty seconds. The whole journey becomes an errand. The act of caring becomes a chore. The conditions that turn kindness into something that costs you, that make the choice to keep going feel like a real decision rather than nothing, depend on a world that is hard to move through. We have spent decades smoothing out that difficulty, and perhaps, in ways we have not thought about carefully, made the world harder to love in the process.</div>
+
+  <div class="p">Caring about people is not a feeling. It is a practice. It takes effort, costs something, means getting lost and going back and asking again. Ahmed does the homework. In his friend's name, in the dark, with no reward waiting at the other end. He returns a notebook that is not his. And in doing so he shows us something the adults around him, with all their experience and authority, have mostly unlearned: the point of being a person in the world is not to protect yourself from difficulty, but to take some of it onto yourself for someone else.</div>
+
+  <div class="p">We were all that boy once. The sadness is not that we grew up. The sadness is that growing up, for most of us, meant learning to stop.</div>
+
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-poem">
+    The title comes from a poem by Sohrab Sepehri,<br>
+    in which a rider asks the darkness where his friend lives<br>
+    and receives, for an answer, directions<br>
+    so beautiful they could never actually be followed.<br>
+    <br>
+    Kiarostami answers differently.<br>
+    He says: you already know the way.<br>
+    You have always known.<br>
+    <em>Now go.</em>
+  </div>
+</div>
+
+<div class="site-footer">
+  <div class="sf-l"><em>Where Is the Friend's House?</em> &nbsp;(1987) &nbsp;· &nbsp;Abbas Kiarostami &nbsp;·&nbsp; Notes by Al Amin</div>
+  <div class="sf-r">Cinema</div>
+</div>
+
+</body>
+</html>
